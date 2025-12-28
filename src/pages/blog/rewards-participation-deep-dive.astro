@@ -1,0 +1,214 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+---
+
+<ArticleLayout 
+  title="Rewards & Participation Deep Dive"
+  description="A technical breakdown of Silica's Proof of Stake, node roles, and incentive layers. Mathematical analysis of staking mechanics."
+  author="Silica Network Team"
+  date="2024-12-04"
+  category="Consensus Mechanisms"
+  readingTime="9 min read"
+>
+
+    <section class="content-section">
+      <h2>💤 Baseline: Rewards by Default</h2>
+      <p>
+        Silica's PoS system is designed to be hands-off:
+      </p>
+      <ul>
+        <li><strong>Auto-staking:</strong> All mature balances are staked by default — no bonding transaction, no minimum.</li>
+        <li><strong>Liquid staking:</strong> Funds remain spendable; moving coins resets their maturity window.</li>
+        <li><strong>No slashing for holders:</strong> Only operators risk slashing (for inactivity or misbehavior). Everyday users simply miss rewards if offline.</li>
+      </ul>
+
+      <div class="example-code">
+        <h4>Concrete Implementation Example:</h4>
+        <div class="code-block">
+          <pre><code set:html={`// Auto-staking calculation for 1000 CHERT held 30 days
+let base_apy = 0.06; // 6% baseline
+let balance = 1000;
+let days_held = 30;
+let rewards = balance * base_apy * (days_held as f64 / 365.0);
+// Result: ~4.93 CHERT earned automatically`} /></pre>
+        </div>
+      </div>
+
+      <h3>Selection mechanics</h3>
+      <p>Two equivalent approaches can be toggled:</p>
+
+      <div class="selection-methods">
+        <div class="method">
+          <h4>1. Coin-age kernel (Peercoin-style):</h4>
+          <div class="code-block">
+            <pre><code set:html={`weight = balance * min(age, age_cap);
+if H(seed || acct || epoch) / weight &lt; target { selected }`} /></pre>
+          </div>
+        </div>
+
+        <div class="method">
+          <h4>2. VRF lottery (Cardano-style):</h4>
+          <div class="code-block">
+            <pre><code set:html={`tickets = f(balance);
+vrf_output, vrf_proof = VRF.sign(seed);
+if score &lt;= p(balance) { selected }`} /></pre>
+          </div>
+        </div>
+      </div>
+
+      <p>Both ensure proportional fairness with no minimum stake requirement.</p>
+    </section>
+
+    <section class="content-section">
+      <h2>🏗 Node Roles & Rewards</h2>
+      <p>
+        Silica supports multiple participation layers:
+      </p>
+
+      <div class="node-roles">
+        <div class="role-card">
+           <h3>1. Full Validators</h3>
+           <p>Stake + reputation + GPoD weighting influence validator selection and rotation.</p>
+           <p>Earn rewards for participating in ordering/finality and a share of transaction fees.</p>
+           <div class="code-block">
+             <pre><code set:html={`pub struct FullValidatorNode {
+    validator_set: ValidatorSet,
+    staking_info: ValidatorStakingInfo,
+    reputation_system: EnhancedReputationSystem,
+}`} /></pre>
+           </div>
+        </div>
+
+        <div class="role-card">
+          <h3>2. Gateway / DAS Nodes</h3>
+          <p>Lightweight nodes serving RPC, relaying txs, and sampling data availability.</p>
+          <p>Low hardware requirements → home-node friendly.</p>
+          <p>Rewarded via helper bonuses and proportional APY bumps.</p>
+        </div>
+
+        <div class="role-card">
+          <h3>3. PoUW Nodes</h3>
+          <p>Contribute useful computation (BOINC/FAH tasks).</p>
+           <p>Submit Merkle proofs of work for anchoring into lineations.</p>
+          <p>Earn project-weighted rewards.</p>
+        </div>
+
+        <div class="role-card">
+          <h3>4. Stake Pools</h3>
+          <p>Delegation supported with proportional distribution.</p>
+          <p>Pools use non-custodial management and optional governance features.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>📈 Boosts & Lockboxes</h2>
+      <p>
+        Silica allows optional yield enhancements:
+      </p>
+
+      <h3>LockBox staking:</h3>
+      <ul>
+        <li><strong>Terms:</strong> 1w, 1m, 3m, 6m, 12m.</li>
+        <li><strong>Multipliers:</strong> ×1.05 → ×2.0 depending on lock length.</li>
+        <li><strong>Early exit:</strong> Allowed with penalty, fees recycled into reward pool.</li>
+      </ul>
+
+      <h3>Helper bonuses:</h3>
+      <ul>
+        <li><strong>Gateway nodes and DAS samplers</strong> receive small APY bumps for verified contributions.</li>
+        <li><strong>Contribution proofs are capped</strong> to avoid spam.</li>
+      </ul>
+
+      <h3>Geographic boosts (GPoD linger):</h3>
+      <ul>
+        <li><strong>Sparse regions receive extra rewards.</strong></li>
+        <li><strong>Bonus lingers partially</strong> even after the region fills.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <h2>🛡 Fairness & Anti-Gaming</h2>
+      <p>
+        Silica ensures participation remains fair:
+      </p>
+      <ul>
+        <li><strong>Cooldowns & warmups:</strong> Rewards phase in over ~6 epochs after moving regions.</li>
+        <li><strong>Reputation throttles:</strong> Caps on per-epoch reputation growth prevent collusion spikes.</li>
+        <li><strong>Dynamic stake floors:</strong> Overcrowded regions require higher minimum stake.</li>
+        <li><strong>Linger bonuses:</strong> Prevents hop-farming while rewarding early regional adopters.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <h2>🔢 Reward Math</h2>
+      <p>
+        At the epoch level:
+      </p>
+
+      <div class="math-formulas">
+        <div class="formula">
+          <strong>scarcity_c = max(0, 1 - n_c / target_c)</strong>
+          <p>Scarcity factor: Rewards validators in under-provisioned regions.</p>
+        </div>
+
+        <div class="formula">
+          <strong>placement_c = 1 + α*scarcity_c - β*crowding_c</strong>
+          <p>Placement score: Adjusts based on overcrowding or scarcity.</p>
+        </div>
+
+        <div class="formula">
+          <strong>G_n = g1*placement_c + g2*quality_n + g3*uptime_n - penalties_n</strong>
+          <p>Geo score (G_n): Weighted combination of placement, quality, uptime.</p>
+        </div>
+
+        <div class="formula">
+          <strong>reward_n = R_epoch * (G_n / Σ G)</strong>
+          <p>Reward share: Proportional to geo score relative to network sum.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>📊 Example Flow</h2>
+      <div class="flow-steps">
+        <div class="step">
+          <span class="step-number">1</span>
+          <p>User holds Chert in wallet → begins earning baseline APY.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">2</span>
+          <p>Delegates to a stake pool → proportional share of rewards.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">3</span>
+          <p>Runs a gateway node → earns helper bonuses.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">4</span>
+          <p>Opts into LockBox (6m) → doubles APY multiplier.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">5</span>
+          <p>Located in underrepresented region → GPoD boost applied.</p>
+        </div>
+      </div>
+
+      <p>All layers stack, so participation is maximized without unnecessary complexity.</p>
+    </section>
+
+    <section class="content-section cta-section">
+      <h2>✅ Takeaway</h2>
+      <p>
+        Silica's reward model blends:
+      </p>
+      <ul>
+        <li><strong>Simplicity for users</strong> (just hold to earn).</li>
+        <li><strong>Flexibility for advanced operators</strong> (lockboxes, helpers, useful work).</li>
+        <li><strong>Fairness for the network</strong> (GPoD boosts, anti-gaming safeguards).</li>
+      </ul>
+      <p class="conclusion">
+        This creates an ecosystem where everyone can earn, and the network stays balanced, secure, and green.
+      </p>
+    </section>
+</ArticleLayout>

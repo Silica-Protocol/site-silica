@@ -1,0 +1,109 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+---
+
+<ArticleLayout 
+  title="Mining That Matters – Deep Dive"
+  description="Silica's Proof of Useful Work and energy-optimized design. How blockchain can contribute to scientific progress instead of wasting energy."
+  author="Silica Network Team"
+  date="2024-12-04"
+  category="Consensus Mechanisms"
+  readingTime="7 min read"
+>
+
+    <section class="content-section">
+      <h2>❌ Traditional PoW: Wasted Energy</h2>
+      <p>
+        Legacy blockchains like Bitcoin use Proof of Work to secure the network. While secure, the energy is spent solving arbitrary puzzles that don't contribute beyond consensus.
+      </p>
+      <ul>
+        <li><strong>Global PoW energy → hundreds of TWh annually.</strong></li>
+        <li><strong>Zero scientific or social output</strong> from computations.</li>
+        <li><strong>Increasing centralization</strong> around industrial miners.</li>
+      </ul>
+      <p>Silica replaces this with Proof of Useful Work (PoUW).</p>
+    </section>
+
+    <section class="content-section">
+      <h2>🔄 Proof of Useful Work (PoUW)</h2>
+      <p>
+        Silica rewards nodes for contributing to real-world computing projects while securing the network:
+      </p>
+      <ul>
+        <li><strong>Tasks:</strong> BOINC/Folding@Home jobs, AI model training, scientific workloads.</li>
+        <li><strong>Execution:</strong> Nodes perform useful work and produce cryptographic digests.</li>
+        <li><strong>Proofs:</strong> Results are compressed into Merkle receipts, batched, and anchored in lineations (periodic chain anchors).</li>
+      </ul>
+
+      <div class="code-block">
+        <pre><code set:html={`pub struct PoUWReceipt {
+    work_id: WorkId,
+    project_id: ProjectId,
+    worker_id: WorkerId,
+    work_proof: WorkProof,
+    verification_signatures: Vec&lt;OracleSignature&gt;,
+    merkle_proof: MerkleProof,
+}`} /></pre>
+      </div>
+
+      <p>Verification: Oracles and validators confirm authenticity before rewards are released.</p>
+    </section>
+
+    <section class="content-section">
+      <h2>⚡ Power-Optimized Consensus</h2>
+      <p>
+        Silica minimizes overhead:
+      </p>
+      <ul>
+        <li><strong>Alluvium/Crystallite/Lithification:</strong> Requires minimal CPU/bandwidth compared to heavy PoW mining.</li>
+        <li><strong>Role diversity:</strong></li>
+        <ul>
+          <li>Validators: run the consensus pipeline.</li>
+          <li>Gateways/DAS: lightweight roles, low hardware.</li>
+          <li>PoUW nodes: contribute cycles to science.</li>
+        </ul>
+        <li><strong>Dual-purpose energy:</strong> Security and computation happen together, not in competition.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <h2>📈 Incentive Design</h2>
+      <p>
+        Rewards are balanced to encourage fairness:
+      </p>
+      <ul>
+        <li><strong>Baseline rewards:</strong> PoS covers all coin holders.</li>
+        <li><strong>PoUW multipliers:</strong> Governance can assign higher weight to critical projects (e.g., medical research).</li>
+        <li><strong>Scheduler boosts:</strong> Nodes providing steady, verifiable useful work may gain priority and extra yield.</li>
+        <li><strong>Anti-gaming:</strong> Fraud proofs slash dishonest nodes; cool-downs prevent farming behavior.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <h2>🌍 Sustainability</h2>
+      <p>
+        Silica flips the blockchain energy narrative:
+      </p>
+      <ul>
+        <li><strong>No wasted hashing.</strong></li>
+        <li><strong>Energy use scales with real-world value.</strong></li>
+        <li><strong>Home-node friendly → decentralization</strong> without datacenter arms races.</li>
+        <li><strong>Green alignment → blockchain that contributes positively</strong> to science and society.</li>
+      </ul>
+    </section>
+
+    <section class="content-section cta-section">
+      <h2>✅ Takeaway</h2>
+      <p>
+        Silica proves mining doesn't have to be wasteful.
+      </p>
+      <ul>
+        <li><strong>For participants:</strong> Earn rewards while contributing to science.</li>
+        <li><strong>For the environment:</strong> Optimized energy, minimal waste.</li>
+        <li><strong>For the world:</strong> Computation power drives progress, not just security.</li>
+      </ul>
+      <p class="conclusion">
+        Mining that matters = blockchain secured by useful work.
+      </p>
+    </section>
+</ArticleLayout>

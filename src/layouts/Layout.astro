@@ -1,0 +1,324 @@
+---
+// Silica Protocol - Professional Technical Website Layout
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = "Silica Protocol", description = "Advanced blockchain technology with sub-second finality, post-quantum security, and useful work integration." } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0ea5e9" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    
+    <title>{title}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind via CDN for simplicity -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              // Logo-inspired palette (Cyan → Teal → Green)
+              'silica-cyan': '#0ea5e9',
+              'silica-teal': '#14b8a6',
+              'silica-green': '#22c55e',
+              'silica-secondary': '#06b6d4',
+              'silica-dark': '#0a1628',
+              'silica-light': '#f0fdfd',
+              'silica-blue': '#0ea5e9',
+              'quantum-gold': '#f59e0b',
+              'success-green': '#22c55e',
+              'code-bg': '#1e293b',
+              'code-text': '#e2e8f0',
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            animation: {
+              'pulse-glow': 'pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'float': 'float 6s ease-in-out infinite',
+            },
+            keyframes: {
+              'pulse-glow': {
+                '0%, 100%': { opacity: '0.5', boxShadow: '0 0 20px rgba(14, 165, 233, 0.3)' },
+                '50%': { opacity: '1', boxShadow: '0 0 40px rgba(14, 165, 233, 0.6)' },
+              },
+              'float': {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+            },
+          }
+        }
+      }
+    </script>
+
+    <style is:global>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'Inter', system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #0f172a;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #0ea5e9, #14b8a6);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, #06b6d4, #0d9488);
+      }
+
+      /* Selection */
+      ::selection {
+        background: rgba(6, 182, 212, 0.3);
+        color: #ffffff;
+      }
+
+      /* Code blocks */
+      pre {
+        font-family: 'JetBrains Mono', monospace;
+      }
+
+      code {
+        font-family: 'JetBrains Mono', monospace;
+      }
+    </style>
+  </head>
+
+  <body class="bg-slate-950 text-slate-100">
+    <!-- Navigation -->
+    <nav class="bg-slate-950/95 backdrop-blur-xl sticky top-0 z-50 border-b border-cyan-500/20 shadow-lg shadow-cyan-500/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo - Animated -->
+          <a href="/" class="flex items-center space-x-3 group relative">
+            <!-- Glow effect behind logo -->
+            <div class="absolute -inset-2 bg-gradient-to-r from-cyan-400 to-teal-400 rounded-xl opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300"></div>
+            <!-- Logo Container -->
+            <div class="relative w-10 h-10 rounded-lg overflow-hidden shadow-lg border border-cyan-500/30">
+              <!-- Animated background -->
+              <div class="absolute inset-0 bg-gradient-to-br from-cyan-500 via-teal-500 to-green-500 animate-pulse"></div>
+              <!-- Logo icon with rotation animation -->
+              <div class="relative w-full h-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-white animate-[spin_3s_linear_infinite]" fill="none" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" opacity="0.6"></circle>
+                  <path d="M12 3a9 9 0 0 1 9 9M3 12a9 9 0 0 1 9-9" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                  <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.8"></circle>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <span class="font-bold text-xl bg-gradient-to-r from-cyan-400 via-teal-400 to-green-400 bg-clip-text text-transparent">SILICA</span>
+              <span class="text-xs text-cyan-400 block -mt-1 font-semibold">PROTOCOL</span>
+            </div>
+          </a>
+
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a href="/" class="text-slate-300 hover:text-cyan-400 font-medium transition-colors relative group">
+              Home
+              <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-teal-400 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <a href="/technology" class="text-slate-300 hover:text-cyan-400 font-medium transition-colors relative group">
+              Technology
+              <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-teal-400 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <a href="/roadmap" class="text-slate-300 hover:text-cyan-400 font-medium transition-colors relative group">
+              Roadmap
+              <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-teal-400 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <a href="/developers" class="text-slate-300 hover:text-cyan-400 font-medium transition-colors relative group">
+              Developers
+              <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-teal-400 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <a href="/governance" class="text-slate-300 hover:text-cyan-400 font-medium transition-colors relative group">
+              Governance
+              <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-teal-400 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <a href="/blog" class="text-slate-300 hover:text-cyan-400 font-medium transition-colors relative group">
+              Blog
+              <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-teal-400 group-hover:w-full transition-all duration-300"></span>
+            </a>
+          </div>
+
+          <!-- CTA -->
+          <div class="hidden md:flex items-center space-x-3">
+            <a href="https://chert.coin" class="text-slate-200 hover:text-cyan-400 font-semibold transition-colors">
+              Chert Coin →
+            </a>
+            <a href="/docs" class="bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-medium py-2 px-4 rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 shadow-sm">
+              Documentation
+            </a>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <button id="mobile-menu-btn" class="md:hidden text-slate-300 p-2" aria-label="Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-cyan-500/20">
+        <div class="px-4 py-4 space-y-3">
+          <a href="/" class="block text-slate-300 hover:text-cyan-400 font-medium">Home</a>
+          <a href="/technology" class="block text-slate-300 hover:text-cyan-400 font-medium">Technology</a>
+          <a href="/roadmap" class="block text-slate-300 hover:text-cyan-400 font-medium">Roadmap</a>
+          <a href="/developers" class="block text-slate-300 hover:text-cyan-400 font-medium">Developers</a>
+          <a href="/governance" class="block text-slate-300 hover:text-cyan-400 font-medium">Governance</a>
+          <a href="/blog" class="block text-slate-300 hover:text-cyan-400 font-medium">Blog</a>
+          <div class="pt-3 border-t border-cyan-500/20">
+            <a href="https://chert.coin" class="block text-cyan-400 font-semibold mb-2">Chert Coin →</a>
+            <a href="/docs" class="block bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-medium py-2 px-4 rounded-lg text-center hover:shadow-lg hover:shadow-cyan-500/50 transition-all">
+              Documentation
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="min-h-screen">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative bg-slate-950 text-white border-t border-cyan-500/20 overflow-hidden">
+      <!-- Animated background -->
+      <div class="absolute inset-0 opacity-30">
+        <div class="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-cyan-500/10 blur-3xl animate-pulse" style="animation-duration: 4s;"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-teal-500/10 blur-3xl animate-pulse" style="animation-duration: 5s;"></div>
+      </div>
+      
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+          <!-- Brand with Animated Logo -->
+          <div class="md:col-span-1">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-10 h-10 rounded-lg overflow-hidden shadow-lg border border-cyan-500/30">
+                <div class="w-full h-full bg-gradient-to-br from-cyan-500 via-teal-500 to-green-500 animate-pulse flex items-center justify-center">
+                  <svg class="w-6 h-6 text-white animate-[spin_2s_linear_infinite]" fill="none" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" opacity="0.6"></circle>
+                    <path d="M12 3a9 9 0 0 1 9 9M3 12a9 9 0 0 1 9-9" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                    <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.8"></circle>
+                  </svg>
+                </div>
+              </div>
+              <span class="font-bold text-xl bg-gradient-to-r from-cyan-400 via-teal-400 to-green-400 bg-clip-text text-transparent">SILICA</span>
+            </div>
+            <p class="text-slate-400 text-sm mb-6">
+              Advanced blockchain protocol with sub-second finality, post-quantum security, and meaningful computation.
+            </p>
+            <div class="flex items-center space-x-4">
+              <a href="https://twitter.com/SilicaProtocol" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="Twitter">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+              <a href="https://github.com/silica-protocol" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="GitHub">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+              <a href="https://discord.gg/silica" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="Discord">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Protocol -->
+          <div>
+            <h4 class="font-semibold text-white mb-4">Protocol</h4>
+            <ul class="space-y-3">
+              <li><a href="/technology" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors">Technology</a></li>
+              <li><a href="/consensus" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors">Consensus</a></li>
+              <li><a href="/security" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors">Security</a></li>
+              <li><a href="/roadmap" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors">Roadmap</a></li>
+            </ul>
+          </div>
+
+          <!-- Developers -->
+          <div>
+            <h4 class="font-semibold text-white mb-4">Developers</h4>
+            <ul class="space-y-3">
+              <li><a href="/docs" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors">Documentation</a></li>
+              <li><a href="/api" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors">API Reference</a></li>
+              <li><a href="/sdk" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors">SDKs</a></li>
+              <li><a href="https://github.com/silica-protocol" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors">GitHub</a></li>
+            </ul>
+          </div>
+
+          <!-- Resources -->
+          <div>
+            <h4 class="font-semibold text-white mb-4">Resources</h4>
+            <ul class="space-y-3">
+              <li><a href="/blog" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors">Blog</a></li>
+              <li><a href="/governance" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors">Governance</a></li>
+              <li><a href="https://chert.coin" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors">Chert Coin</a></li>
+              <li><a href="/whitepaper" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors">Whitepaper</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="mt-12 pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between">
+          <p class="text-slate-500 text-sm">© {new Date().getFullYear()} Silica Protocol. All rights reserved.</p>
+          <div class="flex items-center space-x-6 mt-4 md:mt-0">
+            <a href="/terms" class="text-slate-500 hover:text-white text-sm transition-colors">Terms</a>
+            <a href="/privacy" class="text-slate-500 hover:text-white text-sm transition-colors">Privacy</a>
+            <a href="/disclaimer" class="text-slate-500 hover:text-white text-sm transition-colors">Disclaimer</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Mobile menu script -->
+    <script>
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      mobileMenuBtn?.addEventListener('click', () => {
+        mobileMenu?.classList.toggle('hidden');
+      });
+    </script>
+  </body>
+</html>

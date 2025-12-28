@@ -1,0 +1,1465 @@
+---
+// Silica Technology Page - Professional design
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Technology - Silica Protocol" description="Deep dive into Silica's advanced consensus mechanism, performance benchmarks, and post-quantum security features">
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white py-32 overflow-hidden">
+    <!-- Animated Background Nodes -->
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(rgba(14,165,233,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(14,165,233,0.3) 1px, transparent 1px); background-size: 60px 60px;"></div>
+      <div class="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-cyan-500/20 blur-[120px] animate-pulse" style="animation-duration: 4s;"></div>
+      <div class="absolute bottom-1/3 right-1/4 w-[350px] h-[350px] rounded-full bg-teal-500/15 blur-[100px] animate-pulse" style="animation-duration: 6s;"></div>
+    </div>
+    
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+          Revolutionary <span class="bg-gradient-to-r from-cyan-400 via-teal-400 to-green-400 bg-clip-text text-transparent">Technology</span>
+        </h1>
+        <p class="text-xl text-cyan-100/90 max-w-3xl mx-auto">
+          Discover the cutting-edge consensus mechanism, unparalleled performance, and future-proof security that powers Silica Protocol.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Consensus Architecture Section -->
+  <section class="py-20 bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+          Consensus Architecture
+        </h2>
+        <p class="text-xl text-slate-300 max-w-3xl mx-auto">
+          A layered pipeline: Alluvium (data availability) → Crystallite (ordering) → The Striation (parallel execution) → Calib (verification + watchdog / Arb) → Lithification (irreversible finality), with periodic anchors (Lineation/Lineament).
+        </p>
+      </div>
+
+      <!-- Architecture Note / Disclaimer -->
+      <div class="bg-cyan-500/10 border-l-4 border-cyan-500 rounded-r-lg p-6 mb-12">
+        <div class="flex items-start">
+          <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+          </svg>
+          <div class="ml-3">
+            <p class="text-sm font-semibold text-white mb-2">Architecture Note</p>
+            <p class="text-sm text-slate-300">
+              This page reflects the current architecture source of truth. Implementation details and performance metrics evolve as we optimize the network. For technical implementation details, see the 
+              <a href="https://github.com/Silica-Protocol/Silica-Protocol" class="text-cyan-400 hover:underline">GitHub repository</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Animated Consensus Flow Diagram -->
+      <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-cyan-500/20 p-8 mb-12">
+        <!-- Timeline Style Consensus Architecture -->
+        <div class="relative max-w-5xl mx-auto">
+          <!-- Central Timeline Line -->
+          <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-cyan-500 via-teal-500 to-green-500 h-full opacity-30"></div>
+
+          <!-- Phase 1: Alluvium (Left Side) -->
+          <div class="relative mb-16">
+            <div class="lg:flex items-center">
+              <div class="lg:w-1/2 lg:pr-12 mb-6 lg:mb-0">
+                <div class="bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 border border-cyan-500/30 rounded-xl p-6 hover:shadow-2xl hover:shadow-cyan-500/30 transition-all duration-300">
+                  <div class="flex items-center mb-4">
+                    <div class="bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-lg p-3 mr-4">
+                      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10\"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <div class="text-xs font-semibold text-cyan-400 mb-1">LAYER 1 • DATA PLANE</div>
+                      <h3 class=\"text-2xl font-bold text-white\">Alluvium</h3>
+                    </div>
+                  </div>
+                  <p class="text-slate-200 mb-4">Parallel transaction batching and high-throughput data availability layer using DAG structure.</p>
+                  <ul class="space-y-2 text-sm text-slate-300">
+                    <li class="flex items-start">
+                      <span class="text-cyan-400 mr-2">•</span>
+                      Workers gossip transaction batches in parallel across network
+                    </li>
+                    <li class="flex items-start">
+                      <span class="text-cyan-400 mr-2">•</span>
+                      DAG-based causal structure with batch references
+                    </li>
+                    <li class="flex items-start">
+                      <span class="text-cyan-400 mr-2">•</span>
+                      Separates data dissemination from consensus ordering
+                    </li>
+                    <li class="flex items-start">
+                      <span class="text-cyan-400 mr-2">•</span>
+                      Enables horizontal scaling without security compromise
+                    </li>
+                  </ul>
+                  <!-- Animated Batches -->\n                  <div class="mt-4 flex gap-2">
+                    <div class="w-12 h-2 bg-cyan-400 rounded animate-pulse" style="animation-duration: 1s;"></div>
+                    <div class="w-12 h-2 bg-cyan-400 rounded animate-pulse" style="animation-duration: 1.2s;"></div>
+                    <div class="w-12 h-2 bg-cyan-400 rounded animate-pulse" style="animation-duration: 1.4s;"></div>
+                    <div class="w-12 h-2 bg-cyan-400 rounded animate-pulse" style="animation-duration: 1.6s;"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-full border-4 border-slate-900 shadow-lg shadow-cyan-500/50"></div>
+              <div class="lg:w-1/2 lg:pl-12">
+                <div class="consensus-anim consensus-anim--alluvium" aria-hidden="true">
+                  <div class="consensus-anim__label">Alluvium: batching + gossip</div>
+                  <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                    <defs>
+                      <linearGradient id="alluviumFlow" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#22D3EE" stop-opacity="0.9" />
+                        <stop offset="1" stop-color="#14B8A6" stop-opacity="0.9" />
+                      </linearGradient>
+                    </defs>
+
+                    <rect x="36" y="48" width="128" height="84" rx="14" stroke="#22D3EE" stroke-opacity="0.55" stroke-width="2" />
+                    <rect x="44" y="56" width="112" height="30" rx="10" fill="#22D3EE" fill-opacity="0.12" />
+                    <rect class="alluvium-batch" x="44" y="92" width="112" height="30" rx="10" fill="url(#alluviumFlow)" fill-opacity="0.72" />
+
+                    <g class="alluvium-tx alluvium-tx--a">
+                      <rect x="66" y="18" width="18" height="18" rx="5" fill="#22D3EE" fill-opacity="0.9" />
+                    </g>
+                    <g class="alluvium-tx alluvium-tx--b">
+                      <rect x="102" y="10" width="18" height="18" rx="5" fill="#22D3EE" fill-opacity="0.75" />
+                    </g>
+                    <g class="alluvium-tx alluvium-tx--c">
+                      <rect x="138" y="20" width="18" height="18" rx="5" fill="#22D3EE" fill-opacity="0.65" />
+                    </g>
+
+                    <path d="M188 107h86" stroke="url(#alluviumFlow)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.6" />
+                    <path class="alluvium-arrow" d="M260 94l20 13-20 13" fill="url(#alluviumFlow)" fill-opacity="0.75" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 2: Crystallite (Right Side) -->
+          <div class="relative mb-16">
+            <div class="lg:flex items-center">
+              <div class="lg:w-1/2 lg:pr-12">
+                <div class="consensus-anim consensus-anim--crystallite" aria-hidden="true">
+                  <div class="consensus-anim__label">Crystallite: deterministic ordering</div>
+                  <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                    <defs>
+                      <linearGradient id="crystalOrder" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#22D3EE" stop-opacity="0.9" />
+                        <stop offset="1" stop-color="#2DD4BF" stop-opacity="0.9" />
+                      </linearGradient>
+                    </defs>
+
+                    <rect x="34" y="48" width="252" height="84" rx="18" stroke="#2DD4BF" stroke-opacity="0.35" stroke-width="2" />
+                    <path d="M62 90h196" stroke="url(#crystalOrder)" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round" />
+
+                    <g class="crystal-block crystal-block--one">
+                      <rect x="62" y="64" width="52" height="52" rx="14" fill="#2DD4BF" fill-opacity="0.16" stroke="#2DD4BF" stroke-opacity="0.55" />
+                      <text x="88" y="98" text-anchor="middle" font-size="18" font-weight="700" fill="#5EEAD4">?</text>
+                    </g>
+                    <g class="crystal-block crystal-block--two">
+                      <rect x="134" y="64" width="52" height="52" rx="14" fill="#2DD4BF" fill-opacity="0.16" stroke="#2DD4BF" stroke-opacity="0.55" />
+                      <text x="160" y="98" text-anchor="middle" font-size="18" font-weight="700" fill="#5EEAD4">?</text>
+                    </g>
+                    <g class="crystal-block crystal-block--three">
+                      <rect x="206" y="64" width="52" height="52" rx="14" fill="#2DD4BF" fill-opacity="0.16" stroke="#2DD4BF" stroke-opacity="0.55" />
+                      <text x="232" y="98" text-anchor="middle" font-size="18" font-weight="700" fill="#5EEAD4">?</text>
+                    </g>
+
+                    <g class="crystal-orderline" opacity="0">
+                      <rect x="62" y="64" width="52" height="52" rx="14" fill="url(#crystalOrder)" fill-opacity="0.62" />
+                      <text x="88" y="98" text-anchor="middle" font-size="18" font-weight="800" fill="#0F172A">1</text>
+                      <rect x="134" y="64" width="52" height="52" rx="14" fill="url(#crystalOrder)" fill-opacity="0.62" />
+                      <text x="160" y="98" text-anchor="middle" font-size="18" font-weight="800" fill="#0F172A">2</text>
+                      <rect x="206" y="64" width="52" height="52" rx="14" fill="url(#crystalOrder)" fill-opacity="0.62" />
+                      <text x="232" y="98" text-anchor="middle" font-size="18" font-weight="800" fill="#0F172A">3</text>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full border-4 border-slate-900 shadow-lg shadow-teal-500/50"></div>
+              <div class="lg:w-1/2 lg:pl-12">
+                <div class="bg-gradient-to-br from-teal-500/20 to-teal-600/10 border border-teal-500/30 rounded-xl p-6 hover:shadow-2xl hover:shadow-teal-500/30 transition-all duration-300">
+                  <div class="flex items-center mb-4">
+                    <div class="bg-gradient-to-br from-teal-500 to-teal-600 rounded-lg p-3 mr-4">
+                      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <div class="text-xs font-semibold text-teal-400 mb-1">LAYER 2 • ORDERING</div>
+                      <h3 class="text-2xl font-bold text-white">Crystallite</h3>
+                    </div>
+                  </div>
+                  <p class="text-slate-200 mb-4">Deterministic DAG commit rules and linearization producing canonical transaction ordering.</p>
+                  <ul class="space-y-2 text-sm text-slate-300">
+                    <li class="flex items-start">
+                      <span class="text-teal-400 mr-2">•</span>
+                      Structural DAG commit rules ensure deterministic ordering
+                    </li>
+                    <li class="flex items-start">
+                      <span class="text-teal-400 mr-2">•</span>
+                      Linearizer outputs identical CommittedSubDag sequences
+                    </li>
+                    <li class="flex items-start">
+                      <span class="text-teal-400 mr-2">•</span>
+                      No timing-dependent or arrival-order behaviors
+                    </li>
+                    <li class="flex items-start">
+                      <span class="text-teal-400 mr-2">•</span>
+                      Source of truth: CommittedSubDag from linearizer
+                    </li>
+                  </ul>
+                  <!-- Animated Ordering -->
+                  <div class="mt-4 flex items-center gap-2">
+                    <div class="flex-1 h-2 bg-gradient-to-r from-cyan-400 to-teal-400 rounded animate-pulse" style="animation-duration: 2s;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+           <!-- Phase 3: The Striation (Left Side) -->
+           <div class="relative mb-16">
+             <div class="lg:flex items-center">
+               <div class="lg:w-1/2 lg:pr-12 mb-6 lg:mb-0">
+                 <div class="bg-gradient-to-br from-indigo-500/20 to-indigo-600/10 border border-indigo-500/30 rounded-xl p-6 hover:shadow-2xl hover:shadow-indigo-500/30 transition-all duration-300">
+                   <div class="flex items-center mb-4">
+                     <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg p-3 mr-4">
+                       <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                       </svg>
+                     </div>
+                     <div>
+                       <div class="text-xs font-semibold text-indigo-400 mb-1">LAYER 3 • EXECUTION</div>
+                       <h3 class="text-2xl font-bold text-white">The Striation</h3>
+                     </div>
+                   </div>
+                   <p class="text-slate-200 mb-4">Parallel execution framework that routes ordered transactions into deterministic execution lanes (Striae).</p>
+                   <ul class="space-y-2 text-sm text-slate-300">
+                     <li class="flex items-start">
+                       <span class="text-indigo-400 mr-2">•</span>
+                       Schedules ordered transactions for parallelism
+                     </li>
+                     <li class="flex items-start">
+                       <span class="text-indigo-400 mr-2">•</span>
+                       Each Stria is a single deterministic execution context
+                     </li>
+                     <li class="flex items-start">
+                       <span class="text-indigo-400 mr-2">•</span>
+                       Determinism preserved across replicas
+                     </li>
+                     <li class="flex items-start">
+                       <span class="text-indigo-400 mr-2">•</span>
+                       Maximizes throughput without re-ordering
+                     </li>
+                   </ul>
+                   <div class="mt-4 flex items-center gap-2">
+                     <div class="w-10 h-2 bg-indigo-400 rounded animate-pulse" style="animation-duration: 1.2s;"></div>
+                     <div class="w-10 h-2 bg-indigo-400 rounded animate-pulse" style="animation-duration: 1.4s;"></div>
+                     <div class="w-10 h-2 bg-indigo-400 rounded animate-pulse" style="animation-duration: 1.6s;"></div>
+                   </div>
+                 </div>
+               </div>
+               <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-full border-4 border-slate-900 shadow-lg shadow-indigo-500/50"></div>
+               <div class="lg:w-1/2 lg:pl-12">
+                  <div class="consensus-anim consensus-anim--striation" aria-hidden="true">
+                   <div class="consensus-anim__label">Striation: route txs → accounts</div>
+                   <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                     <defs>
+                       <linearGradient id="striaFlow" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
+                         <stop stop-color="#818CF8" stop-opacity="0.95" />
+                         <stop offset="1" stop-color="#60A5FA" stop-opacity="0.95" />
+                       </linearGradient>
+                     </defs>
+
+                     <rect x="36" y="44" width="248" height="92" rx="18" stroke="#818CF8" stroke-opacity="0.32" stroke-width="2" />
+
+                     <!-- Small DAG cluster (incoming ordered txs) -->
+                     <g opacity="0.8">
+                       <circle cx="62" cy="66" r="6" fill="#818CF8" fill-opacity="0.55" />
+                       <circle cx="52" cy="92" r="6" fill="#818CF8" fill-opacity="0.4" />
+                       <circle cx="74" cy="104" r="6" fill="#818CF8" fill-opacity="0.45" />
+                       <circle cx="64" cy="122" r="6" fill="#818CF8" fill-opacity="0.35" />
+                       <path d="M62 66L52 92L74 104L64 122" stroke="#818CF8" stroke-opacity="0.35" stroke-width="2" stroke-linecap="round" />
+                     </g>
+
+                     <!-- Execution lanes -->
+                     <path d="M92 69C132 69 152 60 190 60" stroke="url(#striaFlow)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.52" />
+                     <path d="M92 101C132 101 152 101 190 101" stroke="url(#striaFlow)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.42" />
+                     <path d="M92 133C132 133 152 142 190 142" stroke="url(#striaFlow)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.32" />
+
+                     <!-- Account state blocks -->
+                     <g class="stria-account stria-account--a">
+                       <rect class="stria-account-shell" x="198" y="48" width="78" height="30" rx="12" fill="#0F172A" fill-opacity="0.35" stroke="#818CF8" stroke-opacity="0.35" />
+                       <rect class="stria-account-fill stria-account-fill--a" x="206" y="66" width="62" height="6" rx="3" fill="url(#striaFlow)" fill-opacity="0.7" />
+                       <text x="237" y="67" text-anchor="middle" font-size="10" font-weight="700" fill="#E2E8F0" fill-opacity="0.75">acct</text>
+                     </g>
+                     <g class="stria-account stria-account--b">
+                       <rect class="stria-account-shell" x="198" y="80" width="78" height="30" rx="12" fill="#0F172A" fill-opacity="0.35" stroke="#818CF8" stroke-opacity="0.35" />
+                       <rect class="stria-account-fill stria-account-fill--b" x="206" y="98" width="62" height="6" rx="3" fill="url(#striaFlow)" fill-opacity="0.55" />
+                       <text x="237" y="99" text-anchor="middle" font-size="10" font-weight="700" fill="#E2E8F0" fill-opacity="0.75">acct</text>
+                     </g>
+                     <g class="stria-account stria-account--c">
+                       <rect class="stria-account-shell" x="198" y="112" width="78" height="30" rx="12" fill="#0F172A" fill-opacity="0.35" stroke="#818CF8" stroke-opacity="0.35" />
+                       <rect class="stria-account-fill stria-account-fill--c" x="206" y="130" width="62" height="6" rx="3" fill="url(#striaFlow)" fill-opacity="0.4" />
+                       <text x="237" y="131" text-anchor="middle" font-size="10" font-weight="700" fill="#E2E8F0" fill-opacity="0.75">acct</text>
+                     </g>
+
+                     <!-- Transactions routed into lanes -->
+                     <circle class="stria-tx stria-tx--a" cx="92" cy="69" r="7" fill="url(#striaFlow)" />
+                     <circle class="stria-tx stria-tx--b" cx="92" cy="101" r="7" fill="url(#striaFlow)" fill-opacity="0.8" />
+                     <circle class="stria-tx stria-tx--c" cx="92" cy="133" r="7" fill="url(#striaFlow)" fill-opacity="0.6" />
+                   </svg>
+                 </div>
+               </div>
+             </div>
+           </div>
+
+           <!-- Phase 4: Calib (Right Side) -->
+           <div class="relative mb-16">
+             <div class="lg:flex items-center">
+               <div class="lg:w-1/2 lg:pr-12">
+                 <div class="consensus-anim consensus-anim--calib" aria-hidden="true">
+                   <div class="consensus-anim__label">Calib: verify + watchdog</div>
+                   <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                     <defs>
+                       <linearGradient id="calibGlow" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
+                         <stop stop-color="#FBBF24" stop-opacity="0.95" />
+                         <stop offset="1" stop-color="#F59E0B" stop-opacity="0.95" />
+                       </linearGradient>
+                     </defs>
+
+                     <rect x="42" y="48" width="236" height="84" rx="18" stroke="#FBBF24" stroke-opacity="0.3" stroke-width="2" />
+
+                     <rect x="66" y="74" width="70" height="32" rx="12" fill="#FBBF24" fill-opacity="0.15" stroke="#FBBF24" stroke-opacity="0.4" />
+                     <rect x="184" y="74" width="70" height="32" rx="12" fill="#FBBF24" fill-opacity="0.15" stroke="#FBBF24" stroke-opacity="0.4" />
+
+                     <path d="M146 90h28" stroke="url(#calibGlow)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.55" />
+                     <path class="calib-check" d="M156 90l6 6 12-14" stroke="url(#calibGlow)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+
+                     <circle class="calib-pulse" cx="270" cy="90" r="10" fill="url(#calibGlow)" fill-opacity="0.7" />
+                     <circle class="calib-pulse-ring" cx="270" cy="90" r="10" stroke="url(#calibGlow)" stroke-width="3" stroke-opacity="0.65" />
+                   </svg>
+                 </div>
+               </div>
+               <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full border-4 border-slate-900 shadow-lg shadow-amber-500/50"></div>
+               <div class="lg:w-1/2 lg:pl-12">
+                 <div class="bg-gradient-to-br from-amber-500/20 to-amber-600/10 border border-amber-500/30 rounded-xl p-6 hover:shadow-2xl hover:shadow-amber-500/30 transition-all duration-300">
+                   <div class="flex items-center mb-4">
+                     <div class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg p-3 mr-4">
+                       <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2"></path>
+                       </svg>
+                     </div>
+                     <div>
+                       <div class="text-xs font-semibold text-amber-400 mb-1">LAYER 4 • VERIFY</div>
+                       <h3 class="text-2xl font-bold text-white">Calib</h3>
+                     </div>
+                   </div>
+                   <p class="text-slate-200 mb-4">Calibration + watchdog layer (aka Arb) that verifies execution results across Striae and coordinates recovery actions during stalls.</p>
+                   <ul class="space-y-2 text-sm text-slate-300">
+                     <li class="flex items-start">
+                       <span class="text-amber-400 mr-2">•</span>
+                       Verifies execution outcomes and state roots
+                     </li>
+                     <li class="flex items-start">
+                       <span class="text-amber-400 mr-2">•</span>
+                       Detects divergence across parallel lanes
+                     </li>
+<li class="flex items-start">
+                        <span class="text-amber-400 mr-2">•</span>
+                        Maintains a single canonical state transition
+                      </li>
+                      <li class="flex items-start">
+                        <span class="text-amber-400 mr-2">•</span>
+                        Monitors for stalls and triggers recovery/restarts
+                      </li>
+                   </ul>
+                   <div class="mt-4 flex items-center gap-2">
+                     <div class="flex-1 h-2 bg-gradient-to-r from-indigo-400 to-amber-400 rounded animate-pulse" style="animation-duration: 2.4s;"></div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+
+           <!-- Phase 5: Lithification (Left Side) -->
+           <div class="relative">
+             <div class="lg:flex items-center">
+               <div class="lg:w-1/2 lg:pr-12 mb-6 lg:mb-0">
+                 <div class="bg-gradient-to-br from-green-500/20 to-green-600/10 border border-green-500/30 rounded-xl p-6 hover:shadow-2xl hover:shadow-green-500/30 transition-all duration-300">
+                  <div class="flex items-center mb-4">
+                    <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-lg p-3 mr-4">
+                      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z\"></path>
+                      </svg>
+                    </div>
+                     <div>
+                       <div class="text-xs font-semibold text-green-400 mb-1">LAYER 5 • FINALITY</div>
+                       <h3 class="text-2xl font-bold text-white">Lithification</h3>
+                     </div>
+                  </div>
+                   <p class="text-slate-200 mb-4">Irreversible commitment of state once the committed ordering is applied and verified.</p>
+                  <ul class="space-y-2 text-sm text-slate-300">
+                     <li class="flex items-start">
+                       <span class="text-green-400 mr-2">•</span>
+                       Applies the committed ordering to execution/storage
+                     </li>
+                     <li class="flex items-start">
+                       <span class="text-green-400 mr-2">•</span>
+                       Finality achieved at commit + local apply (no reorgs)
+                     </li>
+                     <li class="flex items-start">
+                       <span class="text-green-400 mr-2">•</span>
+                       Produces cryptographic proofs for monitoring/auditing
+                     </li>
+                     <li class="flex items-start">
+                       <span class="text-green-400 mr-2">•</span>
+                       Certificates are proofs (reports), not gates
+                     </li>
+                  </ul>
+                  <!-- Single Finality Bar -->
+                  <div class="mt-4 flex items-center gap-2">
+                    <div class="w-full h-3 bg-gradient-to-r from-teal-400 via-green-400 to-green-500 rounded shadow-lg shadow-green-500/50"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-full border-4 border-slate-900 shadow-lg shadow-green-500/50"></div>
+              <div class="lg:w-1/2 lg:pl-12">
+                <div class="consensus-anim consensus-anim--lithification" aria-hidden="true">
+                  <div class="consensus-anim__label">Lithification: seal finality</div>
+                  <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                    <defs>
+                      <linearGradient id="lithSeal" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#34D399" stop-opacity="0.95" />
+                        <stop offset="1" stop-color="#22C55E" stop-opacity="0.95" />
+                      </linearGradient>
+                    </defs>
+
+                    <rect x="54" y="54" width="212" height="72" rx="18" fill="#22C55E" fill-opacity="0.08" stroke="#34D399" stroke-opacity="0.32" stroke-width="2" />
+                    <rect class="lith-block" x="74" y="74" width="92" height="34" rx="12" fill="url(#lithSeal)" fill-opacity="0.62" />
+
+                    <g class="lith-lock" transform="translate(190 66)">
+                      <rect x="0" y="24" width="50" height="44" rx="14" fill="url(#lithSeal)" fill-opacity="0.7" />
+                      <path d="M12 24v-8c0-10 6-16 13-16s13 6 13 16v8" stroke="url(#lithSeal)" stroke-width="5" stroke-linecap="round" />
+                      <circle cx="25" cy="46" r="7" fill="#0F172A" fill-opacity="0.6" />
+                    </g>
+
+                    <circle class="lith-seal" cx="100" cy="91" r="20" stroke="url(#lithSeal)" stroke-width="4" stroke-opacity="0.0" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <!-- Layer Stack Summary -->
+       <div class="mt-12 bg-gradient-to-r from-slate-800/50 to-slate-800/30 backdrop-blur-sm rounded-xl p-6 border border-cyan-500/20">
+         <h3 class="text-lg font-semibold text-white mb-4">Layer Stack</h3>
+         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 text-sm">
+           <div class="text-center">
+             <div class="font-semibold text-cyan-400 mb-1">1. Alluvium</div>
+             <div class="text-slate-400 text-xs">DA / dissemination</div>
+           </div>
+           <div class="text-center">
+             <div class="font-semibold text-teal-400 mb-1">2. Crystallite</div>
+             <div class="text-slate-400 text-xs">ordering / commit</div>
+           </div>
+           <div class="text-center">
+             <div class="font-semibold text-indigo-400 mb-1">3. The Striation</div>
+             <div class="text-slate-400 text-xs">execution (Striae)</div>
+           </div>
+           <div class="text-center">
+             <div class="font-semibold text-amber-400 mb-1">4. Calib</div>
+             <div class="text-slate-400 text-xs">verification</div>
+           </div>
+           <div class="text-center">
+             <div class="font-semibold text-green-400 mb-1">5. Lithification</div>
+             <div class="text-slate-400 text-xs">irreversible finality</div>
+           </div>
+         </div>
+         <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+           <div class="text-center">
+             <div class="font-semibold text-emerald-400 mb-1">Lineation</div>
+             <div class="text-slate-400 text-xs">regular checkpoint anchor</div>
+           </div>
+           <div class="text-center">
+             <div class="font-semibold text-emerald-400 mb-1">Lineament</div>
+             <div class="text-slate-400 text-xs">major epoch anchor</div>
+           </div>
+         </div>
+       </div>
+
+       <!-- Anchor Blocks Explanation -->
+       <div class="mt-8 bg-slate-800/40 backdrop-blur-sm rounded-2xl border border-emerald-500/20 p-8">
+         <div class="flex flex-col lg:flex-row gap-8 lg:items-start">
+           <div class="lg:w-1/2">
+             <div class="text-xs font-semibold text-emerald-400 mb-2 tracking-widest uppercase">Anchors</div>
+             <h3 class="text-2xl font-bold text-white mb-4">Lineation &amp; Lineament</h3>
+             <p class="text-slate-200 mb-5">
+               Silica produces periodic <span class="text-emerald-300 font-semibold">anchor blocks</span> that commit the network’s full activity into compact, verifiable checkpoints.
+               Anchors don’t change ordering or finality; they make the chain <span class="text-slate-100 font-semibold">auditable</span>, <span class="text-slate-100 font-semibold">recoverable</span>, and <span class="text-slate-100 font-semibold">easy to synchronize</span> at scale.
+             </p>
+
+             <div class="grid grid-cols-1 gap-4">
+               <div class="rounded-xl border border-emerald-500/20 bg-slate-950/30 p-4">
+                 <div class="flex items-start gap-3">
+                   <div class="mt-1 w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.35)]"></div>
+                   <div>
+                     <div class="font-semibold text-white">Lineation (regular checkpoint)</div>
+                     <div class="text-sm text-slate-300">Frequent anchor: commits aggregated roots + receipts for fast sync and replay windows.</div>
+                   </div>
+                 </div>
+               </div>
+               <div class="rounded-xl border border-emerald-500/20 bg-slate-950/30 p-4">
+                 <div class="flex items-start gap-3">
+                   <div class="mt-1 w-2.5 h-2.5 rounded-full bg-emerald-300 shadow-[0_0_22px_rgba(16,185,129,0.28)]"></div>
+                   <div>
+                     <div class="font-semibold text-white">Lineament (major epoch anchor)</div>
+                     <div class="text-sm text-slate-300">Less frequent, stronger anchor: ties multiple Lineations into an epoch boundary and long-term audit point.</div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+             <div class="mt-6">
+               <div class="text-sm font-semibold text-white mb-2">Typical inputs</div>
+               <ul class="space-y-2 text-sm text-slate-300">
+                 <li class="flex items-start"><span class="text-emerald-400 mr-2">•</span>Per-stria execution/state roots (from Striation + Calib verification)</li>
+                 <li class="flex items-start"><span class="text-emerald-400 mr-2">•</span>Shard/global aggregation roots (Merkle roots over receipts &amp; state)</li>
+                 <li class="flex items-start"><span class="text-emerald-400 mr-2">•</span>GPoD outputs (digests of performance, integrity, and anomaly evidence)</li>
+                 <li class="flex items-start"><span class="text-emerald-400 mr-2">•</span>PoUW receipts (work proofs summarized into a compact root)</li>
+               </ul>
+             </div>
+           </div>
+
+           <div class="lg:w-1/2">
+             <div class="consensus-anim consensus-anim--anchors" aria-hidden="true">
+               <div class="consensus-anim__label">Anchors: aggregate → commit → audit</div>
+               <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                 <defs>
+                   <linearGradient id="anchorFlow" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
+                     <stop stop-color="#34D399" stop-opacity="0.95" />
+                     <stop offset="1" stop-color="#10B981" stop-opacity="0.95" />
+                   </linearGradient>
+                   <linearGradient id="anchorInput" x1="0" y1="0" x2="0" y2="180" gradientUnits="userSpaceOnUse">
+                     <stop stop-color="#22D3EE" stop-opacity="0.65" />
+                     <stop offset="1" stop-color="#818CF8" stop-opacity="0.55" />
+                   </linearGradient>
+                 </defs>
+
+                 <!-- Inputs -->
+                 <g class="anchor-input anchor-input--state">
+                   <rect x="22" y="36" width="92" height="26" rx="10" fill="#0F172A" fill-opacity="0.35" stroke="#22D3EE" stroke-opacity="0.28" />
+                   <text x="68" y="53" text-anchor="middle" font-size="10" font-weight="700" fill="#E2E8F0" fill-opacity="0.75">state roots</text>
+                 </g>
+                 <g class="anchor-input anchor-input--gpod">
+                   <rect x="22" y="70" width="92" height="26" rx="10" fill="#0F172A" fill-opacity="0.35" stroke="#FBBF24" stroke-opacity="0.22" />
+                   <text x="68" y="87" text-anchor="middle" font-size="10" font-weight="700" fill="#E2E8F0" fill-opacity="0.75">GPoD digest</text>
+                 </g>
+                 <g class="anchor-input anchor-input--pouw">
+                   <rect x="22" y="104" width="92" height="26" rx="10" fill="#0F172A" fill-opacity="0.35" stroke="#60A5FA" stroke-opacity="0.22" />
+                   <text x="68" y="121" text-anchor="middle" font-size="10" font-weight="700" fill="#E2E8F0" fill-opacity="0.75">PoUW receipts</text>
+                 </g>
+
+                 <!-- Aggregation -->
+                 <g class="anchor-agg">
+                   <rect x="132" y="62" width="72" height="56" rx="16" fill="url(#anchorInput)" fill-opacity="0.12" stroke="#34D399" stroke-opacity="0.35" stroke-width="2" />
+                   <text x="168" y="88" text-anchor="middle" font-size="11" font-weight="800" fill="#5EEAD4" fill-opacity="0.95">agg</text>
+                   <text x="168" y="104" text-anchor="middle" font-size="9" font-weight="700" fill="#94A3B8" fill-opacity="0.9">roots</text>
+                 </g>
+
+                 <!-- Flow lines -->
+                 <path d="M114 49H132" stroke="url(#anchorFlow)" stroke-opacity="0.45" stroke-width="3" stroke-linecap="round" />
+                 <path d="M114 83H132" stroke="url(#anchorFlow)" stroke-opacity="0.35" stroke-width="3" stroke-linecap="round" />
+                 <path d="M114 117H132" stroke="url(#anchorFlow)" stroke-opacity="0.3" stroke-width="3" stroke-linecap="round" />
+
+                 <!-- Outputs: two anchor blocks -->
+                 <g class="anchor-block anchor-block--lineation">
+                   <rect x="220" y="46" width="86" height="38" rx="14" fill="url(#anchorFlow)" fill-opacity="0.62" />
+                   <text x="263" y="69" text-anchor="middle" font-size="10" font-weight="800" fill="#062018">Lineation</text>
+                 </g>
+                 <g class="anchor-block anchor-block--lineament">
+                   <rect x="220" y="98" width="86" height="38" rx="14" fill="url(#anchorFlow)" fill-opacity="0.35" stroke="url(#anchorFlow)" stroke-opacity="0.7" stroke-width="2" />
+                   <text x="263" y="121" text-anchor="middle" font-size="10" font-weight="800" fill="#E2E8F0" fill-opacity="0.9">Lineament</text>
+                 </g>
+
+                 <path d="M204 90H220" stroke="url(#anchorFlow)" stroke-opacity="0.55" stroke-width="3" stroke-linecap="round" />
+
+                 <!-- Moving evidence dots -->
+                 <circle class="anchor-pulse anchor-pulse--a" cx="114" cy="49" r="5" fill="url(#anchorFlow)" fill-opacity="0.9" />
+                 <circle class="anchor-pulse anchor-pulse--b" cx="114" cy="83" r="5" fill="url(#anchorFlow)" fill-opacity="0.75" />
+                 <circle class="anchor-pulse anchor-pulse--c" cx="114" cy="117" r="5" fill="url(#anchorFlow)" fill-opacity="0.6" />
+
+                 <circle class="anchor-seal" cx="263" cy="65" r="18" stroke="url(#anchorFlow)" stroke-width="3" stroke-opacity="0" />
+               </svg>
+             </div>
+           </div>
+         </div>
+       </div>
+    </div>
+  </section>
+
+  <!-- Performance Benchmarks Section -->
+  <section class="py-20 bg-slate-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+          Performance Benchmarks
+        </h2>
+        <p class="text-xl text-slate-300 max-w-3xl mx-auto">
+          Real-world performance metrics that demonstrate Silica's superiority in speed, scalability, and efficiency.
+        </p>
+      </div>
+
+      <!-- Performance Comparison Charts -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <!-- TPS Comparison -->
+        <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-cyan-500/20">
+          <h3 class="text-lg font-semibold text-white mb-6">Transaction Throughput (TPS)</h3>
+          <div class="space-y-4">
+            <div class="flex items-center">
+              <span class="text-sm font-medium text-slate-300 w-24 flex-shrink-0">Silica</span>
+              <div class="flex-1 mx-4 bg-slate-700/50 rounded-full h-4">
+                <div class="bg-gradient-to-r from-cyan-500 to-cyan-600 h-4 rounded-full" style="width: 100%"></div>
+              </div>
+              <span class="text-sm font-bold text-cyan-400 w-20 text-right">999,847</span>
+            </div>
+            <div class="flex items-center">
+              <span class="text-sm font-medium text-slate-300 w-24 flex-shrink-0">Solana</span>
+              <div class="flex-1 mx-4 bg-slate-700/50 rounded-full h-4">
+                <div class="bg-gradient-to-r from-slate-500 to-slate-600 h-4 rounded-full" style="width: 65%"></div>
+              </div>
+              <span class="text-sm font-bold text-slate-400 w-20 text-right">65,000</span>
+            </div>
+            <div class="flex items-center">
+              <span class="text-sm font-medium text-slate-300 w-24 flex-shrink-0">Ethereum</span>
+              <div class="flex-1 mx-4 bg-slate-700/50 rounded-full h-4">
+                <div class="bg-gradient-to-r from-slate-500 to-slate-600 h-4 rounded-full" style="width: 1.5%"></div>
+              </div>
+              <span class="text-sm font-bold text-slate-400 w-20 text-right">15</span>
+            </div>
+            <div class="flex items-center">
+              <span class="text-sm font-medium text-slate-300 w-24 flex-shrink-0">Bitcoin</span>
+              <div class="flex-1 mx-4 bg-slate-700/50 rounded-full h-4">
+                <div class="bg-gradient-to-r from-slate-500 to-slate-600 h-4 rounded-full" style="width: 0.7%"></div>
+              </div>
+              <span class="text-sm font-bold text-slate-400 w-20 text-right">7</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Finality Comparison -->
+        <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-teal-500/20">
+          <h3 class="text-lg font-semibold text-white mb-6">Finality Time</h3>
+          <div class="space-y-4">
+            <div class="flex items-center">
+              <span class="text-sm font-medium text-slate-300 w-24 flex-shrink-0">Silica</span>
+              <div class="flex-1 mx-4 bg-slate-700/50 rounded-full h-4">
+                <div class="bg-gradient-to-r from-green-500 to-green-600 h-4 rounded-full" style="width: 2%"></div>
+              </div>
+              <span class="text-sm font-bold text-green-400 w-20 text-right">0.94s</span>
+            </div>
+            <div class="flex items-center">
+              <span class="text-sm font-medium text-slate-300 w-24 flex-shrink-0">Solana</span>
+              <div class="flex-1 mx-4 bg-slate-700/50 rounded-full h-4">
+                <div class="bg-gradient-to-r from-slate-500 to-slate-600 h-4 rounded-full" style="width: 8%"></div>
+              </div>
+              <span class="text-sm font-bold text-slate-400 w-20 text-right">~2.5s</span>
+            </div>
+            <div class="flex items-center">
+              <span class="text-sm font-medium text-slate-300 w-24 flex-shrink-0">Ethereum</span>
+              <div class="flex-1 mx-4 bg-slate-700/50 rounded-full h-4">
+                <div class="bg-gradient-to-r from-slate-500 to-slate-600 h-4 rounded-full" style="width: 30%"></div>
+              </div>
+              <span class="text-sm font-bold text-slate-400 w-20 text-right">~6 min</span>
+            </div>
+            <div class="flex items-center">
+              <span class="text-sm font-medium text-slate-300 w-24 flex-shrink-0">Bitcoin</span>
+              <div class="flex-1 mx-4 bg-slate-700/50 rounded-full h-4">
+                <div class="bg-gradient-to-r from-slate-500 to-slate-600 h-4 rounded-full" style="width: 100%"></div>
+              </div>
+              <span class="text-sm font-bold text-slate-400 w-20 text-right">~60 min</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Performance Metrics -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="bg-slate-800/50 backdrop-blur-sm border border-cyan-500/20 rounded-xl p-6 text-center">
+          <div class="text-2xl font-bold text-cyan-400 mb-2" id="live-tps">847,392</div>
+          <div class="text-sm text-slate-300">Current TPS</div>
+        </div>
+        <div class="bg-slate-800/50 backdrop-blur-sm border border-teal-500/20 rounded-xl p-6 text-center">
+          <div class="text-2xl font-bold text-teal-400 mb-2" id="live-finality">0.87s</div>
+          <div class="text-sm text-slate-300">Avg Finality</div>
+        </div>
+        <div class="bg-slate-800/50 backdrop-blur-sm border border-green-500/20 rounded-xl p-6 text-center">
+          <div class="text-2xl font-bold text-green-400 mb-2">12,847</div>
+          <div class="text-sm text-slate-300">Active Validators</div>
+        </div>
+        <div class="bg-slate-800/50 backdrop-blur-sm border border-emerald-500/20 rounded-xl p-6 text-center">
+          <div class="text-2xl font-bold text-emerald-400 mb-2">99.97%</div>
+          <div class="text-sm text-slate-300">Network Uptime</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Post-Quantum Security Section -->
+  <section class="py-20 bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+            Post-Quantum Security
+          </h2>
+          <p class="text-lg text-slate-300 mb-6">
+            Silica is built with quantum-resistant cryptography from day one, ensuring your assets remain secure even as quantum computing advances.
+          </p>
+
+          <div class="space-y-4 mb-8">
+            <div class="flex items-start space-x-3">
+              <div class="bg-green-500 rounded-full p-1 mt-1">
+                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-semibold text-white">NIST-Approved Algorithms</h3>
+                <p class="text-sm text-slate-300">Implementation of Dilithium and FALCON digital signatures</p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-3">
+              <div class="bg-green-500 rounded-full p-1 mt-1">
+                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-semibold text-white">Hybrid Approach</h3>
+                <p class="text-sm text-slate-300">Classical and post-quantum crypto for smooth transition</p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-3">
+              <div class="bg-green-500 rounded-full p-1 mt-1">
+                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-semibold text-white">Future-Proof Design</h3>
+                <p class="text-sm text-slate-300">Upgradeable cryptography without hard forks</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="/docs/security" class="bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-semibold py-3 px-6 rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all">
+            Learn More About Security
+          </a>
+        </div>
+
+        <div class="relative">
+          <div class="bg-slate-800/50 backdrop-blur-sm border border-teal-500/20 rounded-2xl p-8">
+            <div class="text-center">
+              <div class="bg-gradient-to-br from-teal-500 to-green-600 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center shadow-lg shadow-teal-500/50">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-4">Quantum-Resistant Now</h3>
+              <p class="text-slate-300 text-sm">
+                While others rush to upgrade, Silica users are already protected against future quantum attacks with proven, standardized cryptographic algorithms.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-gradient-to-r from-cyan-600 via-teal-600 to-green-700 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 50px 50px;"></div>
+    
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+        Ready to Explore the Technology?
+      </h2>
+      <p class="text-xl text-white/90 mb-8">
+        Dive deeper into Silica's advanced architecture and technical specifications.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/docs" class="bg-white text-teal-700 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors">
+          Technical Documentation
+        </a>
+        <a href="/developers" class="bg-white/10 backdrop-blur-sm text-white border border-white font-semibold py-3 px-8 rounded-lg hover:bg-white hover:text-teal-700 transition-colors">
+          Developer Portal
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style is:global>
+  .consensus-anim {
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid rgba(14, 165, 233, 0.18);
+    border-radius: 1rem;
+    padding: 1.25rem 1.25rem 1rem 1.25rem;
+    box-shadow: 0 24px 50px rgba(2, 6, 23, 0.35);
+  }
+
+  .consensus-anim__label {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(226, 232, 240, 0.75);
+    margin-bottom: 0.75rem;
+  }
+
+  .consensus-anim__svg {
+    width: 100%;
+    height: 150px;
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .consensus-anim * {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* Alluvium */
+  .alluvium-tx {
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    animation: alluviumTxDrop 2.6s infinite;
+  }
+
+  .alluvium-tx--a {
+    animation-delay: 0.0s;
+  }
+
+  .alluvium-tx--b {
+    animation-delay: 0.25s;
+  }
+
+  .alluvium-tx--c {
+    animation-delay: 0.5s;
+  }
+
+  .alluvium-batch {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: alluviumBatchSlide 2.6s infinite;
+  }
+
+  .alluvium-arrow {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: alluviumArrowPulse 1.3s ease-in-out infinite;
+  }
+
+  @keyframes alluviumTxDrop {
+    0% {
+      opacity: 0;
+      transform: translate(0, -24px) scale(0.9);
+    }
+
+    18% {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+
+    42% {
+      opacity: 1;
+      transform: translate(0, 56px) scale(0.95);
+    }
+
+    58% {
+      opacity: 0;
+      transform: translate(0, 56px) scale(0.92);
+    }
+
+    100% {
+      opacity: 0;
+      transform: translate(0, 56px) scale(0.92);
+    }
+  }
+
+  @keyframes alluviumBatchSlide {
+    0% {
+      opacity: 0.35;
+      transform: translateX(0);
+    }
+
+    40% {
+      opacity: 0.9;
+      transform: translateX(0);
+    }
+
+    70% {
+      opacity: 0.05;
+      transform: translateX(92px);
+    }
+
+    100% {
+      opacity: 0.35;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes alluviumArrowPulse {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: translateX(0);
+    }
+
+    50% {
+      opacity: 0.8;
+      transform: translateX(6px);
+    }
+  }
+
+  /* Crystallite */
+  .crystal-block {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: crystalShuffle 3.2s ease-in-out infinite;
+  }
+
+  .crystal-block--one {
+    animation-delay: 0.0s;
+  }
+
+  .crystal-block--two {
+    animation-delay: 0.15s;
+  }
+
+  .crystal-block--three {
+    animation-delay: 0.3s;
+  }
+
+  .crystal-orderline {
+    animation: crystalOrderReveal 3.2s ease-in-out infinite;
+  }
+
+  @keyframes crystalShuffle {
+    0% {
+      transform: translate(-18px, -12px) rotate(-8deg);
+      opacity: 0.7;
+    }
+
+    35% {
+      transform: translate(14px, 8px) rotate(6deg);
+      opacity: 0.9;
+    }
+
+    55% {
+      transform: translate(0, 0) rotate(0deg);
+      opacity: 0.85;
+    }
+
+    75% {
+      transform: translate(0, 0) rotate(0deg);
+      opacity: 0.0;
+    }
+
+    100% {
+      transform: translate(-18px, -12px) rotate(-8deg);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes crystalOrderReveal {
+    0% {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    55% {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    72% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    92% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    100% {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  /* Striation */
+  .stria-tx {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: striaTxRoute 2.2s linear infinite;
+  }
+
+  .stria-tx--a {
+    animation-delay: 0s;
+  }
+
+  .stria-tx--b {
+    animation-delay: 0.25s;
+  }
+
+  .stria-tx--c {
+    animation-delay: 0.5s;
+  }
+
+  .stria-account-fill {
+    transform-box: fill-box;
+    transform-origin: left center;
+    animation: striaAccountApply 2.2s ease-in-out infinite;
+    transform: scaleX(0.05);
+  }
+
+  .stria-account-fill--a {
+    animation-delay: 0s;
+  }
+
+  .stria-account-fill--b {
+    animation-delay: 0.25s;
+  }
+
+  .stria-account-fill--c {
+    animation-delay: 0.5s;
+  }
+
+  .stria-account-shell {
+    animation: striaAccountGlow 2.2s ease-in-out infinite;
+  }
+
+  @keyframes striaTxRoute {
+    0% {
+      transform: translateX(0);
+      opacity: 0;
+    }
+
+    10% {
+      opacity: 0.85;
+    }
+
+    80% {
+      opacity: 0.85;
+    }
+
+    100% {
+      transform: translateX(118px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes striaAccountApply {
+    0% {
+      opacity: 0.15;
+      transform: scaleX(0.05);
+    }
+
+    45% {
+      opacity: 0.15;
+      transform: scaleX(0.05);
+    }
+
+    70% {
+      opacity: 0.9;
+      transform: scaleX(1);
+    }
+
+    100% {
+      opacity: 0.15;
+      transform: scaleX(0.05);
+    }
+  }
+
+  @keyframes striaAccountGlow {
+    0%,
+    45% {
+      stroke-opacity: 0.22;
+      fill-opacity: 0.28;
+    }
+
+    70% {
+      stroke-opacity: 0.55;
+      fill-opacity: 0.45;
+    }
+
+    100% {
+      stroke-opacity: 0.22;
+      fill-opacity: 0.28;
+    }
+  }
+
+  /* Calib */
+  .calib-check {
+    transform-origin: center;
+    transform-box: fill-box;
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+    animation: calibCheckDraw 2.2s ease-in-out infinite;
+  }
+
+  .calib-pulse-ring {
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: calibPulseRing 2.2s ease-in-out infinite;
+  }
+
+  .calib-pulse {
+    animation: calibPulseDot 1.1s ease-in-out infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
+  @keyframes calibCheckDraw {
+    0% {
+      stroke-dashoffset: 60;
+      opacity: 0.0;
+    }
+
+    32% {
+      stroke-dashoffset: 60;
+      opacity: 0.0;
+    }
+
+    55% {
+      stroke-dashoffset: 0;
+      opacity: 1.0;
+    }
+
+    86% {
+      stroke-dashoffset: 0;
+      opacity: 1.0;
+    }
+
+    100% {
+      stroke-dashoffset: 60;
+      opacity: 0.0;
+    }
+  }
+
+  @keyframes calibPulseRing {
+    0% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+
+    65% {
+      opacity: 0.0;
+      transform: scale(1.9);
+    }
+
+    100% {
+      opacity: 0.0;
+      transform: scale(1.9);
+    }
+  }
+
+  @keyframes calibPulseDot {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+
+    50% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+  }
+
+  /* Anchors */
+  .anchor-pulse {
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    animation: anchorPulseMove 2.6s linear infinite;
+  }
+
+  .anchor-pulse--a {
+    animation-delay: 0s;
+  }
+
+  .anchor-pulse--b {
+    animation-delay: 0.25s;
+  }
+
+  .anchor-pulse--c {
+    animation-delay: 0.5s;
+  }
+
+  .anchor-input {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: anchorInputGlow 2.6s ease-in-out infinite;
+  }
+
+  .anchor-input--gpod {
+    animation-delay: 0.2s;
+  }
+
+  .anchor-input--pouw {
+    animation-delay: 0.4s;
+  }
+
+  .anchor-agg {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: anchorAggBeat 2.6s ease-in-out infinite;
+  }
+
+  .anchor-block {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: anchorBlockSettle 2.6s ease-in-out infinite;
+  }
+
+  .anchor-block--lineament {
+    animation-delay: 0.25s;
+  }
+
+  .anchor-seal {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: anchorSeal 2.6s ease-in-out infinite;
+  }
+
+  @keyframes anchorPulseMove {
+    0% {
+      opacity: 0;
+      transform: translateX(0) scale(0.9);
+    }
+
+    12% {
+      opacity: 0.9;
+      transform: translateX(0) scale(1);
+    }
+
+    70% {
+      opacity: 0.9;
+    }
+
+    100% {
+      opacity: 0;
+      transform: translateX(96px) scale(0.95);
+    }
+  }
+
+  @keyframes anchorInputGlow {
+    0%,
+    38% {
+      opacity: 0.65;
+      transform: translateX(0);
+    }
+
+    55% {
+      opacity: 1;
+      transform: translateX(2px);
+    }
+
+    100% {
+      opacity: 0.65;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes anchorAggBeat {
+    0%,
+    44% {
+      opacity: 0.55;
+      transform: scale(0.98);
+    }
+
+    70% {
+      opacity: 0.95;
+      transform: scale(1);
+    }
+
+    100% {
+      opacity: 0.55;
+      transform: scale(0.98);
+    }
+  }
+
+  @keyframes anchorBlockSettle {
+    0%,
+    60% {
+      opacity: 0.45;
+      transform: translateY(4px);
+    }
+
+    78% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    100% {
+      opacity: 0.45;
+      transform: translateY(4px);
+    }
+  }
+
+  @keyframes anchorSeal {
+    0% {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+
+    65% {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+
+    80% {
+      opacity: 0.85;
+      transform: scale(1);
+    }
+
+    100% {
+      opacity: 0;
+      transform: scale(1.25);
+    }
+  }
+
+  /* Lithification */
+  .lith-lock path {
+    stroke-linejoin: round;
+  }
+
+  .lith-lock {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: lithLockSnap 2.6s ease-in-out infinite;
+  }
+
+  .lith-seal {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: lithSeal 2.6s ease-in-out infinite;
+  }
+
+  .lith-block {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: lithBlockFreeze 2.6s ease-in-out infinite;
+  }
+
+  @keyframes lithLockSnap {
+    0% {
+      transform: translateY(-10px);
+      opacity: 0.5;
+    }
+
+    40% {
+      transform: translateY(-4px);
+      opacity: 0.85;
+    }
+
+    62% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateY(-10px);
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes lithSeal {
+    0% {
+      opacity: 0.0;
+      transform: scale(0.7);
+    }
+
+    52% {
+      opacity: 0.0;
+      transform: scale(0.7);
+    }
+
+    70% {
+      opacity: 0.85;
+      transform: scale(1);
+    }
+
+    92% {
+      opacity: 0.0;
+      transform: scale(1.25);
+    }
+
+    100% {
+      opacity: 0.0;
+      transform: scale(1.25);
+    }
+  }
+
+  @keyframes lithBlockFreeze {
+    0% {
+      opacity: 0.4;
+      filter: blur(1px);
+    }
+
+    45% {
+      opacity: 0.85;
+      filter: blur(0.4px);
+    }
+
+    70% {
+      opacity: 1.0;
+      filter: blur(0);
+    }
+
+    100% {
+      opacity: 0.4;
+      filter: blur(1px);
+    }
+  }
+</style>
+
+<!-- Interactive Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Animate live performance metrics
+    function animateLiveMetrics() {
+      const tpsElement = document.getElementById('live-tps');
+      const finalityElement = document.getElementById('live-finality');
+
+      if (tpsElement) {
+        const baseTps = 800000;
+        const variation = 100000;
+        const newTps = baseTps + Math.floor(Math.random() * variation);
+        tpsElement.textContent = newTps.toLocaleString();
+      }
+
+      if (finalityElement) {
+        const baseFinality = 0.8;
+        const variation = 0.4;
+        const newFinality = (baseFinality + Math.random() * variation).toFixed(2);
+        finalityElement.textContent = newFinality + 's';
+      }
+    }
+
+    // Update metrics every 3 seconds
+    setInterval(animateLiveMetrics, 3000);
+  });
+</script>

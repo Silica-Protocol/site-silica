@@ -1,0 +1,224 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+---
+
+<ArticleLayout 
+  title="Silica Engine Deep Dive"
+  description="A technical breakdown of the Alluvium/Crystallite/Lithification core. DA batching, deterministic ordering, sharding, and Calib-driven reliability."
+  author="Silica Network Team"
+  date="2024-12-04"
+  category="Protocol Architecture"
+  readingTime="10 min read"
+>
+    <section class="content-section">
+      <h2>⏱ Alluvium + Crystallite + Lithification</h2>
+      <p>
+        Silica separates data availability, ordering, and finality into a tight pipeline:
+      </p>
+
+      <ul>
+        <li><strong>Alluvium workers:</strong> Create &amp; gossip micro-batches (50–200/s). Each batch is erasure-coded for data availability.</li>
+        <li><strong>Crystallite ordering:</strong> Deterministic commit rules produce CommittedSubDags in canonical order (the only ordering truth).</li>
+        <li><strong>Lithification apply:</strong> Validates, executes (via The Striation), and finalizes the committed ordering. Generates certificates as cryptographic proofs (not gates).</li>
+      </ul>
+
+      <div class="code-block">
+        <pre><code set:html={`pub struct MicroBatch {
+    batch_id: BatchId,
+    transactions: Vec&lt;Transaction&gt;,
+    erasure_coded_data: ErasureCodedBlob,
+    worker_signature: WorkerSignature,
+    timestamp: u64,
+}
+
+pub struct Lineation {
+    ordered_batches: Vec&lt;BatchId&gt;,
+    validator_signatures: Vec&lt;DilithiumSignature&gt;,
+    finality_proof: FinalityProof,
+    timestamp: u64,
+}`} /></pre>
+      </div>
+
+      <p><strong>Consensus Pipeline:</strong></p>
+      <ol>
+        <li><strong>DA/Dissemination:</strong> Workers gossip batch digests.</li>
+        <li><strong>Ordering/Commit:</strong> DAG linearizer produces deterministic CommittedSubDag sequence.</li>
+        <li><strong>Lithification Apply:</strong> Validates, executes, and finalizes the committed ordering; emits certificates as proofs.</li>
+        <li><strong>Monitoring:</strong> Calib (aka Arb) verifies certificates (non-gating).</li>
+      </ol>
+
+      <div class="code-block bg-blue-50 border-l-4 border-blue-500 p-4 my-4">
+        <p class="text-sm font-semibold text-gray-800 mb-2">Source of Truth (SOT):</p>
+        <ul class="text-sm text-gray-700 space-y-1">
+          <li><strong>Ordering SOT:</strong> CommittedSubDag output from linearizer is the only ordering truth.</li>
+          <li><strong>Finality SOT:</strong> A block is final when committed by DAG commit rule and finalized/applied locally.</li>
+          <li><strong>Certificates/receipts are proofs (reports), not gates.</strong></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>🧵 Sharded Execution Engine</h2>
+      <p>
+        Silica is designed for massive throughput:
+      </p>
+
+      <div class="tech-details">
+        <h3>Multi-Shard MVCC Architecture:</h3>
+        <ul>
+          <li><strong>StateStore Trait:</strong> Pluggable storage backend with MVCC transaction support</li>
+          <li><strong>Lane-Based Parallelism:</strong> 4-16 execution lanes per shard for non-conflicting transactions</li>
+          <li><strong>Cross-Shard Coordination:</strong> Async receipts with Merkle proofs for inter-shard transfers</li>
+          <li><strong>Access List Analysis:</strong> Automatic conflict detection via transaction key declarations</li>
+        </ul>
+      </div>
+
+      <p>Per-shard TPS: 20-40k transactions.</p>
+      <p>Cross-shard: Lightweight proofs ensure correctness.</p>
+      <p>Parallel lanes: Transactions are partitioned by keyspace or access list.</p>
+
+      <div class="code-block">
+        <pre><code set:html={`async fn execute_lane(&amp;mut self, lane_id: LaneId, txs: Vec&lt;Transaction&gt;) -&gt; Result&lt;LaneResult&gt;;
+
+// MVCC transaction interface
+trait MVCCTxn {
+    fn read(&amp;mut self, key: &amp;StateKey) -&gt; Result&lt;Option&lt;Vec&lt;u8&gt;&gt;&gt;;
+    fn write(&amp;mut self, key: StateKey, value: Vec&lt;u8&gt;) -&gt; Result&lt;()&gt;;
+    fn commit(self: Box&lt;Self&gt;) -&gt; Result&lt;()&gt;;
+    fn abort(self: Box&lt;Self&gt;);
+}`} /></pre>
+      </div>
+
+      <p>This enables 1M+ TPS across the network without congestion.</p>
+    </section>
+
+    <section class="content-section">
+      <h2>🔁 Validator Rotation</h2>
+      <p>
+        To ensure fairness and security, validator sets rotate frequently:
+      </p>
+      <ul>
+        <li><strong>VRF-based selection:</strong> Ephemeral keys generate proofs against epoch seeds.</li>
+        <li><strong>Weighting:</strong> Stake × reputation × Geographic Proof of Distribution.</li>
+        <li><strong>Rolling churn:</strong> 10–25% replaced per epoch, ~30m default.</li>
+        <li><strong>Fallback:</strong> Calib (aka Arb) can trigger mid-epoch re-rolls if liveness halts.</li>
+      </ul>
+
+      <div class="math-formula">
+        <p><code set:html={`fn concave_weight(w: &amp;Weights, a: f64, b: f64, c: f64) -&gt; f64 {&lt;br&gt;&amp;nbsp;&amp;nbsp;(1.0 + w.stake).powf(a) * w.rep.powf(b) * w.geo.powf(c)&lt;br&gt;}`} /></p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>🌍 Geographic Proof of Distribution (GPoD)</h2>
+      <p>
+        Silica enforces geographic decentralization via GPoD:
+      </p>
+      <ul>
+        <li><strong>Quota grid:</strong> H3_Rp = 4 (state-level quotas), verified at H3_Rs = 7 (city precision).</li>
+        <li><strong>Probe scheduling:</strong> Each node runs K near/far probes per epoch.</li>
+        <li><strong>Reward formula:</strong></li>
+      </ul>
+
+      <div class="math-formulas">
+        <div class="formula">
+          <strong>placement_c = clamp(1 + α*(1 - n_c/target_c) - β*max(0, n_c/target_c - 1), 0.5, 3.0)</strong>
+          <p>Linger bonus: Early movers retain part of their boost even after a region fills.</p>
+        </div>
+        <div class="formula">
+          <strong>G_n = g1*placement_c + g2*quality_n + g3*uptime_n - penalties_n</strong>
+          <p>Geo score (G_n): Weighted combination of placement, quality, uptime.</p>
+        </div>
+        <div class="formula">
+          <strong>reward_n = R_epoch * (G_n / Σ G)</strong>
+          <p>Reward share: Proportional to geo score relative to network sum.</p>
+        </div>
+      </div>
+
+      <p>Anti-gaming: Cooldowns, warmups, rep velocity throttles.</p>
+    </section>
+
+    <section class="content-section">
+      <h2>🛡 Reliability & Safety</h2>
+      <p>
+        Silica ensures liveness even under stress:
+      </p>
+
+      <h3>Adversarial validator handling:</h3>
+      <ul>
+        <li><strong><1/3 Byzantine → safe, live.</strong></li>
+        <li><strong>1/3–2/3 → safe, stalls until rotation.</strong></li>
+        <li><strong>≥2/3 → breach possible, extremely unlikely.</strong></li>
+      </ul>
+
+      <h3>Calib (Arb) Restart Protocol:</h3>
+      <ol>
+        <li><strong>Detection:</strong> No lineation >2× expected interval.</li>
+        <li><strong>Challenge:</strong> Nodes present missed signatures.</li>
+         <li><strong>Action:</strong> Slash offenders, reseed randomness.</li>
+        <li><strong>Resume:</strong> New validator set finalizes backlog.</li>
+      </ol>
+
+      <p>Emergency fallback: Resume from last clean lineation.</p>
+    </section>
+
+    <section class="content-section">
+      <h2>🔒 Post-Quantum Cryptography</h2>
+      <p>
+        Silica is future-proofed:
+      </p>
+      <ul>
+        <li><strong>Dilithium PQ signatures</strong> secure validator certificates and lineations.</li>
+        <li><strong>PQ VRFs on roadmap</strong> (EC-VRF today with optional PQ attestation).</li>
+        <li><strong>Pluggable cryptography:</strong> Rust traits abstract cryptographic primitives, allowing seamless PQ upgrades.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <h2>📊 Performance Targets</h2>
+      <div class="specs-table">
+        <table>
+          <tbody>
+            <tr>
+              <td><strong>Finality:</strong></td>
+              <td>0.8–1.5s per lineation</td>
+            </tr>
+            <tr>
+              <td><strong>Pre-final UX:</strong></td>
+              <td>100–300ms</td>
+            </tr>
+            <tr>
+              <td><strong>Throughput:</strong></td>
+              <td>1M+ TPS across shards</td>
+            </tr>
+            <tr>
+              <td><strong>Validator set size:</strong></td>
+              <td>64–96 validators</td>
+            </tr>
+            <tr>
+              <td><strong>Epoch:</strong></td>
+              <td>30 minutes with ~20% churn</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section cta-section">
+      <h2>✅ Takeaway</h2>
+      <p>
+        The Silica Engine combines:
+      </p>
+      <ul>
+        <li><strong>Alluvium batching + Crystallite ordering.</strong></li>
+        <li><strong>Lithification finality.</strong></li>
+        <li><strong>Sharded, parallel execution.</strong></li>
+        <li><strong>Geographic fairness via GPoD.</strong></li>
+        <li><strong>Calib-driven resilience under adversarial load.</strong></li>
+        <li><strong>Post-quantum cryptography for future safety.</strong></li>
+      </ul>
+      <p class="conclusion">
+        This architecture makes Silica one of the fastest and most resilient blockchains ever designed.
+      </p>
+    </section>
+</ArticleLayout>
