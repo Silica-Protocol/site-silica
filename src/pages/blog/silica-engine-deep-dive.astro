@@ -4,7 +4,7 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
 <ArticleLayout 
   title="Silica Engine Deep Dive"
-  description="A technical breakdown of the Alluvium/Crystallite/Lithification core. DA batching, deterministic ordering, sharding, and Calib-driven reliability."
+  description="A technical breakdown of the Alluvium/Crystallite/Lithification core. DA batching, deterministic ordering, sharding, and Cali-driven reliability."
   author="Silica Network Team"
   date="2024-12-04"
   category="Protocol Architecture"
@@ -44,7 +44,7 @@ pub struct Lineation {
         <li><strong>DA/Dissemination:</strong> Workers gossip batch digests.</li>
         <li><strong>Ordering/Commit:</strong> DAG linearizer produces deterministic CommittedSubDag sequence.</li>
         <li><strong>Lithification Apply:</strong> Validates, executes, and finalizes the committed ordering; emits certificates as proofs.</li>
-        <li><strong>Monitoring:</strong> Calib (aka Arb) verifies certificates (non-gating).</li>
+        <li><strong>Monitoring:</strong> Cali (aka Arb) verifies certificates (non-gating).</li>
       </ol>
 
       <div class="code-block bg-blue-50 border-l-4 border-blue-500 p-4 my-4">
@@ -101,7 +101,7 @@ trait MVCCTxn {
         <li><strong>VRF-based selection:</strong> Ephemeral keys generate proofs against epoch seeds.</li>
         <li><strong>Weighting:</strong> Stake × reputation × Geographic Proof of Distribution.</li>
         <li><strong>Rolling churn:</strong> 10–25% replaced per epoch, ~30m default.</li>
-        <li><strong>Fallback:</strong> Calib (aka Arb) can trigger mid-epoch re-rolls if liveness halts.</li>
+        <li><strong>Fallback:</strong> Cali (aka Arb) can trigger mid-epoch re-rolls if liveness halts.</li>
       </ul>
 
       <div class="math-formula">
@@ -151,7 +151,7 @@ trait MVCCTxn {
         <li><strong>≥2/3 → breach possible, extremely unlikely.</strong></li>
       </ul>
 
-      <h3>Calib (Arb) Restart Protocol:</h3>
+      <h3>Cali (Arb) Restart Protocol:</h3>
       <ol>
         <li><strong>Detection:</strong> No lineation >2× expected interval.</li>
         <li><strong>Challenge:</strong> Nodes present missed signatures.</li>
@@ -214,7 +214,7 @@ trait MVCCTxn {
         <li><strong>Lithification finality.</strong></li>
         <li><strong>Sharded, parallel execution.</strong></li>
         <li><strong>Geographic fairness via GPoD.</strong></li>
-        <li><strong>Calib-driven resilience under adversarial load.</strong></li>
+        <li><strong>Cali-driven resilience under adversarial load.</strong></li>
         <li><strong>Post-quantum cryptography for future safety.</strong></li>
       </ul>
       <p class="conclusion">

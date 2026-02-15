@@ -105,7 +105,7 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
         <ul class="space-y-2">
           <li><strong>Rolling churn:</strong> 10–25% per epoch</li>
           <li><strong>Reputation weighting:</strong> Uptime, quality, geo distribution</li>
-          <li><strong>Calib (Arb) watchdog:</strong> Slashing, emergency re-rolls</li>
+          <li><strong>Cali (Arb) watchdog:</strong> Slashing, emergency re-rolls</li>
           <li><strong>Emergency restart:</strong> At last clean lineation</li>
         </ul>
       </div>
@@ -159,12 +159,12 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
         <ul class="space-y-2">
           <li><strong>Quorum-seen pre-final signals</strong> → UX feels instant</li>
           <li><strong>Rolling churn + overlapping validator sets</strong> → reduce adversarial lottery risk</li>
-          <li><strong>Calib (Arb) restart protocol:</strong> Detects stalls, slashes malicious actors, reseeds VRF beacon, resumes finality</li>
+          <li><strong>Cali (Arb) restart protocol:</strong> Detects stalls, slashes malicious actors, reseeds VRF beacon, resumes finality</li>
         </ul>
       </div>
 
       <div class="process-flow">
-        <h4>Calib (Arb) Restart Protocol:</h4>
+        <h4>Cali (Arb) Restart Protocol:</h4>
         <ol>
           <li><strong>Detection:</strong> No lineation >2× expected interval</li>
           <li><strong>Challenge:</strong> Evidence of missed signatures collected</li>
@@ -213,7 +213,7 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
         <li><strong>Alluvium/Crystallite pipeline + lithified finality.</strong></li>
         <li><strong>Parallel sharding with access lists.</strong></li>
         <li><strong>GPoD-driven geographic balance.</strong></li>
-        <li><strong>Calib-driven liveness guarantees.</strong></li>
+        <li><strong>Cali-driven liveness guarantees.</strong></li>
         <li><strong>Post-quantum cryptography for future safety.</strong></li>
       </ul>
       <p class="conclusion">

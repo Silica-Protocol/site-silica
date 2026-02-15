@@ -34,7 +34,7 @@ This document contains canonical phrases for describing Silica's consensus archi
 1. **DA / Dissemination (Alluvium):** Workers gossip transaction batches across the network
 2. **Ordering / Commit (Crystallite + Linearizer):** DAG structural rules produce deterministic CommittedSubDag sequences
 3. **Lithification Apply (Lithification):** Applies committed ordering to execution/storage, emits certificates
-4. **Monitoring / Recovery (Calib / Arb):** Asynchronous verification and watchdog actions (non-gating)
+4. **Monitoring / Recovery (Cali / Arb):** Asynchronous verification and watchdog actions (non-gating)
 
 ## Layer Descriptions
 
@@ -78,7 +78,7 @@ This document contains canonical phrases for describing Silica's consensus archi
 - "Certificates provide cryptographic proofs of finalization"
 - "Lithification ensures safety even under asynchronous network conditions"
 
-### Calib (The Calibrator / Arb)
+### Cali (The Calibrator / Arb)
 **Purpose:** Monitoring, Verification & Recovery (Non-Gating)
 
 **Key points:**

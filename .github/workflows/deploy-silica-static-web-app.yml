@@ -1,0 +1,75 @@
+# Silica Docs Site - Trigger Deployment
+# This workflow triggers the centralized deployment in the ops repo
+# Site developers can trigger deploys but cannot modify deployment settings
+
+name: Trigger Deployment
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  trigger-deploy:
+    name: Trigger Ops Deployment
+    runs-on: ubuntu-latest
+    # Only trigger deployment for push to main (not PRs)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Trigger ops deployment workflow
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.OPS_DEPLOY_TOKEN }}
+          repository: Silica-Protocol/ops
+          event-type: deploy-silica
+          client-payload: |
+            {
+              "ref": "${{ github.ref_name }}",
+              "sha": "${{ github.sha }}",
+              "actor": "${{ github.actor }}",
+              "repository": "${{ github.repository }}"
+            }
+      
+      - name: Deployment triggered
+        run: |
+          echo "## 🚀 Deployment Triggered" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The centralized deployment workflow has been triggered in the ops repo." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "[View deployment progress](https://github.com/Silica-Protocol/ops/actions/workflows/deploy-silica-static-web-app.yml)" >> $GITHUB_STEP_SUMMARY
+
+  # Build check for PRs (no deployment)
+  build-check:
+    name: Build Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (verification only)
+        run: npm run build
+        env:
+          NODE_ENV: production
+      
+      - name: Build succeeded
+        run: |
+          echo "## ✅ Build Check Passed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The site builds successfully. Merge to main to trigger deployment." >> $GITHUB_STEP_SUMMARY
