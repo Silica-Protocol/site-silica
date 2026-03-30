@@ -4,20 +4,20 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
 <ArticleLayout 
   title="Silica Deep Dive: Speed, Performance & Reliability"
-  description="A closer look at how Silica achieves instant, secure, and resilient finality. Technical analysis of Alluvium/Crystallite/Lithification."
+  description="A closer look at how Silica achieves fast, secure, and resilient finality through Tephra, deterministic execution, and anchors."
   author="Silica Network Team"
   date="2024-12-04"
   category="Protocol Architecture"
   readingTime="8 min read"
 >
     <section class="content-section">
-      <h2>⏱ Pre-Final vs. Lineation Finality</h2>
+      <h2>⏱ Pre-Final Signals vs. Finalized Apply</h2>
       <p>
         Silica achieves perceived instant confirmation through two layers of finality:
       </p>
       <ul>
         <li><strong>Pre-final admission (100–300ms):</strong> As soon as a batch is referenced by enough validator activity in the DAG, wallets and explorers can show it as "Pre-Final." This gives the user an immediate confirmation signal while full finality is pending.</li>
-        <li><strong>Lineation finality (0.8–1.5s):</strong> Once the DAG commit rule triggers and blocks are applied locally, transactions are finalized permanently—no rollbacks, no forks. Certificates aggregate post-quantum Dilithium signatures and serve as cryptographic proofs for monitoring and auditing.</li>
+        <li><strong>Finalized apply (0.8–1.5s):</strong> Once Tephra order commits and the block is applied locally, transactions are finalized permanently — no rollbacks, no forks. Lineations and certificates package proofs and checkpoints for monitoring, sync, and audit.</li>
       </ul>
 
       <div class="code-block">
@@ -36,19 +36,19 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
         </p>
       </div>
 
-      <p>This blend of fast UX signals + deterministic structural finality is what makes Silica "instant" without sacrificing safety.</p>
+      <p>This blend of fast UX signals + deterministic local apply is what makes Silica feel instant without sacrificing safety.</p>
     </section>
 
     <section class="content-section">
-      <h2>🧩 Alluvium + Crystallite + Lithification</h2>
+      <h2>🧩 Tephra: Sync, Order, Apply</h2>
       <p>
-        At the core, Silica uses an Alluvium/Crystallite/Lithification pipeline for data availability, deterministic ordering, and finality:
+        At the core, Silica uses <strong>Tephra</strong> as a consolidated consensus fabric. Older notes may mention Alluvium and Crystallite, but the current system folds batching, gossip sync, and deterministic ordering into Tephra:
       </p>
       <ul>
-        <li><strong>Alluvium workers:</strong> Create and gossip micro-batches at 50–200/s. Each batch is erasure-coded for data availability.</li>
-        <li><strong>Crystallite ordering:</strong> Structural DAG commit rules produce deterministic CommittedSubDag ordering (the only ordering truth).</li>
-        <li><strong>Lithification apply:</strong> Validates, executes, and finalizes the committed ordering; emits certificates as cryptographic proofs.</li>
-        <li><strong>Lineations:</strong> Aggregated certificates generated every ~1s for efficient monitoring and recovery.</li>
+        <li><strong>Batching:</strong> Transactions are grouped into proposal payloads for efficient network fanout.</li>
+        <li><strong>Gossip sync:</strong> Peers exchange missing Tephra events and record who saw what via self/other-parent links.</li>
+        <li><strong>Deterministic order:</strong> Virtual voting computes the same proposal order at every honest node.</li>
+        <li><strong>Apply + anchors:</strong> Execution applies that order locally while anchors package proofs for monitoring and recovery.</li>
       </ul>
 
       <div class="code-block">
@@ -59,7 +59,7 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
       <div class="code-block bg-blue-50 border-l-4 border-blue-500 p-4 my-4">
         <p class="text-sm font-semibold text-gray-800 mb-2">Ordering Source of Truth:</p>
         <p class="text-sm text-gray-700">
-          CommittedSubDag output from the linearizer is the only ordering truth. Lithification must not re-order; it validates, executes, and finalizes the committed ordering, generating certificates as proofs.
+          Tephra consensus order is the only ordering truth. Execution must not invent a new order; it applies the committed result and emits proofs and checkpoints for auditability.
         </p>
       </div>
 
@@ -72,7 +72,7 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
         Silica's execution engine is designed for scale:
       </p>
       <ul>
-        <li><strong>20–40k TPS per shard</strong> with parallel Stria execution lanes (The Striation).</li>
+          <li><strong>20–40k TPS per shard</strong> with parallel deterministic execution lanes.</li>
         <li><strong>1M+ TPS across shards</strong> when scaled out.</li>
         <li><strong>Access lists:</strong> Transactions declare touched keys, enabling conflict-free parallel execution.</li>
         <li><strong>Cross-shard transactions:</strong> Coordinated with lightweight two-phase receipts.</li>
@@ -105,7 +105,7 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
         <ul class="space-y-2">
           <li><strong>Rolling churn:</strong> 10–25% per epoch</li>
           <li><strong>Reputation weighting:</strong> Uptime, quality, geo distribution</li>
-          <li><strong>Cali (Arb) watchdog:</strong> Slashing, emergency re-rolls</li>
+          <li><strong>Monitoring / recovery watchdog:</strong> Slashing, emergency re-rolls</li>
           <li><strong>Emergency restart:</strong> At last clean lineation</li>
         </ul>
       </div>
@@ -159,12 +159,12 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
         <ul class="space-y-2">
           <li><strong>Quorum-seen pre-final signals</strong> → UX feels instant</li>
           <li><strong>Rolling churn + overlapping validator sets</strong> → reduce adversarial lottery risk</li>
-          <li><strong>Cali (Arb) restart protocol:</strong> Detects stalls, slashes malicious actors, reseeds VRF beacon, resumes finality</li>
+          <li><strong>Automated restart protocol:</strong> Detects stalls, slashes malicious actors, reseeds the VRF beacon, and resumes finality</li>
         </ul>
       </div>
 
       <div class="process-flow">
-        <h4>Cali (Arb) Restart Protocol:</h4>
+        <h4>Automated Restart Protocol:</h4>
         <ol>
           <li><strong>Detection:</strong> No lineation >2× expected interval</li>
           <li><strong>Challenge:</strong> Evidence of missed signatures collected</li>
@@ -210,10 +210,10 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
         Silica achieves instant UX, deterministic finality, and global fairness through:
       </p>
       <ul>
-        <li><strong>Alluvium/Crystallite pipeline + lithified finality.</strong></li>
+        <li><strong>Tephra consensus fabric + local finalized apply.</strong></li>
         <li><strong>Parallel sharding with access lists.</strong></li>
         <li><strong>GPoD-driven geographic balance.</strong></li>
-        <li><strong>Cali-driven liveness guarantees.</strong></li>
+        <li><strong>Monitoring-driven liveness guarantees.</strong></li>
         <li><strong>Post-quantum cryptography for future safety.</strong></li>
       </ul>
       <p class="conclusion">

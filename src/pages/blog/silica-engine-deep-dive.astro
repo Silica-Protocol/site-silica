@@ -4,54 +4,49 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
 <ArticleLayout 
   title="Silica Engine Deep Dive"
-  description="A technical breakdown of the Alluvium/Crystallite/Lithification core. DA batching, deterministic ordering, sharding, and Cali-driven reliability."
+  description="A technical breakdown of Tephra, deterministic execution lanes, anchors, and monitoring-driven reliability."
   author="Silica Network Team"
   date="2024-12-04"
   category="Protocol Architecture"
   readingTime="10 min read"
 >
     <section class="content-section">
-      <h2>⏱ Alluvium + Crystallite + Lithification</h2>
+      <h2>⏱ Tephra Consensus Fabric</h2>
       <p>
-        Silica separates data availability, ordering, and finality into a tight pipeline:
+        Silica now describes its live consensus system as <strong>Tephra</strong>. Earlier research split dissemination and ordering into Alluvium and Crystallite, but the current implementation consolidates those responsibilities into one gossip-about-gossip fabric:
       </p>
 
       <ul>
-        <li><strong>Alluvium workers:</strong> Create &amp; gossip micro-batches (50–200/s). Each batch is erasure-coded for data availability.</li>
-        <li><strong>Crystallite ordering:</strong> Deterministic commit rules produce CommittedSubDags in canonical order (the only ordering truth).</li>
-        <li><strong>Lithification apply:</strong> Validates, executes (via The Striation), and finalizes the committed ordering. Generates certificates as cryptographic proofs (not gates).</li>
+        <li><strong>Batching + payload references:</strong> Transactions are grouped into proposal payloads and attached to Tephra events.</li>
+        <li><strong>Gossip-about-gossip sync:</strong> Each sync records self-parent and other-parent links, letting every node reconstruct a shared event DAG.</li>
+        <li><strong>Virtual voting + deterministic order:</strong> Witness, fame, and ordering are computed locally from the event DAG — no extra vote stream is required.</li>
+        <li><strong>Local apply + proofs:</strong> Execution lanes apply Tephra order, while anchors and certificates report the result for audit and recovery.</li>
       </ul>
 
       <div class="code-block">
-        <pre><code set:html={`pub struct MicroBatch {
-    batch_id: BatchId,
-    transactions: Vec&lt;Transaction&gt;,
-    erasure_coded_data: ErasureCodedBlob,
-    worker_signature: WorkerSignature,
-    timestamp: u64,
-}
-
-pub struct Lineation {
-    ordered_batches: Vec&lt;BatchId&gt;,
-    validator_signatures: Vec&lt;DilithiumSignature&gt;,
-    finality_proof: FinalityProof,
-    timestamp: u64,
+        <pre><code set:html={`pub struct TephraEvent {
+    creator: u16,
+    self_parent: Option&lt;EventRef&gt;,
+    other_parent: Option&lt;EventRef&gt;,
+    round: u64,
+    payload_hash: Option&lt;[u8; 32]&gt;,
+    payload_tx_count: u32,
 }`} /></pre>
       </div>
 
       <p><strong>Consensus Pipeline:</strong></p>
       <ol>
-        <li><strong>DA/Dissemination:</strong> Workers gossip batch digests.</li>
-        <li><strong>Ordering/Commit:</strong> DAG linearizer produces deterministic CommittedSubDag sequence.</li>
-        <li><strong>Lithification Apply:</strong> Validates, executes, and finalizes the committed ordering; emits certificates as proofs.</li>
-        <li><strong>Monitoring:</strong> Cali (aka Arb) verifies certificates (non-gating).</li>
+        <li><strong>Ingress &amp; batching:</strong> Transactions are admitted and attached to proposal payloads.</li>
+        <li><strong>Tephra gossip sync:</strong> Peers exchange missing events and extend the shared event DAG.</li>
+        <li><strong>Virtual voting:</strong> Deterministic proposal order is derived locally from the DAG.</li>
+        <li><strong>Execution + proofs:</strong> Ordered proposals are applied locally, then anchors and certificates package the result for audit and recovery.</li>
       </ol>
 
       <div class="code-block bg-blue-50 border-l-4 border-blue-500 p-4 my-4">
         <p class="text-sm font-semibold text-gray-800 mb-2">Source of Truth (SOT):</p>
         <ul class="text-sm text-gray-700 space-y-1">
-          <li><strong>Ordering SOT:</strong> CommittedSubDag output from linearizer is the only ordering truth.</li>
-          <li><strong>Finality SOT:</strong> A block is final when committed by DAG commit rule and finalized/applied locally.</li>
+          <li><strong>Ordering SOT:</strong> Tephra consensus order is the only ordering truth.</li>
+          <li><strong>Finality SOT:</strong> A block is final when Tephra order is committed and applied locally.</li>
           <li><strong>Certificates/receipts are proofs (reports), not gates.</strong></li>
         </ul>
       </div>
@@ -101,7 +96,7 @@ trait MVCCTxn {
         <li><strong>VRF-based selection:</strong> Ephemeral keys generate proofs against epoch seeds.</li>
         <li><strong>Weighting:</strong> Stake × reputation × Geographic Proof of Distribution.</li>
         <li><strong>Rolling churn:</strong> 10–25% replaced per epoch, ~30m default.</li>
-        <li><strong>Fallback:</strong> Cali (aka Arb) can trigger mid-epoch re-rolls if liveness halts.</li>
+        <li><strong>Fallback:</strong> Automated monitoring and recovery can trigger mid-epoch re-rolls if liveness halts.</li>
       </ul>
 
       <div class="math-formula">
@@ -146,12 +141,12 @@ trait MVCCTxn {
 
       <h3>Adversarial validator handling:</h3>
       <ul>
-        <li><strong><1/3 Byzantine → safe, live.</strong></li>
+        <li><strong>&lt;1/3 Byzantine → safe, live.</strong></li>
         <li><strong>1/3–2/3 → safe, stalls until rotation.</strong></li>
         <li><strong>≥2/3 → breach possible, extremely unlikely.</strong></li>
       </ul>
 
-      <h3>Cali (Arb) Restart Protocol:</h3>
+      <h3>Automated Restart Protocol:</h3>
       <ol>
         <li><strong>Detection:</strong> No lineation >2× expected interval.</li>
         <li><strong>Challenge:</strong> Nodes present missed signatures.</li>
@@ -210,11 +205,11 @@ trait MVCCTxn {
         The Silica Engine combines:
       </p>
       <ul>
-        <li><strong>Alluvium batching + Crystallite ordering.</strong></li>
-        <li><strong>Lithification finality.</strong></li>
+        <li><strong>Tephra batching, gossip sync, and deterministic ordering.</strong></li>
+        <li><strong>Local apply with anchors and audit proofs.</strong></li>
         <li><strong>Sharded, parallel execution.</strong></li>
         <li><strong>Geographic fairness via GPoD.</strong></li>
-        <li><strong>Cali-driven resilience under adversarial load.</strong></li>
+        <li><strong>Monitoring-driven resilience under adversarial load.</strong></li>
         <li><strong>Post-quantum cryptography for future safety.</strong></li>
       </ul>
       <p class="conclusion">

@@ -3,7 +3,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Technology - Silica Protocol" description="Deep dive into Silica's advanced consensus mechanism, performance benchmarks, and post-quantum security features">
+<Layout title="Technology - Silica Protocol" description="Deep dive into Tephra, deterministic execution, high-throughput batching, and post-quantum security in Silica Protocol">
   <!-- Hero Section -->
   <section class="relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white py-32 overflow-hidden">
     <!-- Animated Background Nodes -->
@@ -33,7 +33,7 @@ import Layout from '../layouts/Layout.astro';
           Consensus Architecture
         </h2>
         <p class="text-xl text-slate-300 max-w-3xl mx-auto">
-          A layered pipeline: Alluvium (data availability) → Crystallite (ordering) → The Striation (parallel execution) → Cali (verification + watchdog / Arb) → Lithification (irreversible finality), with periodic anchors (Lineation/Lineament).
+          Tephra now consolidates Silica's former dissemination and ordering layers into one consensus fabric: transactions are batched, peers gossip-sync a shared event DAG, virtual voting derives deterministic order, execution lanes apply that order, and anchors/proofs make the result auditable and recoverable.
         </p>
       </div>
 
@@ -46,8 +46,11 @@ import Layout from '../layouts/Layout.astro';
           <div class="ml-3">
             <p class="text-sm font-semibold text-white mb-2">Architecture Note</p>
             <p class="text-sm text-slate-300">
-              This page reflects the current architecture source of truth. Implementation details and performance metrics evolve as we optimize the network. For technical implementation details, see the 
+              This page reflects the current architecture source of truth. Older research notes may still mention Alluvium and Crystallite; in the live architecture those responsibilities are folded into Tephra. Implementation details and performance metrics evolve as we optimize the network. For technical implementation details, see the 
               <a href="https://github.com/Silica-Protocol/Silica-Protocol" class="text-cyan-400 hover:underline">GitHub repository</a>.
+            </p>
+            <p class="text-sm text-slate-400 mt-2">
+              Historical shorthand: <strong>Alluvium</strong> maps roughly to ingress, batching, and payload dissemination; <strong>Crystallite</strong> maps to deterministic ordering; execution/apply is the stage after ordering, not a renamed Crystallite.
             </p>
           </div>
         </div>
@@ -72,27 +75,27 @@ import Layout from '../layouts/Layout.astro';
                       </svg>
                     </div>
                     <div>
-                      <div class="text-xs font-semibold text-cyan-400 mb-1">LAYER 1 • DATA PLANE</div>
-                      <h3 class=\"text-2xl font-bold text-white\">Alluvium</h3>
+                      <div class="text-xs font-semibold text-cyan-400 mb-1">SYSTEM 1 • TEPHRA SYNC</div>
+                      <h3 class=\"text-2xl font-bold text-white\">Tephra Ingress</h3>
                     </div>
                   </div>
-                  <p class="text-slate-200 mb-4">Parallel transaction batching and high-throughput data availability layer using DAG structure.</p>
+                  <p class="text-slate-200 mb-4">Transaction intake, batching, and gossip-about-gossip sync keep nodes aligned on what happened and who saw what.</p>
                   <ul class="space-y-2 text-sm text-slate-300">
                     <li class="flex items-start">
                       <span class="text-cyan-400 mr-2">•</span>
-                      Workers gossip transaction batches in parallel across network
+                      Batches proposal payloads for efficient network fanout
                     </li>
                     <li class="flex items-start">
                       <span class="text-cyan-400 mr-2">•</span>
-                      DAG-based causal structure with batch references
+                      Records self-parent / other-parent links during each sync
                     </li>
                     <li class="flex items-start">
                       <span class="text-cyan-400 mr-2">•</span>
-                      Separates data dissemination from consensus ordering
+                      Exchanges missing events instead of relying on separate vote traffic
                     </li>
                     <li class="flex items-start">
                       <span class="text-cyan-400 mr-2">•</span>
-                      Enables horizontal scaling without security compromise
+                      Keeps dissemination and causal history inside one consensus fabric
                     </li>
                   </ul>
                   <!-- Animated Batches -->\n                  <div class="mt-4 flex gap-2">
@@ -106,7 +109,7 @@ import Layout from '../layouts/Layout.astro';
               <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-full border-4 border-slate-900 shadow-lg shadow-cyan-500/50"></div>
               <div class="lg:w-1/2 lg:pl-12">
                 <div class="consensus-anim consensus-anim--alluvium" aria-hidden="true">
-                  <div class="consensus-anim__label">Alluvium: batching + gossip</div>
+                  <div class="consensus-anim__label">Tephra: batching + sync</div>
                   <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
                     <defs>
                       <linearGradient id="alluviumFlow" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
@@ -142,7 +145,7 @@ import Layout from '../layouts/Layout.astro';
             <div class="lg:flex items-center">
               <div class="lg:w-1/2 lg:pr-12">
                 <div class="consensus-anim consensus-anim--crystallite" aria-hidden="true">
-                  <div class="consensus-anim__label">Crystallite: deterministic ordering</div>
+                  <div class="consensus-anim__label">Tephra: virtual ordering</div>
                   <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
                     <defs>
                       <linearGradient id="crystalOrder" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
@@ -188,27 +191,27 @@ import Layout from '../layouts/Layout.astro';
                       </svg>
                     </div>
                     <div>
-                      <div class="text-xs font-semibold text-teal-400 mb-1">LAYER 2 • ORDERING</div>
-                      <h3 class="text-2xl font-bold text-white">Crystallite</h3>
+                      <div class="text-xs font-semibold text-teal-400 mb-1">SYSTEM 1 • TEPHRA ORDERING</div>
+                      <h3 class="text-2xl font-bold text-white">Tephra Ordering</h3>
                     </div>
                   </div>
-                  <p class="text-slate-200 mb-4">Deterministic DAG commit rules and linearization producing canonical transaction ordering.</p>
+                  <p class="text-slate-200 mb-4">Hashgraph rounds, visibility rules, and virtual voting turn the shared event DAG into deterministic proposal order.</p>
                   <ul class="space-y-2 text-sm text-slate-300">
                     <li class="flex items-start">
                       <span class="text-teal-400 mr-2">•</span>
-                      Structural DAG commit rules ensure deterministic ordering
+                      Virtual voting is computed locally from gossip history
                     </li>
                     <li class="flex items-start">
                       <span class="text-teal-400 mr-2">•</span>
-                      Linearizer outputs identical CommittedSubDag sequences
+                      Same event DAG yields the same order on all honest nodes
                     </li>
                     <li class="flex items-start">
                       <span class="text-teal-400 mr-2">•</span>
-                      No timing-dependent or arrival-order behaviors
+                      No extra ordering authority exists beyond Tephra order
                     </li>
                     <li class="flex items-start">
                       <span class="text-teal-400 mr-2">•</span>
-                      Source of truth: CommittedSubDag from linearizer
+                      Inspired by DAG-first batching and structural-commit research
                     </li>
                   </ul>
                   <!-- Animated Ordering -->
@@ -232,11 +235,11 @@ import Layout from '../layouts/Layout.astro';
                        </svg>
                      </div>
                      <div>
-                       <div class="text-xs font-semibold text-indigo-400 mb-1">LAYER 3 • EXECUTION</div>
-                       <h3 class="text-2xl font-bold text-white">The Striation</h3>
+                       <div class="text-xs font-semibold text-indigo-400 mb-1">SYSTEM 2 • EXECUTION</div>
+                       <h3 class="text-2xl font-bold text-white">Execution Lanes</h3>
                      </div>
                    </div>
-                   <p class="text-slate-200 mb-4">Parallel execution framework that routes ordered transactions into deterministic execution lanes (Striae).</p>
+                   <p class="text-slate-200 mb-4">Parallel execution framework that applies Tephra order across deterministic state lanes.</p>
                    <ul class="space-y-2 text-sm text-slate-300">
                      <li class="flex items-start">
                        <span class="text-indigo-400 mr-2">•</span>
@@ -265,7 +268,7 @@ import Layout from '../layouts/Layout.astro';
                <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-full border-4 border-slate-900 shadow-lg shadow-indigo-500/50"></div>
                <div class="lg:w-1/2 lg:pl-12">
                   <div class="consensus-anim consensus-anim--striation" aria-hidden="true">
-                   <div class="consensus-anim__label">Striation: route txs → accounts</div>
+                   <div class="consensus-anim__label">Execution lanes: route txs → state</div>
                    <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
                      <defs>
                        <linearGradient id="striaFlow" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
@@ -322,7 +325,7 @@ import Layout from '../layouts/Layout.astro';
              <div class="lg:flex items-center">
                <div class="lg:w-1/2 lg:pr-12">
                  <div class="consensus-anim consensus-anim--calib" aria-hidden="true">
-                   <div class="consensus-anim__label">Cali: verify + watchdog</div>
+                   <div class="consensus-anim__label">Monitoring: health + watchdog</div>
                    <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
                      <defs>
                        <linearGradient id="calibGlow" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
@@ -354,11 +357,11 @@ import Layout from '../layouts/Layout.astro';
                        </svg>
                      </div>
                      <div>
-                       <div class="text-xs font-semibold text-amber-400 mb-1">LAYER 4 • VERIFY</div>
-                       <h3 class="text-2xl font-bold text-white">Cali</h3>
+                       <div class="text-xs font-semibold text-amber-400 mb-1">SYSTEM 3 • OBSERVE</div>
+                       <h3 class="text-2xl font-bold text-white">Monitoring &amp; Recovery</h3>
                      </div>
                    </div>
-                   <p class="text-slate-200 mb-4">Calibration + watchdog layer (aka Arb) that verifies execution results across Striae and coordinates recovery actions during stalls.</p>
+                   <p class="text-slate-200 mb-4">Operational watchdogs, peer-readiness checks, and recovery flows keep the network convergent under stalls or churn.</p>
                    <ul class="space-y-2 text-sm text-slate-300">
                      <li class="flex items-start">
                        <span class="text-amber-400 mr-2">•</span>
@@ -397,15 +400,15 @@ import Layout from '../layouts/Layout.astro';
                       </svg>
                     </div>
                      <div>
-                       <div class="text-xs font-semibold text-green-400 mb-1">LAYER 5 • FINALITY</div>
-                       <h3 class="text-2xl font-bold text-white">Lithification</h3>
+                       <div class="text-xs font-semibold text-green-400 mb-1">SYSTEM 4 • FINALIZE</div>
+                       <h3 class="text-2xl font-bold text-white">Apply + Proofs</h3>
                      </div>
                   </div>
-                   <p class="text-slate-200 mb-4">Irreversible commitment of state once the committed ordering is applied and verified.</p>
+                   <p class="text-slate-200 mb-4">Once ordered proposals are applied locally, state transitions are final; anchors and proofs package the result for audit, replay, and fast sync.</p>
                   <ul class="space-y-2 text-sm text-slate-300">
                      <li class="flex items-start">
                        <span class="text-green-400 mr-2">•</span>
-                       Applies the committed ordering to execution/storage
+                       Applies committed Tephra order to execution and storage
                      </li>
                      <li class="flex items-start">
                        <span class="text-green-400 mr-2">•</span>
@@ -413,11 +416,11 @@ import Layout from '../layouts/Layout.astro';
                      </li>
                      <li class="flex items-start">
                        <span class="text-green-400 mr-2">•</span>
-                       Produces cryptographic proofs for monitoring/auditing
+                       Emits anchors, certificates, and receipts as proofs
                      </li>
                      <li class="flex items-start">
                        <span class="text-green-400 mr-2">•</span>
-                       Certificates are proofs (reports), not gates
+                       Checkpoints simplify audit, sync, and recovery
                      </li>
                   </ul>
                   <!-- Single Finality Bar -->
@@ -429,7 +432,7 @@ import Layout from '../layouts/Layout.astro';
               <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-full border-4 border-slate-900 shadow-lg shadow-green-500/50"></div>
               <div class="lg:w-1/2 lg:pl-12">
                 <div class="consensus-anim consensus-anim--lithification" aria-hidden="true">
-                  <div class="consensus-anim__label">Lithification: seal finality</div>
+                  <div class="consensus-anim__label">Apply + proofs: seal final state</div>
                   <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
                     <defs>
                       <linearGradient id="lithSeal" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
@@ -461,24 +464,24 @@ import Layout from '../layouts/Layout.astro';
          <h3 class="text-lg font-semibold text-white mb-4">Layer Stack</h3>
          <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 text-sm">
            <div class="text-center">
-             <div class="font-semibold text-cyan-400 mb-1">1. Alluvium</div>
-             <div class="text-slate-400 text-xs">DA / dissemination</div>
+             <div class="font-semibold text-cyan-400 mb-1">1. Tephra ingress</div>
+             <div class="text-slate-400 text-xs">batching / sync</div>
            </div>
            <div class="text-center">
-             <div class="font-semibold text-teal-400 mb-1">2. Crystallite</div>
-             <div class="text-slate-400 text-xs">ordering / commit</div>
+             <div class="font-semibold text-teal-400 mb-1">2. Tephra order</div>
+             <div class="text-slate-400 text-xs">virtual voting</div>
            </div>
            <div class="text-center">
-             <div class="font-semibold text-indigo-400 mb-1">3. The Striation</div>
-             <div class="text-slate-400 text-xs">execution (Striae)</div>
+             <div class="font-semibold text-indigo-400 mb-1">3. Execution lanes</div>
+             <div class="text-slate-400 text-xs">deterministic apply</div>
            </div>
            <div class="text-center">
-             <div class="font-semibold text-amber-400 mb-1">4. Cali</div>
-             <div class="text-slate-400 text-xs">verification</div>
+             <div class="font-semibold text-amber-400 mb-1">4. Monitoring</div>
+             <div class="text-slate-400 text-xs">health / recovery</div>
            </div>
            <div class="text-center">
-             <div class="font-semibold text-green-400 mb-1">5. Lithification</div>
-             <div class="text-slate-400 text-xs">irreversible finality</div>
+             <div class="font-semibold text-green-400 mb-1">5. Apply + proofs</div>
+             <div class="text-slate-400 text-xs">final state / checkpoints</div>
            </div>
          </div>
          <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -528,7 +531,7 @@ import Layout from '../layouts/Layout.astro';
              <div class="mt-6">
                <div class="text-sm font-semibold text-white mb-2">Typical inputs</div>
                <ul class="space-y-2 text-sm text-slate-300">
-                 <li class="flex items-start"><span class="text-emerald-400 mr-2">•</span>Per-stria execution/state roots (from Striation + Cali verification)</li>
+                 <li class="flex items-start"><span class="text-emerald-400 mr-2">•</span>Per-lane execution/state roots (from execution + monitoring)</li>
                  <li class="flex items-start"><span class="text-emerald-400 mr-2">•</span>Shard/global aggregation roots (Merkle roots over receipts &amp; state)</li>
                  <li class="flex items-start"><span class="text-emerald-400 mr-2">•</span>GPoD outputs (digests of performance, integrity, and anomaly evidence)</li>
                  <li class="flex items-start"><span class="text-emerald-400 mr-2">•</span>PoUW receipts (work proofs summarized into a compact root)</li>

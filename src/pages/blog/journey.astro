@@ -30,9 +30,9 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
             <div class="space-y-6">
               <!-- Breakthrough 1 -->
               <div>
-                <h3 class="text-lg font-semibold text-cyan-400 mb-3">1. Alluvium + Crystallite + Lithification</h3>
+                <h3 class="text-lg font-semibold text-cyan-400 mb-3">1. Tephra Consolidation</h3>
                 <p class="text-slate-300 mb-2">
-                  Our first major innovation was separating dissemination, ordering, and finality into an Alluvium/Crystallite/Lithification pipeline for deterministic finality.
+                  One of our biggest architectural shifts was consolidating earlier dissemination and ordering research into <strong>Tephra</strong>, a single gossip-about-gossip consensus fabric. Older design notes may mention Alluvium and Crystallite, but their responsibilities now live inside Tephra.
                 </p>
                 <div class="bg-slate-800/50 backdrop-blur-sm border border-cyan-500/20 rounded-lg p-4 mt-4">
                   <pre class="text-sm text-slate-300"><code set:html={`// Lineation finality structure
@@ -44,7 +44,7 @@ pub struct Lineation {
 }`} /></pre>
                 </div>
                 <p class="text-sm text-slate-400 mt-2">
-                  This architecture enables sub-second finality (0.8-1.5s) while maintaining Byzantine fault tolerance.
+                  This architecture enables sub-second finality (0.8-1.5s) while maintaining Byzantine fault tolerance and a much cleaner public description of the protocol.
                 </p>
               </div>
 

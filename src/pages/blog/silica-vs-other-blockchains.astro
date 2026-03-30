@@ -48,7 +48,7 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
             <tr>
               <td>Cardano</td>
               <td>~20s</td>
-              <td><250 TPS</td>
+              <td>&lt;250 TPS</td>
               <td>~$0.1–0.3</td>
               <td>Slow UX</td>
             </tr>
@@ -83,7 +83,7 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
             <tr>
               <td>Cosmos</td>
               <td>5–7s</td>
-              <td><1,000 TPS</td>
+              <td>&lt;1,000 TPS</td>
               <td>~$0.01</td>
               <td>Governance-driven halts</td>
             </tr>
@@ -98,8 +98,8 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
               <td>Silica</td>
               <td>0.8–1.5s</td>
               <td>1M+ TPS</td>
-              <td>< $0.01 (stable)</td>
-              <td>Pre-final 100–300ms, Cali restarts ensure uptime</td>
+              <td>&lt; $0.01 (stable)</td>
+              <td>Pre-final 100–300ms, automated recovery preserves uptime</td>
             </tr>
           </tbody>
         </table>
@@ -268,9 +268,9 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
             </tr>
             <tr class="highlight">
               <td>Silica</td>
-              <td>Lithification deterministic</td>
+              <td>Tephra deterministic</td>
               <td>No forks unless ≥2/3 adversarial</td>
-              <td>Cali restarts auto-recover</td>
+              <td>Automated recovery paths</td>
             </tr>
           </tbody>
         </table>
@@ -278,7 +278,7 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
       <h3>Why Silica wins:</h3>
       <ul>
-        <li><strong>Lithification finality:</strong> No probabilistic waits — once a lineation is produced, it's final.</li>
+        <li><strong>Tephra finality:</strong> No probabilistic waits — once Tephra order is applied locally, it's final.</li>
         <li><strong>Validator selection & rotation:</strong></li>
         <ul>
           <li><strong>Dual Key System:</strong> Dilithium identity keys + ephemeral EC-VRF epoch keys</li>
@@ -286,8 +286,8 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
           <li><strong>Rolling Churn:</strong> 10-25% validator set replacement every 5-10 minutes</li>
           <li><strong>Cooldown penalties:</strong> Reduces selection probability briefly after proposing</li>
         </ul>
-        <li><strong>Cali (Arb) watchdog:</strong> Detects stalls, slashes bad actors, reseeds randomness, resumes finality automatically. Unlike Cosmos/Solana, no governance or manual restarts.</li>
-        <li><strong>Emergency fallback:</strong> Always resume from last clean lineation — no messy forks.</li>
+        <li><strong>Automated recovery watchdog:</strong> Detects stalls, slashes bad actors, reseeds randomness, and resumes finality automatically. Unlike Cosmos/Solana, no governance or manual restarts.</li>
+        <li><strong>Emergency fallback:</strong> Always resume from the last clean checkpoint — no messy forks.</li>
         <li><strong>GPoD fairness:</strong> Prevents validator clustering (which fuels Sybil risk).</li>
       </ul>
     </section>
@@ -390,7 +390,7 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
       <h3>Silica advantage:</h3>
       <ul>
         <li><strong>Rolling churn + validator set overlap:</strong> Prevent adversarial capture.</li>
-        <li><strong>Cali restarts:</strong> Keep validators live, slash bad actors, reseed randomness.</li>
+        <li><strong>Automated restarts:</strong> Keep validators live, slash bad actors, and reseed randomness.</li>
         <li><strong>Always processing:</strong> Even under attack, Silica never permanently halts.</li>
       </ul>
     </section>
