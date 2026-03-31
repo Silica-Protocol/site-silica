@@ -13,7 +13,7 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
     <section class="content-section">
       <h2>⏱ Pre-Final Signals vs. Finalized Apply</h2>
       <p>
-        Silica achieves perceived instant confirmation through two layers of finality:
+        Silica targets fast confirmation through two layers of finality:
       </p>
       <ul>
         <li><strong>Pre-final admission (100–300ms):</strong> As soon as a batch is referenced by enough validator activity in the DAG, wallets and explorers can show it as "Pre-Final." This gives the user an immediate confirmation signal while full finality is pending.</li>
@@ -36,7 +36,7 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
         </p>
       </div>
 
-      <p>This blend of fast UX signals + deterministic local apply is what makes Silica feel instant without sacrificing safety.</p>
+      <p>This blend of fast UX signals + deterministic local apply is what makes Silica designed to feel fast without sacrificing safety.</p>
     </section>
 
     <section class="content-section">
@@ -64,7 +64,7 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
         </p>
       </div>
 
-      <p>This ensures high throughput with sub-second deterministic finality.</p>
+      <p>This targets high throughput with fast deterministic finality.</p>
     </section>
 
     <section class="content-section">
@@ -74,7 +74,7 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
       </p>
       <ul>
           <li><strong>20–40k TPS per shard</strong> with parallel deterministic execution lanes.</li>
-        <li><strong>1M+ TPS across shards</strong> when scaled out.</li>
+        <li><strong>High throughput across shards</strong> when scaled out — exact numbers pending benchmarks.</li>
         <li><strong>Access lists:</strong> Transactions declare touched keys, enabling conflict-free parallel execution.</li>
         <li><strong>Cross-shard transactions:</strong> Coordinated with lightweight two-phase receipts.</li>
       </ul>
@@ -190,7 +190,7 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
             </tr>
             <tr>
               <td><strong>Throughput:</strong></td>
-              <td>1M+ TPS across shards</td>
+              <td>Target: high throughput across shards</td>
             </tr>
             <tr>
               <td><strong>Validator set size:</strong></td>
@@ -208,7 +208,7 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
     <section class="content-section cta-section">
       <h2>✅ Takeaway</h2>
       <p>
-        Silica achieves instant UX, deterministic finality, and global fairness through:
+        Silica targets fast UX, deterministic finality, and global fairness through:
       </p>
       <ul>
         <li><strong>Alluvium + Tephra + Crystallite + Lithification + Cali.</strong></li>

@@ -25,12 +25,10 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
       <div class="example-code">
         <h4>Concrete Implementation Example:</h4>
         <div class="code-block">
-          <pre><code set:html={`// Auto-staking calculation for 1000 CHERT held 30 days
-let base_apy = 0.06; // 6% baseline
-let balance = 1000;
-let days_held = 30;
-let rewards = balance * base_apy * (days_held as f64 / 365.0);
-// Result: ~4.93 CHERT earned automatically`} /></pre>
+          <pre><code set:html={`// Auto-staking design intent
+// All mature balances participate automatically
+// No bonding transaction, no minimum stake
+// Exact rates will be published when the reward model is finalized`} /></pre>
         </div>
       </div>
 
@@ -83,7 +81,7 @@ if score &lt;= p(balance) { selected }`} /></pre>
           <h3>2. Gateway / DAS Nodes</h3>
           <p>Lightweight nodes serving RPC, relaying txs, and sampling data availability.</p>
           <p>Low hardware requirements → home-node friendly.</p>
-          <p>Rewarded via helper bonuses and proportional APY bumps.</p>
+          <p>Rewarded via helper bonuses and proportional reward bumps.</p>
         </div>
 
         <div class="role-card">
@@ -107,16 +105,16 @@ if score &lt;= p(balance) { selected }`} /></pre>
         Silica allows optional yield enhancements:
       </p>
 
-      <h3>LockBox staking:</h3>
+      <h3>LockBox staking (planned):</h3>
       <ul>
-        <li><strong>Terms:</strong> 1w, 1m, 3m, 6m, 12m.</li>
-        <li><strong>Multipliers:</strong> ×1.05 → ×2.0 depending on lock length.</li>
+        <li><strong>Terms:</strong> Multiple lock durations planned.</li>
+        <li><strong>Multipliers:</strong> Longer locks earn higher multipliers — exact values to be published.</li>
         <li><strong>Early exit:</strong> Allowed with penalty, fees recycled into reward pool.</li>
       </ul>
 
       <h3>Helper bonuses:</h3>
       <ul>
-        <li><strong>Gateway nodes and DAS samplers</strong> receive small APY bumps for verified contributions.</li>
+        <li><strong>Gateway nodes and DAS samplers</strong> receive reward bumps for verified contributions.</li>
         <li><strong>Contribution proofs are capped</strong> to avoid spam.</li>
       </ul>
 
@@ -174,7 +172,7 @@ if score &lt;= p(balance) { selected }`} /></pre>
       <div class="flow-steps">
         <div class="step">
           <span class="step-number">1</span>
-          <p>User holds Chert in wallet → begins earning baseline APY.</p>
+          <p>User holds Chert in wallet → begins earning rewards automatically.</p>
         </div>
         <div class="step">
           <span class="step-number">2</span>
@@ -186,7 +184,7 @@ if score &lt;= p(balance) { selected }`} /></pre>
         </div>
         <div class="step">
           <span class="step-number">4</span>
-          <p>Opts into LockBox (6m) → doubles APY multiplier.</p>
+          <p>Opts into LockBox (planned) → earns enhanced rewards.</p>
         </div>
         <div class="step">
           <span class="step-number">5</span>

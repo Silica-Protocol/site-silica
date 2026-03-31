@@ -34,7 +34,7 @@ import Layout from '../layouts/Layout.astro';
           
           <p class="text-xl md:text-2xl text-cyan-100/90 mb-10 leading-relaxed max-w-xl">
             The engine powering next-generation blockchain infrastructure with 
-            <span class="text-white font-semibold">sub-second finality</span> and 
+            <span class="text-white font-semibold">fast finality</span> and 
             <span class="text-white font-semibold">post-quantum security</span>.
           </p>
           
@@ -52,11 +52,11 @@ import Layout from '../layouts/Layout.astro';
 
           <div class="grid grid-cols-3 gap-6">
             <div class="text-center p-4 bg-cyan-500/10 backdrop-blur-sm rounded-xl border border-cyan-500/20">
-              <div class="text-2xl md:text-3xl font-bold text-cyan-400">1M+</div>
-              <div class="text-xs text-cyan-200 uppercase tracking-wider mt-1">TPS</div>
+              <div class="text-2xl md:text-3xl font-bold text-cyan-400">High</div>
+              <div class="text-xs text-cyan-200 uppercase tracking-wider mt-1">Throughput</div>
             </div>
             <div class="text-center p-4 bg-teal-500/10 backdrop-blur-sm rounded-xl border border-teal-500/20">
-              <div class="text-2xl md:text-3xl font-bold text-teal-400">&lt;1s</div>
+              <div class="text-2xl md:text-3xl font-bold text-teal-400">Fast</div>
               <div class="text-xs text-teal-200 uppercase tracking-wider mt-1">Finality</div>
             </div>
             <div class="text-center p-4 bg-green-500/10 backdrop-blur-sm rounded-xl border border-green-500/20">
@@ -220,17 +220,17 @@ import Layout from '../layouts/Layout.astro';
         <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
           Technical <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Specifications</span>
         </h2>
-        <p class="text-xl text-blue-100/80 max-w-3xl mx-auto">Real-world performance metrics demonstrating Silica's capabilities.</p>
+        <p class="text-xl text-blue-100/80 max-w-3xl mx-auto">Design targets for the Silica architecture. Measured benchmarks will be published with methodology.</p>
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
         <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 text-center border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300">
-          <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-300 bg-clip-text text-transparent mb-3">1M+</div>
-          <div class="text-sm text-cyan-200 font-medium uppercase tracking-wider">TPS Capability</div>
+          <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-300 bg-clip-text text-transparent mb-3">High</div>
+          <div class="text-sm text-cyan-200 font-medium uppercase tracking-wider">Throughput Target</div>
         </div>
         <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 text-center border border-teal-500/20 hover:border-teal-500/40 transition-all duration-300">
-          <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-teal-400 to-teal-300 bg-clip-text text-transparent mb-3">&lt;1s</div>
-          <div class="text-sm text-teal-200 font-medium uppercase tracking-wider">Finality Time</div>
+          <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-teal-400 to-teal-300 bg-clip-text text-transparent mb-3">Fast</div>
+          <div class="text-sm text-teal-200 font-medium uppercase tracking-wider">Finality Target</div>
         </div>
         <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 text-center border border-green-500/20 hover:border-green-500/40 transition-all duration-300">
           <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-400 to-green-300 bg-clip-text text-transparent mb-3">2/3+</div>
@@ -260,14 +260,14 @@ import Layout from '../layouts/Layout.astro';
             <tbody class="divide-y divide-white/5">
               <tr class="hover:bg-white/5 transition-colors">
                 <td class="py-5 px-8 text-sm text-blue-100">Throughput</td>
-                <td class="py-5 px-6 text-center text-sm font-bold text-blue-400">1M+ TPS</td>
+                <td class="py-5 px-6 text-center text-sm font-bold text-blue-400">Target: high</td>
                 <td class="py-5 px-6 text-center text-sm text-blue-200/70">65K TPS</td>
                 <td class="py-5 px-6 text-center text-sm text-blue-200/70">15 TPS</td>
                 <td class="py-5 px-6 text-center text-sm text-blue-200/70">7 TPS</td>
               </tr>
               <tr class="hover:bg-white/5 transition-colors">
                 <td class="py-5 px-8 text-sm text-blue-100">Finality</td>
-                <td class="py-5 px-6 text-center text-sm font-bold text-blue-400">0.8-1.5s</td>
+                <td class="py-5 px-6 text-center text-sm font-bold text-blue-400">Target: fast</td>
                 <td class="py-5 px-6 text-center text-sm text-blue-200/70">~2.5s</td>
                 <td class="py-5 px-6 text-center text-sm text-blue-200/70">~6 min</td>
                 <td class="py-5 px-6 text-center text-sm text-blue-200/70">~60 min</td>
@@ -355,9 +355,9 @@ import Layout from '../layouts/Layout.astro';
                 <span class="text-slate-400 text-sm font-mono">example.ts</span>
               </div>
               <div class="p-6 font-mono text-sm overflow-x-auto">
-                <pre class="text-slate-300 leading-relaxed"><code set:html={`<span class="text-purple-400">import</span> { <span class="text-blue-300">SilicaClient</span> } <span class="text-purple-400">from</span> <span class="text-green-400">'@silica/sdk'</span>;
+                <pre class="text-slate-300 leading-relaxed"><code set:html={`<span class="text-purple-400">import</span> { <span class="text-blue-300">ChertClient</span> } <span class="text-purple-400">from</span> <span class="text-green-400">'@chert/sdk'</span>;
 
-<span class="text-purple-400">const</span> client = <span class="text-purple-400">new</span> <span class="text-blue-300">SilicaClient</span>({
+<span class="text-purple-400">const</span> client = <span class="text-purple-400">new</span> <span class="text-blue-300">ChertClient</span>({
   network: <span class="text-green-400">'mainnet'</span>,
   apiKey: process.env.<span class="text-amber-300">API_KEY</span>
 });
@@ -400,8 +400,8 @@ console.<span class="text-blue-300">log</span>(<span class="text-green-400">\`Fi
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
           </svg>
         </a>
-        <a href="https://chert.network" class="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm text-white border border-white/20 font-semibold py-4 px-10 rounded-xl hover:bg-white/20 transition-all duration-300">
-          Visit Chert Network →
+        <a href="https://chert.cash" class="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm text-white border border-white/20 font-semibold py-4 px-10 rounded-xl hover:bg-white/20 transition-all duration-300">
+          Visit Chert →
         </a>
       </div>
     </div>

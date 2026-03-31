@@ -614,12 +614,26 @@ import Layout from '../layouts/Layout.astro';
           Performance Benchmarks
         </h2>
         <p class="text-xl text-slate-300 max-w-3xl mx-auto">
-          Real-world performance metrics that demonstrate Silica's superiority in speed, scalability, and efficiency.
+          Architecture design targets. Measured benchmarks will be published with methodology when available.
         </p>
       </div>
 
       <!-- Performance Comparison Charts -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+
+        <!-- Note Banner -->
+        <div class="lg:col-span-2 bg-amber-500/10 border-l-4 border-amber-500 rounded-r-lg p-6">
+          <div class="flex items-start">
+            <svg class="w-6 h-6 text-amber-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+            <div class="ml-3">
+              <p class="text-sm font-semibold text-amber-300 mb-1">Design Targets</p>
+              <p class="text-sm text-slate-300">The numbers below are design targets for the Silica architecture. Third-party TPS numbers are approximate and sourced from public documentation. Silica benchmarks will be published with full methodology when available.</p>
+            </div>
+          </div>
+        </div>
+
         <!-- TPS Comparison -->
         <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-cyan-500/20">
           <h3 class="text-lg font-semibold text-white mb-6">Transaction Throughput (TPS)</h3>
@@ -629,7 +643,7 @@ import Layout from '../layouts/Layout.astro';
               <div class="flex-1 mx-4 bg-slate-700/50 rounded-full h-4">
                 <div class="bg-gradient-to-r from-cyan-500 to-cyan-600 h-4 rounded-full" style="width: 100%"></div>
               </div>
-              <span class="text-sm font-bold text-cyan-400 w-20 text-right">999,847</span>
+              <span class="text-sm font-bold text-cyan-400 w-20 text-right">Target</span>
             </div>
             <div class="flex items-center">
               <span class="text-sm font-medium text-slate-300 w-24 flex-shrink-0">Solana</span>
@@ -664,7 +678,7 @@ import Layout from '../layouts/Layout.astro';
               <div class="flex-1 mx-4 bg-slate-700/50 rounded-full h-4">
                 <div class="bg-gradient-to-r from-green-500 to-green-600 h-4 rounded-full" style="width: 2%"></div>
               </div>
-              <span class="text-sm font-bold text-green-400 w-20 text-right">0.94s</span>
+              <span class="text-sm font-bold text-green-400 w-20 text-right">Target</span>
             </div>
             <div class="flex items-center">
               <span class="text-sm font-medium text-slate-300 w-24 flex-shrink-0">Solana</span>
@@ -691,23 +705,24 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
 
-      <!-- Live Performance Metrics -->
+      <!-- Design Target Metrics -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div class="bg-slate-800/50 backdrop-blur-sm border border-cyan-500/20 rounded-xl p-6 text-center">
-          <div class="text-2xl font-bold text-cyan-400 mb-2" id="live-tps">847,392</div>
-          <div class="text-sm text-slate-300">Current TPS</div>
+          <div class="text-2xl font-bold text-cyan-400 mb-2">High</div>
+          <div class="text-sm text-slate-300">Throughput Target</div>
         </div>
         <div class="bg-slate-800/50 backdrop-blur-sm border border-teal-500/20 rounded-xl p-6 text-center">
-          <div class="text-2xl font-bold text-teal-400 mb-2" id="live-finality">0.87s</div>
-          <div class="text-sm text-slate-300">Avg Finality</div>
+          <div class="text-2xl font-bold text-teal-400 mb-2">Fast</div>
+          <div class="text-sm text-slate-300">Finality Target</div>
         </div>
         <div class="bg-slate-800/50 backdrop-blur-sm border border-green-500/20 rounded-xl p-6 text-center">
-          <div class="text-2xl font-bold text-green-400 mb-2">12,847</div>
-          <div class="text-sm text-slate-300">Active Validators</div>
+          <div class="text-2xl font-bold text-green-400 mb-2">100–200</div>
+          <div class="text-sm text-slate-300">Validator Set (target)</div>
         </div>
         <div class="bg-slate-800/50 backdrop-blur-sm border border-emerald-500/20 rounded-xl p-6 text-center">
-          <div class="text-2xl font-bold text-emerald-400 mb-2">99.97%</div>
-          <div class="text-sm text-slate-300">Network Uptime</div>
+          <div class="text-2xl font-bold text-emerald-400 mb-2">PQ</div>
+          <div class="text-sm text-slate-300">Post-Quantum Secure</div>
+        </div>
         </div>
       </div>
     </div>
@@ -799,7 +814,7 @@ import Layout from '../layouts/Layout.astro';
         Dive deeper into Silica's advanced architecture and technical specifications.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/docs" class="bg-white text-teal-700 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors">
+        <a href="/developers" class="bg-white text-teal-700 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors">
           Technical Documentation
         </a>
         <a href="/developers" class="bg-white/10 backdrop-blur-sm text-white border border-white font-semibold py-3 px-8 rounded-lg hover:bg-white hover:text-teal-700 transition-colors">
@@ -1431,27 +1446,6 @@ import Layout from '../layouts/Layout.astro';
 <!-- Interactive Script -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Animate live performance metrics
-    function animateLiveMetrics() {
-      const tpsElement = document.getElementById('live-tps');
-      const finalityElement = document.getElementById('live-finality');
-
-      if (tpsElement) {
-        const baseTps = 800000;
-        const variation = 100000;
-        const newTps = baseTps + Math.floor(Math.random() * variation);
-        tpsElement.textContent = newTps.toLocaleString();
-      }
-
-      if (finalityElement) {
-        const baseFinality = 0.8;
-        const variation = 0.4;
-        const newFinality = (baseFinality + Math.random() * variation).toFixed(2);
-        finalityElement.textContent = newFinality + 's';
-      }
-    }
-
-    // Update metrics every 3 seconds
-    setInterval(animateLiveMetrics, 3000);
+    // Performance metric animations removed — no live metrics to display
   });
 </script>
