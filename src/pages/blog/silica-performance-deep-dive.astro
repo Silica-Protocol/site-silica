@@ -4,7 +4,7 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
 <ArticleLayout 
   title="Silica Deep Dive: Speed, Performance & Reliability"
-  description="A closer look at how Silica achieves fast, secure, and resilient finality through Tephra, deterministic execution, and anchors."
+  description="A closer look at how Silica achieves fast, secure, and resilient finality through Alluvium, Tephra, Crystallite, Lithification, and Cali."
   author="Silica Network Team"
   date="2024-12-04"
   category="Protocol Architecture"
@@ -17,7 +17,7 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
       </p>
       <ul>
         <li><strong>Pre-final admission (100–300ms):</strong> As soon as a batch is referenced by enough validator activity in the DAG, wallets and explorers can show it as "Pre-Final." This gives the user an immediate confirmation signal while full finality is pending.</li>
-        <li><strong>Finalized apply (0.8–1.5s):</strong> Once Tephra order commits and the block is applied locally, transactions are finalized permanently — no rollbacks, no forks. Lineations and certificates package proofs and checkpoints for monitoring, sync, and audit.</li>
+        <li><strong>Finalized apply (0.8–1.5s):</strong> Once Tephra order commits and Crystallite applies the block locally, transactions are finalized permanently — no rollbacks, no forks. Lithification then packages proofs and checkpoints for monitoring, sync, and audit.</li>
       </ul>
 
       <div class="code-block">
@@ -40,15 +40,16 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
     </section>
 
     <section class="content-section">
-      <h2>🧩 Tephra: Sync, Order, Apply</h2>
+      <h2>🧩 Layered Pipeline: Batch, Order, Apply, Prove</h2>
       <p>
-        At the core, Silica uses <strong>Tephra</strong> as a consolidated consensus fabric. Older notes may mention Alluvium and Crystallite, but the current system folds batching, gossip sync, and deterministic ordering into Tephra:
+        At the core, Silica uses a branded layered architecture:
       </p>
       <ul>
-        <li><strong>Batching:</strong> Transactions are grouped into proposal payloads for efficient network fanout.</li>
-        <li><strong>Gossip sync:</strong> Peers exchange missing Tephra events and record who saw what via self/other-parent links.</li>
-        <li><strong>Deterministic order:</strong> Virtual voting computes the same proposal order at every honest node.</li>
-        <li><strong>Apply + anchors:</strong> Execution applies that order locally while anchors package proofs for monitoring and recovery.</li>
+        <li><strong>Alluvium:</strong> Transactions are grouped into proposal payloads for efficient network fanout.</li>
+        <li><strong>Tephra:</strong> Peers exchange missing events and record who saw what via self/other-parent links, then derive deterministic order.</li>
+        <li><strong>Crystallite:</strong> Execution applies that order locally in deterministic lanes.</li>
+        <li><strong>Lithification:</strong> Anchors and certificates package proofs for monitoring and recovery.</li>
+        <li><strong>Cali:</strong> Recovery watchdogs observe the network and help restart cleanly when liveness degrades.</li>
       </ul>
 
       <div class="code-block">
@@ -59,7 +60,7 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
       <div class="code-block bg-blue-50 border-l-4 border-blue-500 p-4 my-4">
         <p class="text-sm font-semibold text-gray-800 mb-2">Ordering Source of Truth:</p>
         <p class="text-sm text-gray-700">
-          Tephra consensus order is the only ordering truth. Execution must not invent a new order; it applies the committed result and emits proofs and checkpoints for auditability.
+          Tephra consensus order is the only ordering truth. Crystallite applies the committed result, Lithification emits proofs and checkpoints, and Cali watches health and recovery.
         </p>
       </div>
 
@@ -210,10 +211,10 @@ async fn gossip_batch_digest(&amp;self, batch: &amp;MicroBatch) -&gt; Result&lt;
         Silica achieves instant UX, deterministic finality, and global fairness through:
       </p>
       <ul>
-        <li><strong>Tephra consensus fabric + local finalized apply.</strong></li>
+        <li><strong>Alluvium + Tephra + Crystallite + Lithification + Cali.</strong></li>
         <li><strong>Parallel sharding with access lists.</strong></li>
         <li><strong>GPoD-driven geographic balance.</strong></li>
-        <li><strong>Monitoring-driven liveness guarantees.</strong></li>
+        <li><strong>Cali-driven liveness guarantees.</strong></li>
         <li><strong>Post-quantum cryptography for future safety.</strong></li>
       </ul>
       <p class="conclusion">

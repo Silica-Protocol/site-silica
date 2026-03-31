@@ -1,0 +1,137 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const healthSnippet = String.raw`curl https://rpc.testnet.silicaprotocol.network/health
+curl https://rpc.testnet.silicaprotocol.network/info
+curl https://rpc.testnet.silicaprotocol.network/metrics`;
+
+const rpcSnippet = String.raw`fetch('https://rpc.testnet.silicaprotocol.network', {
+  method: 'POST',
+  headers: { 'content-type': 'application/json' },
+  body: JSON.stringify({
+    jsonrpc: '2.0',
+    id: 1,
+    method: 'get_block_number',
+    params: []
+  })
+});`;
+
+const plannedSnippet = String.raw`GET /v1/identity/{id}
+GET /v1/pouw/leaderboard?type=boinc&timeframe=week
+GET /v1/governance/proposals?status=active
+GET /v1/explorer/block/{height}`;
+---
+
+<Layout title="API - Silica Protocol" description="How to integrate with Silica today via node RPC, plus the planned indexed API layer for wallets, explorers, and analytics.">
+  <section class="relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white py-28 overflow-hidden">
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(rgba(14,165,233,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(14,165,233,0.3) 1px, transparent 1px); background-size: 60px 60px;"></div>
+      <div class="absolute top-1/4 left-1/4 w-[360px] h-[360px] rounded-full bg-cyan-500/15 blur-[120px] animate-pulse"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-[320px] h-[320px] rounded-full bg-teal-500/15 blur-[120px] animate-pulse" style="animation-duration: 6s;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl">
+        <span class="inline-flex items-center rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1 text-sm font-medium text-cyan-300 mb-6">API access</span>
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">Connect to <span class="bg-gradient-to-r from-cyan-400 via-teal-400 to-green-400 bg-clip-text text-transparent">Silica data surfaces</span></h1>
+        <p class="text-xl text-cyan-100/90 max-w-3xl">
+          Silica exposes direct node RPC and telemetry surfaces today, with a richer indexed API layer planned for explorers, wallets, governance dashboards, and analytics-heavy products.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-cyan-500/20">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-2xl font-bold text-white">Direct node access today</h2>
+            <span class="rounded-full bg-green-500/15 text-green-300 px-3 py-1 text-sm font-medium border border-green-500/20">Live path</span>
+          </div>
+          <p class="text-slate-300 mb-6">
+            For production integrations that need raw chain data, the current source of truth is the node itself: JSON-RPC, health, info, and metrics endpoints.
+          </p>
+          <ul class="space-y-3 text-slate-300 text-sm">
+            <li>• Query chain state and latest height directly from RPC</li>
+            <li>• Use <code class="text-cyan-300">/health</code>, <code class="text-cyan-300">/info</code>, and <code class="text-cyan-300">/metrics</code> for operator telemetry</li>
+            <li>• Keep your app close to the protocol when you need zero aggregation lag</li>
+          </ul>
+        </div>
+
+        <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-amber-500/20">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-2xl font-bold text-white">Indexed API layer</h2>
+            <span class="rounded-full bg-amber-500/15 text-amber-300 px-3 py-1 text-sm font-medium border border-amber-500/20">Planned</span>
+          </div>
+          <p class="text-slate-300 mb-6">
+            The repository already defines an aggregation and query service for higher-level app experiences. It is designed as a read-only service that continuously indexes chain and oracle data into fast query surfaces.
+          </p>
+          <ul class="space-y-3 text-slate-300 text-sm">
+            <li>• REST and gRPC for low-latency app queries</li>
+            <li>• Identity, PoUW, governance, and explorer views</li>
+            <li>• PostgreSQL-backed indexing with hot-data caching</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-slate-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Designed endpoint families</h2>
+        <p class="text-xl text-slate-300 max-w-3xl mx-auto">The planned API backend is shaped around four product surfaces that cover most consumer and developer application needs.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-cyan-500/20">
+          <h3 class="text-lg font-semibold text-cyan-300 mb-3">Identity</h3>
+          <p class="text-slate-300 text-sm">Public profiles, linked wallets, and searchable identity records for apps that need user-facing metadata.</p>
+        </div>
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-teal-500/20">
+          <h3 class="text-lg font-semibold text-teal-300 mb-3">PoUW</h3>
+          <p class="text-slate-300 text-sm">Work submissions, leaderboards, contribution history, and oracle-backed useful-work analytics.</p>
+        </div>
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-green-500/20">
+          <h3 class="text-lg font-semibold text-green-300 mb-3">Governance</h3>
+          <p class="text-slate-300 text-sm">Proposal details, participation rates, vote breakdowns, and governance power summaries.</p>
+        </div>
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-purple-500/20">
+          <h3 class="text-lg font-semibold text-purple-300 mb-3">Explorer</h3>
+          <p class="text-slate-300 text-sm">Recent blocks, transaction details, address history, and balance lookups for explorer and wallet UIs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-cyan-500/20">
+        <h3 class="text-lg font-semibold text-white mb-4">Health and telemetry</h3>
+        <pre class="bg-slate-950 rounded-lg p-4 overflow-x-auto border border-slate-700 text-sm text-slate-300"><code>{healthSnippet}</code></pre>
+      </div>
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-teal-500/20">
+        <h3 class="text-lg font-semibold text-white mb-4">Direct JSON-RPC</h3>
+        <pre class="bg-slate-950 rounded-lg p-4 overflow-x-auto border border-slate-700 text-sm text-slate-300"><code>{rpcSnippet}</code></pre>
+      </div>
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-amber-500/20">
+        <h3 class="text-lg font-semibold text-white mb-4">Indexed API shape</h3>
+        <pre class="bg-slate-950 rounded-lg p-4 overflow-x-auto border border-slate-700 text-sm text-slate-300"><code>{plannedSnippet}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-slate-950">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Choose the right integration surface</h2>
+      <p class="text-xl text-slate-300 mb-8">
+        Use direct node RPC when you want minimal abstraction. Use the planned indexed API model when you need fast composite queries for dashboards, explorers, and rich wallet experiences.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/sdk" class="bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-semibold py-3 px-8 rounded-lg hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300">See SDKs</a>
+        <a href="/nodes" class="bg-white/10 backdrop-blur-sm text-white border border-white/20 font-semibold py-3 px-8 rounded-lg hover:bg-white hover:text-slate-900 transition-all duration-300">Run a node</a>
+      </div>
+    </div>
+  </section>
+</Layout>

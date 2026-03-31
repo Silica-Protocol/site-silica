@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const contractRepos = [
+  { name: 'CRC-20', slug: 'crc20', description: 'Fungible token standard with transfers, allowances, minting, metadata, and events.', color: 'cyan' },
+  { name: 'CRC-721', slug: 'crc721', description: 'NFT standard for ownership, approvals, token metadata, and transfer flows.', color: 'sky' },
+  { name: 'DAO Governor', slug: 'dao-governor', description: 'On-chain governance with proposals, voting, delegation, quorum, and execution queues.', color: 'purple' },
+  { name: 'Timelock', slug: 'timelock', description: 'Delayed execution and role-gated scheduling for upgrades and protected operations.', color: 'amber' },
+  { name: 'Staking Pool', slug: 'staking-pool', description: 'Pooling and delegation flows for users who want managed staking participation.', color: 'green' },
+  { name: 'Cross-Shard Bridge', slug: 'cross-shard-bridge', description: 'Bridge primitives for asset movement and message passing between shards.', color: 'teal' },
+  { name: 'DEX / AMM', slug: 'dex-amm', description: 'Decentralized exchange and liquidity-pool building blocks.', color: 'rose' },
+  { name: 'Multisig', slug: 'multisig', description: 'M-of-N approval workflows for treasury and operational control.', color: 'orange' },
+  { name: 'Oracle', slug: 'oracle', description: 'On-chain bridge points for oracle-style integrations and external data trust surfaces.', color: 'indigo' },
+  { name: 'Privacy Token', slug: 'privacy-token', description: 'Confidential transfer patterns and privacy-oriented token behavior.', color: 'emerald' },
+];
+
+const docs = [
+  {
+    title: 'Contracts overview',
+    url: 'https://github.com/Silica-Protocol/protocol/blob/main/contracts/README.md',
+    description: 'Overview of the contract model, architecture, and standard contract families in the Silica ecosystem.'
+  },
+  {
+    title: 'Rust SDK specification',
+    url: 'https://github.com/Silica-Protocol/protocol/blob/main/contracts/RUST_SDK_SPEC.md',
+    description: 'Reference specification for the Rust contract SDK and the contract authoring model.'
+  },
+  {
+    title: 'Contract SDK README',
+    url: 'https://github.com/Silica-Protocol/protocol/blob/main/contracts/_sdk/README.md',
+    description: 'Practical SDK usage guide covering storage, events, execution context, and examples.'
+  },
+];
+---
+
+<Layout title="Contracts - Silica Protocol" description="System and standard contracts for the Silica ecosystem, with direct links to the individual contract repositories and the current in-repo contract documentation.">
+  <section class="relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white py-28 overflow-hidden">
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(rgba(168,85,247,0.28) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,0.28) 1px, transparent 1px); background-size: 60px 60px;"></div>
+      <div class="absolute top-1/3 left-1/4 w-[360px] h-[360px] rounded-full bg-purple-500/15 blur-[120px] animate-pulse"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-[320px] h-[320px] rounded-full bg-cyan-500/15 blur-[120px] animate-pulse" style="animation-duration: 6s;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl">
+        <span class="inline-flex items-center rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-1 text-sm font-medium text-purple-300 mb-6">Smart Contracts</span>
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">Build with <span class="bg-gradient-to-r from-cyan-400 via-teal-400 to-purple-400 bg-clip-text text-transparent">Silica smart contracts</span></h1>
+        <p class="text-xl text-purple-100/90 max-w-3xl">
+          Explore the contract SDK, core references, and contract repositories for tokens, governance, bridges, staking, privacy, treasury control, and other programmable building blocks across the Silica ecosystem.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Core documentation</h2>
+        <p class="text-xl text-slate-300 max-w-3xl mx-auto">Start with the core references for the contract model, SDK surface, and developer workflow in the main Silica protocol repository.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {docs.map((doc) => (
+          <a href={doc.url} target="_blank" rel="noopener noreferrer" class="block bg-slate-800/50 rounded-xl p-6 border border-purple-500/20 hover:border-purple-500/40 hover:shadow-xl hover:shadow-purple-500/20 transition-all duration-300">
+            <h3 class="text-xl font-semibold text-white mb-3">{doc.title}</h3>
+            <p class="text-sm text-slate-300">{doc.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-slate-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Contract repositories</h2>
+        <p class="text-xl text-slate-300 max-w-3xl mx-auto">Browse the contract libraries and reference implementations published under <code class="text-purple-300">Silica-Contracts</code>.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {contractRepos.map((contract) => (
+          <div class="bg-slate-800/50 rounded-xl p-6 border border-purple-500/20 flex flex-col hover:border-purple-500/40 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300">
+            <h3 class="text-xl font-semibold text-white mb-3">{contract.name}</h3>
+            <p class="text-sm text-slate-300 mb-5 flex-1">{contract.description}</p>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a href={`https://github.com/Silica-Contracts/${contract.slug}`} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-purple-500/10 text-purple-300 border border-purple-500/30 rounded-lg px-4 py-2 text-sm font-medium hover:bg-purple-500 hover:text-white transition-all duration-300">View repo</a>
+              <a href={`https://github.com/Silica-Contracts/${contract.slug}#readme`} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-white/5 text-slate-200 border border-white/10 rounded-lg px-4 py-2 text-sm font-medium hover:bg-white hover:text-slate-900 transition-all duration-300">Open README</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-slate-900">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Start with the right entry point</h2>
+      <p class="text-xl text-slate-300 mb-8">
+        Use the SDK page for client integrations, the API page for data surfaces, and the contracts page for protocol-native programmable building blocks and reference implementations.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/sdk" class="bg-gradient-to-r from-purple-500 to-cyan-500 text-white font-semibold py-3 px-8 rounded-lg hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300">View SDKs</a>
+        <a href="/api" class="bg-white/10 backdrop-blur-sm text-white border border-white/20 font-semibold py-3 px-8 rounded-lg hover:bg-white hover:text-slate-900 transition-all duration-300">Explore APIs</a>
+      </div>
+    </div>
+  </section>
+</Layout>

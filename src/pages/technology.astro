@@ -3,7 +3,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Technology - Silica Protocol" description="Deep dive into Tephra, deterministic execution, high-throughput batching, and post-quantum security in Silica Protocol">
+<Layout title="Technology - Silica Protocol" description="Deep dive into Alluvium, Tephra, Crystallite, Lithification, and Cali — Silica's branded layered architecture">
   <!-- Hero Section -->
   <section class="relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white py-32 overflow-hidden">
     <!-- Animated Background Nodes -->
@@ -33,7 +33,7 @@ import Layout from '../layouts/Layout.astro';
           Consensus Architecture
         </h2>
         <p class="text-xl text-slate-300 max-w-3xl mx-auto">
-          Tephra now consolidates Silica's former dissemination and ordering layers into one consensus fabric: transactions are batched, peers gossip-sync a shared event DAG, virtual voting derives deterministic order, execution lanes apply that order, and anchors/proofs make the result auditable and recoverable.
+          Silica uses a named layered architecture: <strong>Alluvium</strong> batches and disseminates payloads, <strong>Tephra</strong> orders them through gossip-about-gossip consensus, <strong>Crystallite</strong> applies the ordered result, <strong>Lithification</strong> packages proofs and checkpoints, and <strong>Cali</strong> monitors health and recovery.
         </p>
       </div>
 
@@ -46,11 +46,11 @@ import Layout from '../layouts/Layout.astro';
           <div class="ml-3">
             <p class="text-sm font-semibold text-white mb-2">Architecture Note</p>
             <p class="text-sm text-slate-300">
-              This page reflects the current architecture source of truth. Older research notes may still mention Alluvium and Crystallite; in the live architecture those responsibilities are folded into Tephra. Implementation details and performance metrics evolve as we optimize the network. For technical implementation details, see the 
+              This page reflects the current architecture source of truth. The names on this page are intentional current layer names, chosen to fit the system as it exists today. Implementation details and performance metrics evolve as we optimize the network. For technical implementation details, see the 
               <a href="https://github.com/Silica-Protocol/Silica-Protocol" class="text-cyan-400 hover:underline">GitHub repository</a>.
             </p>
             <p class="text-sm text-slate-400 mt-2">
-              Historical shorthand: <strong>Alluvium</strong> maps roughly to ingress, batching, and payload dissemination; <strong>Crystallite</strong> maps to deterministic ordering; execution/apply is the stage after ordering, not a renamed Crystallite.
+              Canonical shorthand: <strong>Alluvium</strong> = data plane, <strong>Tephra</strong> = ordering/consensus, <strong>Crystallite</strong> = execution/apply, <strong>Lithification</strong> = proofs/checkpoints, <strong>Cali</strong> = monitoring/recovery.
             </p>
           </div>
         </div>
@@ -75,11 +75,11 @@ import Layout from '../layouts/Layout.astro';
                       </svg>
                     </div>
                     <div>
-                      <div class="text-xs font-semibold text-cyan-400 mb-1">SYSTEM 1 • TEPHRA SYNC</div>
-                      <h3 class=\"text-2xl font-bold text-white\">Tephra Ingress</h3>
+                      <div class="text-xs font-semibold text-cyan-400 mb-1">LAYER 1 • DATA PLANE</div>
+                      <h3 class=\"text-2xl font-bold text-white\">Alluvium</h3>
                     </div>
                   </div>
-                  <p class="text-slate-200 mb-4">Transaction intake, batching, and gossip-about-gossip sync keep nodes aligned on what happened and who saw what.</p>
+                  <p class="text-slate-200 mb-4">Narwhal-inspired data plane for transaction intake, batching, and dissemination into consensus.</p>
                   <ul class="space-y-2 text-sm text-slate-300">
                     <li class="flex items-start">
                       <span class="text-cyan-400 mr-2">•</span>
@@ -87,15 +87,15 @@ import Layout from '../layouts/Layout.astro';
                     </li>
                     <li class="flex items-start">
                       <span class="text-cyan-400 mr-2">•</span>
-                      Records self-parent / other-parent links during each sync
+                      Disseminates payloads and references into the ordering layer
                     </li>
                     <li class="flex items-start">
                       <span class="text-cyan-400 mr-2">•</span>
-                      Exchanges missing events instead of relying on separate vote traffic
+                      Keeps batching and network dissemination distinct from consensus ordering
                     </li>
                     <li class="flex items-start">
                       <span class="text-cyan-400 mr-2">•</span>
-                      Keeps dissemination and causal history inside one consensus fabric
+                      Narwhal-style batching inspiration belongs here
                     </li>
                   </ul>
                   <!-- Animated Batches -->\n                  <div class="mt-4 flex gap-2">
@@ -109,7 +109,7 @@ import Layout from '../layouts/Layout.astro';
               <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-full border-4 border-slate-900 shadow-lg shadow-cyan-500/50"></div>
               <div class="lg:w-1/2 lg:pl-12">
                 <div class="consensus-anim consensus-anim--alluvium" aria-hidden="true">
-                  <div class="consensus-anim__label">Tephra: batching + sync</div>
+                  <div class="consensus-anim__label">Alluvium: batching + dissemination</div>
                   <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
                     <defs>
                       <linearGradient id="alluviumFlow" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
@@ -145,7 +145,7 @@ import Layout from '../layouts/Layout.astro';
             <div class="lg:flex items-center">
               <div class="lg:w-1/2 lg:pr-12">
                 <div class="consensus-anim consensus-anim--crystallite" aria-hidden="true">
-                  <div class="consensus-anim__label">Tephra: virtual ordering</div>
+                  <div class="consensus-anim__label">Tephra: gossip + ordering</div>
                   <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
                     <defs>
                       <linearGradient id="crystalOrder" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
@@ -191,11 +191,11 @@ import Layout from '../layouts/Layout.astro';
                       </svg>
                     </div>
                     <div>
-                      <div class="text-xs font-semibold text-teal-400 mb-1">SYSTEM 1 • TEPHRA ORDERING</div>
-                      <h3 class="text-2xl font-bold text-white">Tephra Ordering</h3>
+                      <div class="text-xs font-semibold text-teal-400 mb-1">LAYER 2 • ORDERING</div>
+                      <h3 class="text-2xl font-bold text-white">Tephra</h3>
                     </div>
                   </div>
-                  <p class="text-slate-200 mb-4">Hashgraph rounds, visibility rules, and virtual voting turn the shared event DAG into deterministic proposal order.</p>
+                  <p class="text-slate-200 mb-4">Gossip-about-gossip consensus layer that turns the shared event DAG into deterministic proposal order.</p>
                   <ul class="space-y-2 text-sm text-slate-300">
                     <li class="flex items-start">
                       <span class="text-teal-400 mr-2">•</span>
@@ -211,7 +211,7 @@ import Layout from '../layouts/Layout.astro';
                     </li>
                     <li class="flex items-start">
                       <span class="text-teal-400 mr-2">•</span>
-                      Inspired by DAG-first batching and structural-commit research
+                      Ordering truth for the entire protocol
                     </li>
                   </ul>
                   <!-- Animated Ordering -->
@@ -223,7 +223,7 @@ import Layout from '../layouts/Layout.astro';
             </div>
           </div>
 
-           <!-- Phase 3: The Striation (Left Side) -->
+           <!-- Phase 3: Crystallite Execution (Left Side) -->
            <div class="relative mb-16">
              <div class="lg:flex items-center">
                <div class="lg:w-1/2 lg:pr-12 mb-6 lg:mb-0">
@@ -235,8 +235,8 @@ import Layout from '../layouts/Layout.astro';
                        </svg>
                      </div>
                      <div>
-                       <div class="text-xs font-semibold text-indigo-400 mb-1">SYSTEM 2 • EXECUTION</div>
-                       <h3 class="text-2xl font-bold text-white">Execution Lanes</h3>
+                       <div class="text-xs font-semibold text-indigo-400 mb-1">LAYER 3 • EXECUTION / APPLY</div>
+                       <h3 class="text-2xl font-bold text-white">Crystallite</h3>
                      </div>
                    </div>
                    <p class="text-slate-200 mb-4">Parallel execution framework that applies Tephra order across deterministic state lanes.</p>
@@ -247,7 +247,7 @@ import Layout from '../layouts/Layout.astro';
                      </li>
                      <li class="flex items-start">
                        <span class="text-indigo-400 mr-2">•</span>
-                       Each Stria is a single deterministic execution context
+                       Each execution lane is a single deterministic execution context
                      </li>
                      <li class="flex items-start">
                        <span class="text-indigo-400 mr-2">•</span>
@@ -267,11 +267,11 @@ import Layout from '../layouts/Layout.astro';
                </div>
                <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-full border-4 border-slate-900 shadow-lg shadow-indigo-500/50"></div>
                <div class="lg:w-1/2 lg:pl-12">
-                  <div class="consensus-anim consensus-anim--striation" aria-hidden="true">
-                   <div class="consensus-anim__label">Execution lanes: route txs → state</div>
+                  <div class="consensus-anim consensus-anim--crystallite-lanes" aria-hidden="true">
+                   <div class="consensus-anim__label">Crystallite: route txs → state</div>
                    <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
                      <defs>
-                       <linearGradient id="striaFlow" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
+                       <linearGradient id="laneFlow" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
                          <stop stop-color="#818CF8" stop-opacity="0.95" />
                          <stop offset="1" stop-color="#60A5FA" stop-opacity="0.95" />
                        </linearGradient>
@@ -289,31 +289,31 @@ import Layout from '../layouts/Layout.astro';
                      </g>
 
                      <!-- Execution lanes -->
-                     <path d="M92 69C132 69 152 60 190 60" stroke="url(#striaFlow)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.52" />
-                     <path d="M92 101C132 101 152 101 190 101" stroke="url(#striaFlow)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.42" />
-                     <path d="M92 133C132 133 152 142 190 142" stroke="url(#striaFlow)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.32" />
+                     <path d="M92 69C132 69 152 60 190 60" stroke="url(#laneFlow)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.52" />
+                     <path d="M92 101C132 101 152 101 190 101" stroke="url(#laneFlow)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.42" />
+                     <path d="M92 133C132 133 152 142 190 142" stroke="url(#laneFlow)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.32" />
 
                      <!-- Account state blocks -->
-                     <g class="stria-account stria-account--a">
-                       <rect class="stria-account-shell" x="198" y="48" width="78" height="30" rx="12" fill="#0F172A" fill-opacity="0.35" stroke="#818CF8" stroke-opacity="0.35" />
-                       <rect class="stria-account-fill stria-account-fill--a" x="206" y="66" width="62" height="6" rx="3" fill="url(#striaFlow)" fill-opacity="0.7" />
+                     <g class="lane-account lane-account--a">
+                       <rect class="lane-account-shell" x="198" y="48" width="78" height="30" rx="12" fill="#0F172A" fill-opacity="0.35" stroke="#818CF8" stroke-opacity="0.35" />
+                       <rect class="lane-account-fill lane-account-fill--a" x="206" y="66" width="62" height="6" rx="3" fill="url(#laneFlow)" fill-opacity="0.7" />
                        <text x="237" y="67" text-anchor="middle" font-size="10" font-weight="700" fill="#E2E8F0" fill-opacity="0.75">acct</text>
                      </g>
-                     <g class="stria-account stria-account--b">
-                       <rect class="stria-account-shell" x="198" y="80" width="78" height="30" rx="12" fill="#0F172A" fill-opacity="0.35" stroke="#818CF8" stroke-opacity="0.35" />
-                       <rect class="stria-account-fill stria-account-fill--b" x="206" y="98" width="62" height="6" rx="3" fill="url(#striaFlow)" fill-opacity="0.55" />
+                     <g class="lane-account lane-account--b">
+                       <rect class="lane-account-shell" x="198" y="80" width="78" height="30" rx="12" fill="#0F172A" fill-opacity="0.35" stroke="#818CF8" stroke-opacity="0.35" />
+                       <rect class="lane-account-fill lane-account-fill--b" x="206" y="98" width="62" height="6" rx="3" fill="url(#laneFlow)" fill-opacity="0.55" />
                        <text x="237" y="99" text-anchor="middle" font-size="10" font-weight="700" fill="#E2E8F0" fill-opacity="0.75">acct</text>
                      </g>
-                     <g class="stria-account stria-account--c">
-                       <rect class="stria-account-shell" x="198" y="112" width="78" height="30" rx="12" fill="#0F172A" fill-opacity="0.35" stroke="#818CF8" stroke-opacity="0.35" />
-                       <rect class="stria-account-fill stria-account-fill--c" x="206" y="130" width="62" height="6" rx="3" fill="url(#striaFlow)" fill-opacity="0.4" />
+                     <g class="lane-account lane-account--c">
+                       <rect class="lane-account-shell" x="198" y="112" width="78" height="30" rx="12" fill="#0F172A" fill-opacity="0.35" stroke="#818CF8" stroke-opacity="0.35" />
+                       <rect class="lane-account-fill lane-account-fill--c" x="206" y="130" width="62" height="6" rx="3" fill="url(#laneFlow)" fill-opacity="0.4" />
                        <text x="237" y="131" text-anchor="middle" font-size="10" font-weight="700" fill="#E2E8F0" fill-opacity="0.75">acct</text>
                      </g>
 
                      <!-- Transactions routed into lanes -->
-                     <circle class="stria-tx stria-tx--a" cx="92" cy="69" r="7" fill="url(#striaFlow)" />
-                     <circle class="stria-tx stria-tx--b" cx="92" cy="101" r="7" fill="url(#striaFlow)" fill-opacity="0.8" />
-                     <circle class="stria-tx stria-tx--c" cx="92" cy="133" r="7" fill="url(#striaFlow)" fill-opacity="0.6" />
+                     <circle class="lane-tx lane-tx--a" cx="92" cy="69" r="7" fill="url(#laneFlow)" />
+                     <circle class="lane-tx lane-tx--b" cx="92" cy="101" r="7" fill="url(#laneFlow)" fill-opacity="0.8" />
+                     <circle class="lane-tx lane-tx--c" cx="92" cy="133" r="7" fill="url(#laneFlow)" fill-opacity="0.6" />
                    </svg>
                  </div>
                </div>
@@ -324,11 +324,11 @@ import Layout from '../layouts/Layout.astro';
            <div class="relative mb-16">
              <div class="lg:flex items-center">
                <div class="lg:w-1/2 lg:pr-12">
-                 <div class="consensus-anim consensus-anim--calib" aria-hidden="true">
-                   <div class="consensus-anim__label">Monitoring: health + watchdog</div>
+                 <div class="consensus-anim consensus-anim--cali" aria-hidden="true">
+                   <div class="consensus-anim__label">Cali: health + watchdog</div>
                    <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
                      <defs>
-                       <linearGradient id="calibGlow" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
+                       <linearGradient id="caliGlow" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
                          <stop stop-color="#FBBF24" stop-opacity="0.95" />
                          <stop offset="1" stop-color="#F59E0B" stop-opacity="0.95" />
                        </linearGradient>
@@ -339,11 +339,11 @@ import Layout from '../layouts/Layout.astro';
                      <rect x="66" y="74" width="70" height="32" rx="12" fill="#FBBF24" fill-opacity="0.15" stroke="#FBBF24" stroke-opacity="0.4" />
                      <rect x="184" y="74" width="70" height="32" rx="12" fill="#FBBF24" fill-opacity="0.15" stroke="#FBBF24" stroke-opacity="0.4" />
 
-                     <path d="M146 90h28" stroke="url(#calibGlow)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.55" />
-                     <path class="calib-check" d="M156 90l6 6 12-14" stroke="url(#calibGlow)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                     <path d="M146 90h28" stroke="url(#caliGlow)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.55" />
+                     <path class="cali-check" d="M156 90l6 6 12-14" stroke="url(#caliGlow)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
 
-                     <circle class="calib-pulse" cx="270" cy="90" r="10" fill="url(#calibGlow)" fill-opacity="0.7" />
-                     <circle class="calib-pulse-ring" cx="270" cy="90" r="10" stroke="url(#calibGlow)" stroke-width="3" stroke-opacity="0.65" />
+                     <circle class="cali-pulse" cx="270" cy="90" r="10" fill="url(#caliGlow)" fill-opacity="0.7" />
+                     <circle class="cali-pulse-ring" cx="270" cy="90" r="10" stroke="url(#caliGlow)" stroke-width="3" stroke-opacity="0.65" />
                    </svg>
                  </div>
                </div>
@@ -357,8 +357,8 @@ import Layout from '../layouts/Layout.astro';
                        </svg>
                      </div>
                      <div>
-                       <div class="text-xs font-semibold text-amber-400 mb-1">SYSTEM 3 • OBSERVE</div>
-                       <h3 class="text-2xl font-bold text-white">Monitoring &amp; Recovery</h3>
+                       <div class="text-xs font-semibold text-amber-400 mb-1">LAYER 4 • MONITOR / RECOVER</div>
+                       <h3 class="text-2xl font-bold text-white">Cali</h3>
                      </div>
                    </div>
                    <p class="text-slate-200 mb-4">Operational watchdogs, peer-readiness checks, and recovery flows keep the network convergent under stalls or churn.</p>
@@ -400,8 +400,8 @@ import Layout from '../layouts/Layout.astro';
                       </svg>
                     </div>
                      <div>
-                       <div class="text-xs font-semibold text-green-400 mb-1">SYSTEM 4 • FINALIZE</div>
-                       <h3 class="text-2xl font-bold text-white">Apply + Proofs</h3>
+                       <div class="text-xs font-semibold text-green-400 mb-1">LAYER 5 • PROOFS / CHECKPOINTS</div>
+                       <h3 class="text-2xl font-bold text-white">Lithification</h3>
                      </div>
                   </div>
                    <p class="text-slate-200 mb-4">Once ordered proposals are applied locally, state transitions are final; anchors and proofs package the result for audit, replay, and fast sync.</p>
@@ -432,7 +432,7 @@ import Layout from '../layouts/Layout.astro';
               <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-full border-4 border-slate-900 shadow-lg shadow-green-500/50"></div>
               <div class="lg:w-1/2 lg:pl-12">
                 <div class="consensus-anim consensus-anim--lithification" aria-hidden="true">
-                  <div class="consensus-anim__label">Apply + proofs: seal final state</div>
+                  <div class="consensus-anim__label">Lithification: seal final proof</div>
                   <svg class="consensus-anim__svg" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
                     <defs>
                       <linearGradient id="lithSeal" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
@@ -464,24 +464,24 @@ import Layout from '../layouts/Layout.astro';
          <h3 class="text-lg font-semibold text-white mb-4">Layer Stack</h3>
          <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 text-sm">
            <div class="text-center">
-             <div class="font-semibold text-cyan-400 mb-1">1. Tephra ingress</div>
-             <div class="text-slate-400 text-xs">batching / sync</div>
+             <div class="font-semibold text-cyan-400 mb-1">1. Alluvium</div>
+             <div class="text-slate-400 text-xs">batching / dissemination</div>
            </div>
            <div class="text-center">
-             <div class="font-semibold text-teal-400 mb-1">2. Tephra order</div>
+             <div class="font-semibold text-teal-400 mb-1">2. Tephra</div>
              <div class="text-slate-400 text-xs">virtual voting</div>
            </div>
            <div class="text-center">
-             <div class="font-semibold text-indigo-400 mb-1">3. Execution lanes</div>
-             <div class="text-slate-400 text-xs">deterministic apply</div>
+             <div class="font-semibold text-indigo-400 mb-1">3. Crystallite</div>
+             <div class="text-slate-400 text-xs">execution / apply</div>
            </div>
            <div class="text-center">
-             <div class="font-semibold text-amber-400 mb-1">4. Monitoring</div>
+             <div class="font-semibold text-amber-400 mb-1">4. Cali</div>
              <div class="text-slate-400 text-xs">health / recovery</div>
            </div>
            <div class="text-center">
-             <div class="font-semibold text-green-400 mb-1">5. Apply + proofs</div>
-             <div class="text-slate-400 text-xs">final state / checkpoints</div>
+             <div class="font-semibold text-green-400 mb-1">5. Lithification</div>
+             <div class="text-slate-400 text-xs">proofs / checkpoints</div>
            </div>
          </div>
          <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -1011,49 +1011,49 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 
-  /* Striation */
-  .stria-tx {
+  /* Crystallite execution lanes */
+  .lane-tx {
     transform-box: fill-box;
     transform-origin: center;
-    animation: striaTxRoute 2.2s linear infinite;
+    animation: laneTxRoute 2.2s linear infinite;
   }
 
-  .stria-tx--a {
+  .lane-tx--a {
     animation-delay: 0s;
   }
 
-  .stria-tx--b {
+  .lane-tx--b {
     animation-delay: 0.25s;
   }
 
-  .stria-tx--c {
+  .lane-tx--c {
     animation-delay: 0.5s;
   }
 
-  .stria-account-fill {
+  .lane-account-fill {
     transform-box: fill-box;
     transform-origin: left center;
-    animation: striaAccountApply 2.2s ease-in-out infinite;
+    animation: laneAccountApply 2.2s ease-in-out infinite;
     transform: scaleX(0.05);
   }
 
-  .stria-account-fill--a {
+  .lane-account-fill--a {
     animation-delay: 0s;
   }
 
-  .stria-account-fill--b {
+  .lane-account-fill--b {
     animation-delay: 0.25s;
   }
 
-  .stria-account-fill--c {
+  .lane-account-fill--c {
     animation-delay: 0.5s;
   }
 
-  .stria-account-shell {
-    animation: striaAccountGlow 2.2s ease-in-out infinite;
+  .lane-account-shell {
+    animation: laneAccountGlow 2.2s ease-in-out infinite;
   }
 
-  @keyframes striaTxRoute {
+  @keyframes laneTxRoute {
     0% {
       transform: translateX(0);
       opacity: 0;
@@ -1073,7 +1073,7 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 
-  @keyframes striaAccountApply {
+  @keyframes laneAccountApply {
     0% {
       opacity: 0.15;
       transform: scaleX(0.05);
@@ -1095,7 +1095,7 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 
-  @keyframes striaAccountGlow {
+  @keyframes laneAccountGlow {
     0%,
     45% {
       stroke-opacity: 0.22;
@@ -1114,37 +1114,26 @@ import Layout from '../layouts/Layout.astro';
   }
 
   /* Cali */
-  .calib-check {
+  .cali-check {
     transform-origin: center;
     transform-box: fill-box;
     stroke-dasharray: 60;
     stroke-dashoffset: 60;
-    animation: calibCheckDraw 2.2s ease-in-out infinite;
+    animation: caliCheckDraw 2.2s ease-in-out infinite;
   }
 
-  .calib-pulse-ring {
+  .cali-pulse-ring {
     transform-origin: center;
     transform-box: fill-box;
-    animation: calibPulseRing 2.2s ease-in-out infinite;
+    animation: caliPulseRing 2.2s ease-in-out infinite;
   }
 
-  .calib-pulse {
-    animation: calibPulseDot 1.1s ease-in-out infinite;
+  .cali-pulse {
     transform-origin: center;
-    transform-box: fill-box;
+    animation: caliPulseDot 1.1s ease-in-out infinite;
   }
 
-  @keyframes calibCheckDraw {
-    0% {
-      stroke-dashoffset: 60;
-      opacity: 0.0;
-    }
-
-    32% {
-      stroke-dashoffset: 60;
-      opacity: 0.0;
-    }
-
+  @keyframes caliCheckDraw {
     55% {
       stroke-dashoffset: 0;
       opacity: 1.0;
@@ -1161,7 +1150,7 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 
-  @keyframes calibPulseRing {
+  @keyframes caliPulseRing {
     0% {
       opacity: 0.6;
       transform: scale(1);
@@ -1178,7 +1167,7 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 
-  @keyframes calibPulseDot {
+  @keyframes caliPulseDot {
     0%,
     100% {
       transform: scale(1);

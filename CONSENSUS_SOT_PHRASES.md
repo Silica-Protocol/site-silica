@@ -4,21 +4,46 @@ This document contains canonical phrases for describing Silica's current consens
 
 ## Canonical definition
 
-### Tephra definition SOT
+### Alluvium definition SOT
 **Canonical phrase:**
-> Tephra is Silica's consolidated consensus fabric: a gossip-about-gossip hashgraph that carries transaction batch references and peer sync metadata, reconstructs a shared event DAG at every honest node, and derives deterministic order locally through structural rules and virtual voting.
-
-**Usage context:** Use this when introducing Tephra or explaining what replaced the older Alluvium/Crystallite split.
+> Alluvium is Silica's data plane: the Narwhal-inspired layer for transaction admission, batching, and payload dissemination into consensus.
 
 **Key points:**
-- Tephra is the live consensus system name.
-- Tephra combines batching, gossip sync, causal history, ordering, and finality handoff into one fabric.
+- Alluvium owns ingress, batching, and dissemination language.
+- Narwhal inspiration belongs here, not on Tephra.
+- Alluvium feeds payloads into the consensus layer; it does not decide final order.
+
+### Tephra definition SOT
+**Canonical phrase:**
+> Tephra is Silica's consensus and ordering layer: a gossip-about-gossip hashgraph that reconstructs a shared event DAG at every honest node and derives deterministic order locally through structural rules and virtual voting.
+
+**Usage context:** Use this when introducing Tephra as the ordering/consensus layer.
+
+**Key points:**
+- Tephra is the live ordering/consensus system name.
+- Tephra consumes Alluvium-fed payloads and consensus metadata.
 - Every honest node computes the same order from the same event DAG.
 - Extra vote messages are minimized because virtual voting is computed locally from gossip history.
 
+### Crystallite definition SOT
+**Canonical phrase:**
+> Crystallite is Silica's execution/apply layer: it executes committed Tephra order in deterministic lanes and applies the result locally.
+
+**Key points:**
+- Crystallite is where execution/apply language belongs.
+- Crystallite does not invent ordering; it applies Tephra order.
+
+### Lithification definition SOT
+**Canonical phrase:**
+> Lithification is Silica's proof/checkpoint layer: it packages finalized state transitions into anchors, certificates, receipts, and replay-friendly checkpoints.
+
+**Key points:**
+- Lithification is where finality-proof and checkpoint language belongs.
+- Lithification reports and packages the finalized result; it does not invent order.
+
 ### Ordering SOT
 **Canonical phrase:**
-> Tephra consensus order is the only ordering truth. Execution applies Tephra order; it does not invent a new one.
+> Tephra consensus order is the only ordering truth. Crystallite applies Tephra order; it does not invent a new one.
 
 **Usage context:** When describing how transactions become ordered before execution.
 
@@ -29,26 +54,28 @@ This document contains canonical phrases for describing Silica's current consens
 
 ### Finality SOT
 **Canonical phrase:**
-> A block is final when Tephra order is committed and applied locally. Anchors, certificates, and receipts are proofs and checkpoints, not independent ordering authorities.
+> A block is final when Tephra order is committed and applied locally by Crystallite. Lithification packages anchors, certificates, and receipts as proofs and checkpoints, not independent ordering authorities.
 
 **Usage context:** When describing finality, permanence, or auditability.
 
 **Key points:**
-- Finality is not a separate branded subsystem anymore.
+- Execution/apply language belongs to Crystallite.
+- Proof/checkpoint/finality packaging language belongs to Lithification.
 - Local apply finalizes the ordered result.
 - Anchors, proofs, and receipts support audit, monitoring, replay, and recovery.
 
 ## Canonical pipeline
 
 **Canonical description:**
-> Transaction ingress & batching → Tephra gossip-sync / event DAG → virtual voting & deterministic ordering → execution apply → anchors, monitoring, and recovery.
+> Alluvium batching & dissemination → Tephra gossip-sync / event DAG / ordering → Crystallite execution apply → Lithification proofs & checkpoints → Cali monitoring & recovery.
 
 **5-stage breakdown:**
-1. **Ingress & batching:** Transactions are admitted, batched, and attached to Tephra events.
-2. **Tephra gossip-sync:** Peers exchange unknown events and record who saw what.
-3. **Deterministic ordering:** Virtual voting and structural rules compute a shared proposal order.
-4. **Execution apply:** Ordered proposals are executed in deterministic lanes and applied locally.
-5. **Anchors / recovery:** Proofs, checkpoints, and watchdog systems support audit and restart safety.
+1. **Alluvium:** Transactions are admitted, batched, and disseminated into consensus.
+2. **Tephra sync:** Peers exchange unknown events and record who saw what.
+3. **Tephra ordering:** Virtual voting and structural rules compute a shared proposal order.
+4. **Crystallite:** Ordered proposals are executed in deterministic lanes and applied locally.
+5. **Lithification:** Anchors, certificates, receipts, and finalized checkpoints package the result.
+6. **Cali:** Health telemetry and watchdog systems support audit and restart safety.
 
 ## Influence wording
 
@@ -56,12 +83,12 @@ These phrases are acceptable when explaining influences, but they must be framed
 
 ### Narwhal / Bullshark
 **Correct descriptions:**
-- "Tephra retains Narwhal-style transaction batching and DAG-first dissemination ideas."
-- "Tephra is informed by DAG-based ordering research, including Bullshark-era commit discipline."
+- "Alluvium is the Narwhal-inspired batching and dissemination layer."
+- "Tephra is informed by DAG-based ordering research and virtual-voting hashgraph ideas."
 
 **Avoid saying:**
 - "Bullshark is the live Silica consensus protocol" ❌
-- "Narwhal is a current Silica subsystem" ❌
+- "Narwhal is Tephra" ❌
 
 ### TigerBeetle
 **Correct descriptions:**
@@ -74,51 +101,45 @@ These phrases are acceptable when explaining influences, but they must be framed
 
 ## Historical terminology guidance
 
-Older research notes may refer to **Alluvium** and **Crystallite**.
+Older research notes may use these names inconsistently. The current canonical meaning is:
 
-- Use those names only when explicitly describing historical designs or earlier research phases.
-- When describing the current system, say that their responsibilities are now **consolidated into Tephra**.
-
-**Practical mapping:**
-- **Alluvium** maps most closely to transaction ingress, batching, and payload dissemination responsibilities.
-- In the live design, those responsibilities are split between **Ingress & Batching** and **Tephra gossip sync**.
-- **Crystallite** maps most closely to deterministic ordering/commit logic, which now lives inside **Tephra**.
-- **Execution Apply** is a separate stage after consensus ordering; it is not a renamed Crystallite.
-
-**Canonical historical bridge sentence:**
-> Earlier Silica research split dissemination and ordering into Alluvium and Crystallite. The current implementation consolidates those responsibilities into Tephra.
+- **Alluvium** = ingress / batching / dissemination
+- **Tephra** = ordering / consensus
+- **Crystallite** = execution apply
+- **Lithification** = proofs / checkpoints / finality packaging
+- **Cali** = monitoring / recovery
 
 ## Common mistakes to avoid
 
-### ❌ Incorrect: "Alluvium is Silica's current data layer"
-**Why wrong:** That is historical terminology, not the current production-facing system name.
+### ❌ Incorrect: "Tephra is the Narwhal-inspired batching layer"
+**Why wrong:** Narwhal-style batching/dissemination belongs to Alluvium.
 
-**✅ Correct:** "Silica now uses Tephra as the consolidated batching, gossip, and ordering fabric."
+**✅ Correct:** "Alluvium is the Narwhal-inspired data plane; Tephra is the ordering layer above it."
 
 ### ❌ Incorrect: "Crystallite is Silica's current ordering engine"
-**Why wrong:** Current ordering is described as Tephra ordering derived from the event DAG.
+**Why wrong:** Current ordering is Tephra ordering derived from the event DAG.
 
-**✅ Correct:** "Tephra derives deterministic ordering locally from gossip-about-gossip history and virtual voting."
+**✅ Correct:** "Tephra derives deterministic ordering locally from gossip-about-gossip history and virtual voting; Crystallite applies that order."
 
 ### ❌ Incorrect: "TigerBeetle consensus powers Silica"
 **Why wrong:** TigerBeetle informs implementation discipline, not network consensus semantics.
 
 **✅ Correct:** "Silica borrows TigerBeetle-style engineering discipline for batching, deterministic hot paths, and bounded resource use."
 
-### ❌ Incorrect: "Anchors or certificates decide ordering"
-**Why wrong:** Ordering comes from Tephra. Anchors and certificates report or checkpoint the result.
+### ❌ Incorrect: "Lithification decides ordering"
+**Why wrong:** Ordering comes from Tephra; Lithification only packages the finalized result.
 
-**✅ Correct:** "Tephra decides order; anchors and proofs make the result auditable and recoverable."
+**✅ Correct:** "Tephra decides order; Crystallite applies it; Lithification packages the proofs and checkpoints."
 
 ## Performance language
 
 ### Finality time
 **Template:**
-> Silica targets sub-second deterministic finality. Blocks are final when Tephra order is committed and applied locally. User-facing pre-final indicators may appear earlier for UX purposes.
+> Silica targets sub-second deterministic finality. Blocks are final when Tephra order is committed and applied locally by Crystallite. Lithification packages the resulting proofs and checkpoints. User-facing pre-final indicators may appear earlier for UX purposes.
 
 ### Throughput
 **Template:**
-> Silica targets high throughput through aggressive batching, efficient gossip-sync, deterministic ordering, and parallel execution. Published metrics may evolve as the network is optimized.
+> Silica targets high throughput through Alluvium batching, Tephra ordering, Crystallite execution, and Lithification checkpoints. Published metrics may evolve as the network is optimized.
 
 ## Updating this document
 

@@ -4,23 +4,24 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
 <ArticleLayout 
   title="Silica Engine Deep Dive"
-  description="A technical breakdown of Tephra, deterministic execution lanes, anchors, and monitoring-driven reliability."
+  description="A technical breakdown of Alluvium, Tephra, Crystallite, Lithification, and Cali in the Silica architecture."
   author="Silica Network Team"
   date="2024-12-04"
   category="Protocol Architecture"
   readingTime="10 min read"
 >
     <section class="content-section">
-      <h2>⏱ Tephra Consensus Fabric</h2>
+      <h2>⏱ The Branded Layer Stack</h2>
       <p>
-        Silica now describes its live consensus system as <strong>Tephra</strong>. Earlier research split dissemination and ordering into Alluvium and Crystallite, but the current implementation consolidates those responsibilities into one gossip-about-gossip fabric:
+        Silica uses a named layered architecture, with each layer owning a distinct responsibility:
       </p>
 
       <ul>
-        <li><strong>Batching + payload references:</strong> Transactions are grouped into proposal payloads and attached to Tephra events.</li>
-        <li><strong>Gossip-about-gossip sync:</strong> Each sync records self-parent and other-parent links, letting every node reconstruct a shared event DAG.</li>
-        <li><strong>Virtual voting + deterministic order:</strong> Witness, fame, and ordering are computed locally from the event DAG — no extra vote stream is required.</li>
-        <li><strong>Local apply + proofs:</strong> Execution lanes apply Tephra order, while anchors and certificates report the result for audit and recovery.</li>
+        <li><strong>Alluvium:</strong> Narwhal-inspired data plane for batching and payload dissemination.</li>
+        <li><strong>Tephra:</strong> Gossip-about-gossip ordering layer that reconstructs the event DAG and derives deterministic order.</li>
+        <li><strong>Crystallite:</strong> Deterministic execution/apply layer that turns ordered proposals into visible state transitions.</li>
+        <li><strong>Lithification:</strong> Proof/checkpoint layer that packages anchors, receipts, and finalized surfaces.</li>
+        <li><strong>Cali:</strong> Monitoring and recovery layer that tracks health and restart safety.</li>
       </ul>
 
       <div class="code-block">
@@ -36,17 +37,19 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
       <p><strong>Consensus Pipeline:</strong></p>
       <ol>
-        <li><strong>Ingress &amp; batching:</strong> Transactions are admitted and attached to proposal payloads.</li>
-        <li><strong>Tephra gossip sync:</strong> Peers exchange missing events and extend the shared event DAG.</li>
-        <li><strong>Virtual voting:</strong> Deterministic proposal order is derived locally from the DAG.</li>
-        <li><strong>Execution + proofs:</strong> Ordered proposals are applied locally, then anchors and certificates package the result for audit and recovery.</li>
+        <li><strong>Alluvium:</strong> Transactions are admitted, batched, and disseminated into consensus.</li>
+        <li><strong>Tephra:</strong> Peers exchange missing events, extend the shared event DAG, and derive deterministic order.</li>
+        <li><strong>Crystallite:</strong> Ordered proposals are executed in deterministic lanes and applied locally.</li>
+        <li><strong>Lithification:</strong> Anchors and certificates package the result into proofs and checkpoints.</li>
+        <li><strong>Cali:</strong> Watchdog and recovery flows observe the finalized chain and keep restart paths clean.</li>
       </ol>
 
       <div class="code-block bg-blue-50 border-l-4 border-blue-500 p-4 my-4">
         <p class="text-sm font-semibold text-gray-800 mb-2">Source of Truth (SOT):</p>
         <ul class="text-sm text-gray-700 space-y-1">
           <li><strong>Ordering SOT:</strong> Tephra consensus order is the only ordering truth.</li>
-          <li><strong>Finality SOT:</strong> A block is final when Tephra order is committed and applied locally.</li>
+          <li><strong>Apply SOT:</strong> Crystallite applies Tephra order; it does not invent a new one.</li>
+          <li><strong>Proof SOT:</strong> Lithification packages proofs and checkpoints; it does not decide order.</li>
           <li><strong>Certificates/receipts are proofs (reports), not gates.</strong></li>
         </ul>
       </div>
@@ -205,11 +208,13 @@ trait MVCCTxn {
         The Silica Engine combines:
       </p>
       <ul>
-        <li><strong>Tephra batching, gossip sync, and deterministic ordering.</strong></li>
-        <li><strong>Local apply with anchors and audit proofs.</strong></li>
+        <li><strong>Alluvium batching and dissemination.</strong></li>
+        <li><strong>Tephra gossip sync and deterministic ordering.</strong></li>
+        <li><strong>Crystallite execution/apply.</strong></li>
+        <li><strong>Lithification proofs and checkpoints.</strong></li>
         <li><strong>Sharded, parallel execution.</strong></li>
         <li><strong>Geographic fairness via GPoD.</strong></li>
-        <li><strong>Monitoring-driven resilience under adversarial load.</strong></li>
+        <li><strong>Cali-driven resilience under adversarial load.</strong></li>
         <li><strong>Post-quantum cryptography for future safety.</strong></li>
       </ul>
       <p class="conclusion">

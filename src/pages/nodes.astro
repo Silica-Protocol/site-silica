@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const buildSnippet = String.raw`# Local binary
+cargo build --bin silica --release
+
+# Quality gates
+cargo fmt --all
+cargo clippy --all-targets --all-features -- -D warnings
+cargo test --workspace`;
+
+const imageSnippet = String.raw`docker buildx build \
+  --builder silica-builder \
+  --platform linux/amd64,linux/arm64 \
+  -t silicaprotocol/silica-node:testnet-latest \
+  --push .`;
+
+const rolloutSnippet = String.raw`cd infrastructure/opentofu/testnet/oci
+
+python3 scripts/silica_nodes.py --user silica set-image \
+  --image silicaprotocol/silica-node:testnet-latest
+
+python3 scripts/silica_nodes.py --user silica update`;
+---
+
+<Layout title="Nodes & Deployment - Silica Protocol" description="Build, containerize, and deploy Silica nodes across local, testnet, and production-style environments.">
+  <section class="relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white py-28 overflow-hidden">
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(rgba(34,197,94,0.28) 1px, transparent 1px), linear-gradient(90deg, rgba(34,197,94,0.28) 1px, transparent 1px); background-size: 60px 60px;"></div>
+      <div class="absolute top-1/4 right-1/4 w-[360px] h-[360px] rounded-full bg-green-500/15 blur-[120px] animate-pulse"></div>
+      <div class="absolute bottom-1/4 left-1/4 w-[320px] h-[320px] rounded-full bg-cyan-500/15 blur-[120px] animate-pulse" style="animation-duration: 6s;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl">
+        <span class="inline-flex items-center rounded-full border border-green-500/30 bg-green-500/10 px-4 py-1 text-sm font-medium text-green-300 mb-6">Operators</span>
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">Run and deploy <span class="bg-gradient-to-r from-cyan-400 via-teal-400 to-green-400 bg-clip-text text-transparent">Silica nodes</span></h1>
+        <p class="text-xl text-green-100/90 max-w-3xl">
+          The repo ships the pieces you need for local builds, multi-arch container publishing, and environment-specific rollout through the infrastructure stacks.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Environment stacks</h2>
+        <p class="text-xl text-slate-300 max-w-3xl mx-auto">The infrastructure repo is organized around an env-first layout so operators can move from local or dev setups to testnet and production stacks without changing mental models.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-cyan-500/20"><h3 class="text-lg font-semibold text-cyan-300 mb-2">core/</h3><p class="text-sm text-slate-300">Shared services like static sites and observability foundations.</p></div>
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-sky-500/20"><h3 class="text-lg font-semibold text-sky-300 mb-2">dev/</h3><p class="text-sm text-slate-300">Low-cost development services for iterative testing and app integration.</p></div>
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-green-500/20"><h3 class="text-lg font-semibold text-green-300 mb-2">testnet/</h3><p class="text-sm text-slate-300">Operational testnet stacks, Kubernetes manifests, and rollout tooling.</p></div>
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-purple-500/20"><h3 class="text-lg font-semibold text-purple-300 mb-2">mainnet/</h3><p class="text-sm text-slate-300">Production-oriented AWS, Azure, Ansible, Docker, and environment guides.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-slate-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="bg-slate-800/50 rounded-2xl p-8 border border-cyan-500/20">
+        <h2 class="text-2xl font-bold text-white mb-4">1. Build locally</h2>
+        <pre class="bg-slate-950 rounded-lg p-4 overflow-x-auto border border-slate-700 text-sm text-slate-300"><code>{buildSnippet}</code></pre>
+      </div>
+      <div class="bg-slate-800/50 rounded-2xl p-8 border border-teal-500/20">
+        <h2 class="text-2xl font-bold text-white mb-4">2. Publish a node image</h2>
+        <pre class="bg-slate-950 rounded-lg p-4 overflow-x-auto border border-slate-700 text-sm text-slate-300"><code>{imageSnippet}</code></pre>
+      </div>
+      <div class="bg-slate-800/50 rounded-2xl p-8 border border-green-500/20">
+        <h2 class="text-2xl font-bold text-white mb-4">3. Roll out to testnet</h2>
+        <pre class="bg-slate-950 rounded-lg p-4 overflow-x-auto border border-slate-700 text-sm text-slate-300"><code>{rolloutSnippet}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-slate-800/50 rounded-xl p-8 border border-green-500/20">
+          <h3 class="text-2xl font-bold text-white mb-4">Operational checkpoints</h3>
+          <ul class="space-y-3 text-slate-300 text-sm">
+            <li>• Verify builder availability with <code class="text-green-300">docker buildx ls</code></li>
+            <li>• Run fmt, clippy, and workspace tests before publishing images</li>
+            <li>• Track common tags like <code class="text-green-300">testnet-latest</code>, <code class="text-green-300">latest</code>, and version tags</li>
+            <li>• Keep the primary node Dockerfile aligned with the cargo-chef pipeline</li>
+          </ul>
+        </div>
+        <div class="bg-slate-800/50 rounded-xl p-8 border border-cyan-500/20">
+          <h3 class="text-2xl font-bold text-white mb-4">Health and observability</h3>
+          <ul class="space-y-3 text-slate-300 text-sm">
+            <li>• Monitor node health through <code class="text-cyan-300">/health</code>, <code class="text-cyan-300">/info</code>, and <code class="text-cyan-300">/metrics</code></li>
+            <li>• Use the infrastructure <code class="text-cyan-300">observability/</code> assets and stack-specific manifests</li>
+            <li>• Treat rollout, sync lag, and validator progress as first-class operator signals</li>
+            <li>• Start infrastructure navigation in <code class="text-cyan-300">infrastructure/opentofu/README.md</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-slate-950">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">From binary to fleet</h2>
+      <p class="text-xl text-slate-300 mb-8">
+        Silica’s deployment story is already split cleanly across local builds, container publishing, and environment-specific infrastructure. These pages are here to make that operator path discoverable from the public site.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/api" class="bg-gradient-to-r from-green-500 to-teal-500 text-white font-semibold py-3 px-8 rounded-lg hover:shadow-lg hover:shadow-green-500/30 transition-all duration-300">API surfaces</a>
+        <a href="/sdk" class="bg-white/10 backdrop-blur-sm text-white border border-white/20 font-semibold py-3 px-8 rounded-lg hover:bg-white hover:text-slate-900 transition-all duration-300">SDKs</a>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -82,6 +82,20 @@ import BlogPost from '../../components/BlogPost.astro';
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+       <!-- Article 0 -->
+       <BlogPost
+         title="Why We Moved to Tephra"
+         date="March 31, 2026"
+         author="Silica Network Team"
+         category="Consensus Migration"
+         readingTime="11"
+       >
+        <p class="text-gray-600 mb-4">
+          An engineering look at Silica's migration from an older modified Narwhal/Bullshark-derived Alluvium + Crystallite v1 path to Tephra's gossip-about-gossip ordering model.
+        </p>
+         <a href="/blog/why-we-moved-to-tephra" class="text-silica-blue font-medium hover:underline">Read More →</a>
+       </BlogPost>
+
        <!-- Article 1 -->
        <BlogPost
          title="Silica Deep Dive: Speed, Performance & Reliability"
@@ -91,7 +105,7 @@ import BlogPost from '../../components/BlogPost.astro';
          readingTime="8"
        >
         <p class="text-gray-600 mb-4">
-          A closer look at how Silica achieves fast UX and deterministic finality through Tephra, parallel execution, and audit-friendly anchors.
+          A closer look at how Silica achieves fast UX and deterministic finality through Alluvium, Tephra, Crystallite, Lithification, and Cali.
         </p>
          <a href="/blog/silica-performance-deep-dive" class="text-silica-blue font-medium hover:underline">Read More →</a>
        </BlogPost>
@@ -119,7 +133,7 @@ import BlogPost from '../../components/BlogPost.astro';
          readingTime="10"
        >
         <p class="text-gray-600 mb-4">
-          A technical breakdown of Tephra, deterministic execution lanes, anchors, and monitoring-driven reliability.
+          A technical breakdown of Alluvium, Tephra, Crystallite, Lithification, and Cali.
         </p>
          <a href="/blog/silica-engine-deep-dive" class="text-silica-blue font-medium hover:underline">Read More →</a>
        </BlogPost>
@@ -147,7 +161,7 @@ import BlogPost from '../../components/BlogPost.astro';
          readingTime="8"
        >
         <p class="text-gray-600 mb-4">
-          How Silica defends against adversaries today and quantum threats tomorrow through Tephra safety, automated recovery, and post-quantum cryptography.
+          How Silica defends against adversaries today and quantum threats tomorrow through Tephra safety, Lithification proofs, Cali recovery, and post-quantum cryptography.
         </p>
          <a href="/blog/security-future-proofing-deep-dive" class="text-silica-blue font-medium hover:underline">Read More →</a>
        </BlogPost>

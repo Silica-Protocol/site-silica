@@ -1,0 +1,194 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+---
+
+<ArticleLayout
+  title="Why We Moved to Tephra"
+  description="An engineering look at Silica's migration from an older modified Narwhal/Bullshark-derived DAG commit path to Tephra's gossip-about-gossip ordering model."
+  author="Silica Network Team"
+  date="2026-03-31"
+  category="Consensus Migration"
+  readingTime="11 min read"
+>
+  <section class="content-section">
+    <h2>🌋 This was a consensus migration, not a naming exercise</h2>
+    <p>
+      Silica did not move to Tephra because we wanted a cleaner label. We moved because the older consensus path — an aggressively modified DAG pipeline built around <strong>Alluvium</strong> and a first-generation <strong>Crystallite v1</strong> commit path — was doing too many jobs across too many seams.
+    </p>
+    <p>
+      That older design borrowed from <strong>Narwhal/Bullshark-style thinking</strong>: separate payload dissemination from ordering, push data-plane work earlier, and let the DAG carry more of the protocol. That got us valuable properties early: strong batching, good payload fanout, and a clear performance mindset. But once we pushed it into a more demanding asynchronous, sharded, recovery-heavy environment, the edges started to show.
+    </p>
+    <p>
+      <strong>Tephra</strong> is the result of that learning. It is Silica's gossip-about-gossip (GaG) ordering layer: a hashgraph-style event DAG where honest nodes reconstruct the same communication history and derive deterministic order locally through structure and virtual voting.
+    </p>
+
+    <div class="code-block">
+      <p><strong>Old direction:</strong></p>
+      <p><code>Alluvium batching → proposal DAG → Crystallite v1 commit / linearization → proofs</code></p>
+      <p class="mt-4"><strong>Current direction:</strong></p>
+      <p><code>Alluvium data plane → Tephra gossip-about-gossip ordering → Crystallite apply → Lithification proofs → Cali recovery</code></p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <h2>🧱 What the old path was trying to achieve</h2>
+    <p>
+      The old pipeline was not misguided. It was trying to solve real problems the right way:
+    </p>
+    <ul>
+      <li><strong>Alluvium</strong> pushed transaction admission, batching, and dissemination out of the hot consensus core.</li>
+      <li>The DAG structure let us reason about proposal ancestry without collapsing everything into a single linear mempool queue.</li>
+      <li><strong>Crystallite v1</strong> tried to turn DAG progress into a deterministic commit path that execution could consume cleanly.</li>
+      <li>The broader system was optimized for throughput, bounded hot paths, and sharded execution from the start.</li>
+    </ul>
+    <p>
+      In other words, v1 was a serious attempt to preserve the best parts of DAG-based dissemination while still producing deterministic order and finality surfaces for the rest of the stack.
+    </p>
+  </section>
+
+  <section class="content-section">
+    <h2>⚠ Where the old design started fighting us</h2>
+    <p>
+      The challenge was not that the DAG idea was bad. The challenge was that too much <em>consensus meaning</em> had become distributed across multiple layers and heuristics.
+    </p>
+
+    <h3>1. Order was harder to reason about than it should have been</h3>
+    <p>
+      In the older path, deterministic commit behavior depended on more than “all honest nodes eventually see the same history.” In practice, parts of the commit decision could still be sensitive to <strong>which quorum-sized subset of next-round information arrived first</strong> and how exact parent references lined up at closure time.
+    </p>
+    <p>
+      That is survivable in a prototype. It is not the invariant you want at the heart of deterministic finality.
+    </p>
+
+    <h3>2. We paid for a split source of truth</h3>
+    <p>
+      The data plane was excellent at admission and dissemination, but the actual ordering truth lived further downstream in a commit/linearization path with its own structural assumptions. That meant engineers and operators had to keep asking a subtle question:
+    </p>
+    <blockquote>
+      Is this layer carrying data, or is it already deciding consensus meaning?
+    </blockquote>
+    <p>
+      When that boundary is blurry, debugging becomes slower, audits become harder, and recovery logic becomes more delicate.
+    </p>
+
+    <h3>3. Recovery and replay became more complicated than we wanted</h3>
+    <p>
+      Under partial visibility, backlog replay, or frontier repair, we found ourselves spending too much effort on synchronization corner cases: orphan handling, missing frontier material, certificate identity alignment, and keeping late-arriving DAG information from mutating the meaning of earlier progress.
+    </p>
+    <p>
+      A fast protocol that is hard to recover cleanly is not finished. It's just fast on a good day.
+    </p>
+
+    <h3>4. Too much coordination leaked into the control plane</h3>
+    <p>
+      The old path could be made to work, but it carried more semantic bookkeeping than we wanted. The protocol was doing useful work, but also spending too much energy proving to itself that different nodes were still talking about the same thing.
+    </p>
+  </section>
+
+  <section class="content-section">
+    <h2>🔍 The specific limitation we refused to normalize</h2>
+    <p>
+      One of the core lessons from the v1 path was this: <strong>a deterministic protocol cannot allow commit meaning to depend on the wrong kind of partial view</strong>.
+    </p>
+    <p>
+      In the older leaderless DAG commit flow, a round could look “closed” once the next round crossed a quorum threshold, but the exact set of parent references visible at that moment could still influence which earlier slots appeared directly committable. Different honest nodes could therefore reach closure with different yet quorum-sized views and derive different immediate commit sets.
+    </p>
+    <p>
+      Once that happens, downstream artifacts such as commit indices, certificate identities, and finality packaging start inheriting divergence risk. Even if the system can eventually reconcile, the architecture is telling you something important: the ordering rule is not anchored tightly enough to a single canonical history.
+    </p>
+    <div class="code-block bg-blue-50 border-l-4 border-blue-500 p-4 my-4">
+      <p class="text-sm font-semibold text-gray-800 mb-2">The engineering takeaway:</p>
+      <p class="text-sm text-gray-700">
+        If different honest nodes can temporarily assign different consensus meaning to the same logical phase transition, recovery becomes a protocol feature instead of an operational tool. We wanted the opposite.
+      </p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <h2>🕸 Why Tephra is the better long-term foundation</h2>
+    <p>
+      Tephra changes the question. Instead of asking whether a separate commit heuristic can safely summarize a disseminated DAG, Tephra makes the <strong>event DAG itself</strong> the ordering substrate.
+    </p>
+
+    <ul>
+      <li><strong>Gossip-about-gossip:</strong> Each event records not just payload context, but who saw what and when through self-parent and other-parent links.</li>
+      <li><strong>Shared causal history:</strong> Honest nodes reconstruct the same event DAG from the same gossip history.</li>
+      <li><strong>Virtual voting:</strong> Witness, visibility, fame, and ordering are computed locally from structure rather than from a large stream of explicit vote traffic.</li>
+      <li><strong>Same DAG, same order:</strong> The protocol gets closer to the invariant we actually want — identical communication history yields identical ordered proposals.</li>
+    </ul>
+
+    <p>
+      Tephra does not merely replace an old commit function. It narrows the architecture around a stronger idea: <strong>ordering should come from the communication graph itself, not from downstream interpretation of a dissemination graph plus special-case commit rules</strong>.
+    </p>
+  </section>
+
+  <section class="content-section">
+    <h2>🧭 What we kept, and what we intentionally changed</h2>
+    <p>
+      This migration was not a full discard-and-rewrite. Some parts of v1 were correct and stayed.
+    </p>
+
+    <h3>What we kept</h3>
+    <ul>
+      <li><strong>Alluvium</strong> still matters. It remains Silica's data plane for admission, batching, and dissemination.</li>
+      <li><strong>Crystallite</strong> still matters. It remains the deterministic execution/apply layer.</li>
+      <li><strong>Lithification</strong> still matters. Finalized results still need anchors, receipts, certificates, and replay-friendly checkpoints.</li>
+      <li><strong>Cali</strong> still matters. Monitoring and recovery are part of the architecture, not afterthoughts.</li>
+    </ul>
+
+    <h3>What changed</h3>
+    <ul>
+      <li><strong>Tephra is now the ordering truth.</strong> That boundary is explicit and intentional.</li>
+      <li><strong>Consensus meaning moved closer to the actual event graph.</strong></li>
+      <li><strong>Execution no longer needs to inherit ambiguous ordering seams.</strong></li>
+      <li><strong>Recovery logic gets to orbit a cleaner core.</strong></li>
+    </ul>
+  </section>
+
+  <section class="content-section">
+    <h2>🚀 The improvements we were aiming for</h2>
+    <p>
+      The point of moving to Tephra was not just “make it more elegant.” It was to improve the real properties that matter in a production protocol.
+    </p>
+
+    <ul>
+      <li><strong>Cleaner determinism:</strong> Fewer places where partial views can distort immediate commit interpretation.</li>
+      <li><strong>Less control-plane noise:</strong> More consensus meaning computed locally from structure, less carried in extra coordination traffic.</li>
+      <li><strong>Sharper layer boundaries:</strong> Alluvium disseminates, Tephra orders, Crystallite applies, Lithification packages, Cali watches and recovers.</li>
+      <li><strong>Better replay and recovery semantics:</strong> A stronger canonical history makes backlog replay and restart behavior easier to reason about.</li>
+      <li><strong>Stronger long-term scalability:</strong> Sharding and deterministic execution benefit from a simpler, more canonical ordering substrate.</li>
+    </ul>
+  </section>
+
+  <section class="content-section">
+    <h2>🎯 Our intent going forward</h2>
+    <p>
+      Tephra is the consensus direction we actually want to scale, harden, and explain publicly.
+    </p>
+    <p>
+      The intention is straightforward:
+    </p>
+    <ol>
+      <li><strong>Keep Alluvium narrow and excellent</strong> as the data plane.</li>
+      <li><strong>Keep Tephra authoritative</strong> as the ordering and consensus layer.</li>
+      <li><strong>Keep Crystallite honest</strong> as apply, not a second ordering engine.</li>
+      <li><strong>Keep Lithification and Cali operationally useful</strong> as proof, checkpoint, monitoring, and recovery surfaces.</li>
+    </ol>
+    <p>
+      That gives us an architecture that is faster to reason about, easier to operate, and more faithful to the deterministic finality story we want Silica to tell.
+    </p>
+  </section>
+
+  <section class="content-section cta-section">
+    <h2>✅ Takeaway</h2>
+    <p>
+      The old Alluvium + Crystallite v1 path taught us a lot. It proved the value of strong ingress, batching, and DAG-centric thinking. But it also exposed a limit: if consensus meaning is spread across too many downstream interpretations, the system becomes harder to stabilize, recover, and explain.
+    </p>
+    <p>
+      <strong>Tephra is our answer to that lesson.</strong> It gives Silica a clearer ordering truth, a cleaner relationship between dissemination and finality, and a better foundation for the rest of the stack.
+    </p>
+    <p class="conclusion">
+      In short: the migration was about reducing ambiguity at the heart of consensus — and that is one of the highest-leverage improvements a protocol can make.
+    </p>
+  </section>
+</ArticleLayout>
